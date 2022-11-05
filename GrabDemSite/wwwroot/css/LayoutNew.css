@@ -1,6 +1,61 @@
-﻿.txt {
+﻿.txtsecondary {
     background: #FFB76B;
     background: linear-gradient(to right, #FFB76B 0%, #FFA73D 30%, #FF7C00 60%, #FF7F04 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-size: 34px;
+    font-weight: 600;
+    margin-left: 125px;
+    padding-right: 12.5px;
+    padding-left: 12.5px;
+}
+.txtsecondary:hover{
+    animation-name:hovering;
+    animation-duration:3s;
+    animation-iteration-count:infinite;
+}
+@keyframes hovering{
+    0% {
+        opacity:100%;
+    }
+    50% {
+        opacity:0%;
+    }
+    100% {
+       opacity:100%;
+    }
+}
+.txtmain {
+    background: #090d00;
+    color: rgba(255,255,255,.25);
+    font: 700 42px "Oswald", sans-serif;
+    letter-spacing: 0;
+    padding: .25em 0 .325em;
+    display: block;
+    margin: 0 auto;
+    text-shadow: 0 0 80px rgba(255,255,255,.5);
+    /* Clip Background Image */
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient( to bottom, #FF7C00, rgba(0,0,0,0) ) 1 100%;
+    background: url(https://i.ibb.co/RDTnNrT/animated-text-fill.png) repeat-y;
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Animate Background Image */
+
+    -webkit-text-fill-color: transparent;
+    -webkit-animation: aitf 80s linear infinite;
+    /* Activate hardware acceleration for smoother animations */
+
+    -webkit-transform: translate3d(0,0,0);
+    -webkit-backface-visibility: hidden;
+}
+@-webkit-keyframes aitf {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
 }
