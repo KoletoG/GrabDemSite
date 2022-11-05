@@ -1,0 +1,82 @@
+﻿body {
+    font: 400 1em/1.5 "Neuton";
+    background: #090d00;
+    color: rgba(255,255,255,.25);
+    margin: 0;
+    text-align: center;
+    animation-name: loading;
+    animation-duration: 3s;
+}
+@keyframes loading{
+    0%{opacity:0%}
+    100%{
+        opacity:100%;
+    }
+}
+label {
+    font: 700 30px "Oswald", sans-serif;
+    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 35px rgba(255,255,255,.40);
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+input {
+    border: 5px solid orange;
+    font: 700 25px "Oswald", sans-serif;
+    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 35px rgba(255,255,255,.40);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#login-submit {
+    border: 5px solid orange;
+    margin-top: 15px;
+    font: 700 30px "Oswald", sans-serif;
+    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 35px rgba(255,255,255,.40);
+    padding: 10px;
+}
+
+    #login-submit:hover {
+        animation-name: zoomandbloom;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+    }
+
+@keyframes zoomandbloom {
+    0% {
+        font: 700 30px "Oswald", sans-serif;
+        text-shadow: 0 0 35px rgba(255,255,255,.40);
+        border-radius: 0px;
+        background: linear-gradient(to right, orange,rgb(190, 85, 39));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    100% {
+        background: linear-gradient(to right, orange,rgb(190, 85, 39));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font: 700 45px "Oswald", sans-serif;
+        text-shadow: 0 0 55px rgb(255,255,255);
+        border-radius: 25px;
+    }
+}
+
+.loginform {
+    border-width: 3px;
+    border-style: solid;
+    border-image: linear-gradient(to bottom, #FF7C00, rgba(0,0,0,0) ) 1 100%;
+}
+
+.align {
+    margin-top: 7%;
+}
