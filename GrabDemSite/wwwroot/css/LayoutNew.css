@@ -13,7 +13,7 @@
 
     .txtsecondary:hover {
         animation-name: hovering;
-        animation-duration: 3s;
+        animation-duration: 2.5s;
         animation-iteration-count: infinite;
     }
 
@@ -65,4 +65,11 @@
     100% {
         background-position: 100% 50%;
     }
+}
+
+.navsection {
+    border-bottom:3px solid #FF7C00;
+}
+.footersection {
+    border-top: 3px solid #FF7C00;
 }
