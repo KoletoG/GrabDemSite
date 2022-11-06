@@ -73,4 +73,5 @@
 
 .footersection {
     border-top: 3px solid #FF7C00;
+    max-block-size: 120px;
 }

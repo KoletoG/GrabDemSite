@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GrabDemSite</title>
     <link rel="stylesheet" href="~/css/LayoutNew.css" />
+    <link rel="stylesheet" href="~/css/Footer.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GrabDemSite.styles.css" asp-append-version="true" />
@@ -43,9 +44,17 @@
         </main>
     </div> 
 
-    <footer class="footersection footer text-muted">
+    <footer class="footer text-muted footersection">
         <div class="container">
-            &copy; 2022 - GrabDemSite - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            @{
+                Random rnd = new Random();
+                int stars=rnd.Next(1,5);
+                string[] names={"IndexeR","SalamiKebabi","MACEDONIAA","GGGG!","Messi","Cr3pto","IceMan","IceWallowCome","DEEZNUTZ","Hobbit"
+            ,"CroccWithAGlocc","JamesCharles","SexyGirl69","TheJoker","JokesOnYou22","MrDragon","DoctorSimplyStrange","Hank","Heisenberg",
+        "420Josh","BlazeItGlazeIt","mOntero","snitch9ine","BobTheBuilder","32LivesEtc","PillTaker31xD","xXMeinKraftXx","GimmeTroll","Frog",
+    "PopCornMike","LuvU","Weesly","PaNdorA","CringiestGuy","EmoKid","XXXshhh","waterdrinker83","AnUnluckyLuckyPerson","DaRealSanta","BigFootLazza"};
+
+            }
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
