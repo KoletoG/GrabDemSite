@@ -33,6 +33,49 @@ input {
     text-align: center;
     margin-bottom: 15px;
 }
+.invalidfield {
+    font: 700 15px "Oswald", sans-serif;
+    background: linear-gradient(to right, rgb(245, 75, 28),rgb(190, 85, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    left:13%;
+    top:36%;
+    position:absolute;
+}
+.invalidpassword {
+    font: 700 15px "Oswald", sans-serif;
+    background: linear-gradient(to right, rgb(245, 75, 28),rgb(190, 85, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    left: 13%;
+    top: 38%;
+    position: absolute;
+}
+.invalidpasswordconfirm {
+    font: 700 15px "Oswald", sans-serif;
+    background: linear-gradient(to right, rgb(245, 75, 28),rgb(190, 85, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    left: 13%;
+    top: 40%;
+    position: absolute;
+}
+input:focus {
+    animation-name: zoom;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+@keyframes zoom{
+    0% {
+        font: 700 25px "Oswald", sans-serif;
+    }
+    100% {
+        font: 700 35px "Oswald", sans-serif;
+    }
+}
 
 #login-submit {
     border: 5px solid orange;
@@ -79,4 +122,7 @@ input {
 
 .align {
     margin-top: 7%;
+}
+.alignreg{
+    margin-top:3%;
 }
