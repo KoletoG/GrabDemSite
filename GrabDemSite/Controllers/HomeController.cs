@@ -20,7 +20,7 @@ namespace GrabDemSite.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Deposit()
         {
             return View();
         }
