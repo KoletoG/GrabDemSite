@@ -55,7 +55,7 @@
     "PopCornMike","LuvU","Weesly","PaNdorA","CringiestGuy","EmoKid","XXXshhh","waterdrinker83","AnUnluckyLuckyPerson","DaRealSanta","BigFootLazza",
     "Kylie","CarlMarx","FakeR","CartoonStar","JJOrangutunji"};
                 int namesCount = names.Count();
-                int number = rnd.Next(0,namescount);
+                int number = rnd.Next(0,namesCount);
                for(int i=1;i<=3;i++)
                 {
                        <section class="review">
@@ -69,10 +69,10 @@
                         @{
 
                             stars=rnd.Next(3,6);
-                            int nextnum = rnd.Next(0,namescount);
+                            int nextnum = rnd.Next(0,namesCount);
                             while(nextnum==number)
                             {
-                                nextnum = rnd.Next(0,namescount);
+                                nextnum = rnd.Next(0,namesCount);
                             }
                             number = nextnum;
                         }
