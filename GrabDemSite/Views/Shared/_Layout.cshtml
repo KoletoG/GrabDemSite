@@ -11,9 +11,9 @@
     <link rel="stylesheet" href="~/GrabDemSite.styles.css" asp-append-version="true" />
 </head>
 <body>
-        <header>
-   
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navsection box-shadow mb-3">
+    <header>
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navsection box-shadow mb-3">
             <div class="container-fluid">
                 <a class="nav-link txtmain" asp-area="" asp-controller="Home" asp-action="Index">GrabDemSite</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -22,63 +22,65 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     @if (this.User.Identity.IsAuthenticated == true)
-    {
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="txtsecondary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="txtsecondary " asp-area="" asp-controller="Home" asp-action="Deposit">Deposit</a>
-                        </li>
-                    </ul>
-   }
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="txtsecondary" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="txtsecondary " asp-area="" asp-controller="Home" asp-action="Deposit">Deposit</a>
+                            </li>
+                        </ul>
+                    }
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
-        </header>
- 
+    </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-    </div> 
+    </div>
 
     <footer class="footer1 footersection">
         <div class="container">
             @{
                 Random rnd = new Random();
-                int stars=rnd.Next(3,6);
-                string[] names={"IndexeR","SalamiKebabi","MACEDONIAA","GGGG!","Messi","Cr3pto","IceMan","IceWallowCome","DEEZNUTZ","Hobbit"
+                string[] names ={"IndexeR","SalamiKebabi","MACEDONIAA","GGGG!","Messi","Cr3pto","IceMan","IceWallowCome","DEEZNUTZ","Hobbit"
             ,"CroccWithAGlocc","JamesCharles","SexyGirl69","TheJoker","JokesOnYou22","MrDragon","DoctorSimplyStrange","Hank","Heisenberg",
-        "420Josh","BlazeItGlazeIt","mOntero","snitch9ine","BobTheBuilder","32LivesEtc","PillTaker31xD","xXMeinKraftXx","GimmeTroll","Frog",
-    "PopCornMike","LuvU","Weesly","PaNdorA","CringiestGuy","EmoKid","XXXshhh","waterdrinker83","AnUnluckyLuckyPerson","DaRealSanta","BigFootLazza",
-    "Kylie","CarlMarx","FakeR","CartoonStar","JJOrangutunji"};
+            "420Josh","BlazeItGlazeIt","mOntero","snitch9ine","BobTheBuilder","32LivesEtc","PillTaker31xD","xXMeinKraftXx","GimmeTroll","Frog",
+            "PopCornMike","LuvU","Weesly","PaNdorA","CringiestGuy","EmoKid","XXXshhh","waterdrinker83","AnUnluckyLuckyPerson","DaRealSanta","BigFootLazza",
+            "Kylie","CarlMarx","FakeR","CartoonStar","JJOrangutunji"};
+
+
+                int stars = rnd.Next(3, 6);
                 int namesCount = names.Count();
-                int number = rnd.Next(0,namesCount);
-               for(int i=1;i<=3;i++)
+                int number = rnd.Next(0, namesCount);
+                for (int i = 1; i <= 3; i++)
                 {
-                       <section class="review">
-                       
-
-                            <h3>@names[number]</h3>
-                        @for(int b=1;b<=stars;b++)
-                    {
-                                <img src="~/Images/star.png" style="height:35px;width:35px"/>
-                    }
+                    <section class="review">
+                        <h3>@names[number]</h3>
+                        @for (int b = 1; b <= stars; b++)
+                        {
+                            <img src="~/Images/star.png" style="height:35px;width:35px" />
+                        }
                         @{
-
-                            stars=rnd.Next(3,6);
-                            int nextnum = rnd.Next(0,namesCount);
-                            while(nextnum==number)
+                            stars = rnd.Next(3, 6);
+                            int nextnum = rnd.Next(0, namesCount);
+                            while (nextnum == number)
                             {
-                                nextnum = rnd.Next(0,namesCount);
+                                nextnum = rnd.Next(0, namesCount);
                             }
                             number = nextnum;
                         }
-                        </section>
+                    </section>
+
                 }
+
             }
+
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
