@@ -52,9 +52,10 @@
                 string[] names={"IndexeR","SalamiKebabi","MACEDONIAA","GGGG!","Messi","Cr3pto","IceMan","IceWallowCome","DEEZNUTZ","Hobbit"
             ,"CroccWithAGlocc","JamesCharles","SexyGirl69","TheJoker","JokesOnYou22","MrDragon","DoctorSimplyStrange","Hank","Heisenberg",
         "420Josh","BlazeItGlazeIt","mOntero","snitch9ine","BobTheBuilder","32LivesEtc","PillTaker31xD","xXMeinKraftXx","GimmeTroll","Frog",
-    "PopCornMike","LuvU","Weesly","PaNdorA","CringiestGuy","EmoKid","XXXshhh","waterdrinker83","AnUnluckyLuckyPerson","DaRealSanta","BigFootLazza"};
-               
-                            int number = rnd.Next(0, names.Count() - 1);
+    "PopCornMike","LuvU","Weesly","PaNdorA","CringiestGuy","EmoKid","XXXshhh","waterdrinker83","AnUnluckyLuckyPerson","DaRealSanta","BigFootLazza",
+    "Kylie","CarlMarx","FakeR","CartoonStar","JJOrangutunji"};
+                int namescount = names.Count() - 1;
+                int number = rnd.Next(0,namescount);
                for(int i=1;i<=3;i++)
                 {
                        <section class="review">
@@ -68,10 +69,10 @@
                         @{
 
                             stars=rnd.Next(3,6);
-                            int nextnum = rnd.Next(0,names.Count()-1);
+                            int nextnum = rnd.Next(0,namescount);
                             while(nextnum==number)
                             {
-                                nextnum = rnd.Next(0,names.Count()-1);
+                                nextnum = rnd.Next(0,namescount);
                             }
                             number = nextnum;
                         }
