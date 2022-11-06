@@ -44,16 +44,39 @@
         </main>
     </div> 
 
-    <footer class="footer text-muted footersection">
+    <footer class="footer1 footersection">
         <div class="container">
             @{
                 Random rnd = new Random();
-                int stars=rnd.Next(1,5);
+                int stars=rnd.Next(3,6);
                 string[] names={"IndexeR","SalamiKebabi","MACEDONIAA","GGGG!","Messi","Cr3pto","IceMan","IceWallowCome","DEEZNUTZ","Hobbit"
             ,"CroccWithAGlocc","JamesCharles","SexyGirl69","TheJoker","JokesOnYou22","MrDragon","DoctorSimplyStrange","Hank","Heisenberg",
         "420Josh","BlazeItGlazeIt","mOntero","snitch9ine","BobTheBuilder","32LivesEtc","PillTaker31xD","xXMeinKraftXx","GimmeTroll","Frog",
     "PopCornMike","LuvU","Weesly","PaNdorA","CringiestGuy","EmoKid","XXXshhh","waterdrinker83","AnUnluckyLuckyPerson","DaRealSanta","BigFootLazza"};
+               
+                            int number = rnd.Next(0, names.Count() - 1);
+               for(int i=1;i<=3;i++)
+                {
+                       <section class="review">
+                       
 
+                            <h3>@names[number]</h3>
+                        @for(int b=1;b<=stars;b++)
+                    {
+                                <img src="~/Images/star.png" style="height:35px;width:35px"/>
+                    }
+                        @{
+
+                            stars=rnd.Next(3,6);
+                            int nextnum = rnd.Next(0,names.Count()-1);
+                            while(nextnum==number)
+                            {
+                                nextnum = rnd.Next(0,names.Count()-1);
+                            }
+                            number = nextnum;
+                        }
+                        </section>
+                }
             }
         </div>
     </footer>
