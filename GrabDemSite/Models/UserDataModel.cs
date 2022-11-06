@@ -8,6 +8,7 @@ namespace GrabDemSite.Models
         [Key]
         public override string Id { get; set; }
         [Required(AllowEmptyStrings =false,ErrorMessage ="Username cannot be empty.")]
+        [StringLength(25, MinimumLength = 3)]
         public override string UserName { get; set; }
         [Required(AllowEmptyStrings = false)]
         [EmailAddress]
@@ -20,5 +21,6 @@ namespace GrabDemSite.Models
         [DataType(DataType.Currency)]
         public double MoneySpent { get; set; }
         public string WalletAddress { get; set;}
+        public int Level { get; set; }
     }
 }
