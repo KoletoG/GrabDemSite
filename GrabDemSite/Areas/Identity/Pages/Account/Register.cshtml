@@ -12,7 +12,10 @@
                 <input asp-for="Input.Email" class="user-box" autocomplete="username" aria-required="true" />
                 
                 <span asp-validation-for="Input.Email" class="invalidfield"></span>
-            </div>
+            </div> <div class="user-box">
+                <label asp-for="Input.UserName"></label><br />
+                <input asp-for="Input.UserName" class="user-box" autocomplete="username" aria-required="true" />
+                </div>
             <div class="user-box">
                 <label asp-for="Input.Password"></label><br />
                 <input asp-for="Input.Password" class="user-box" autocomplete="new-password" aria-required="true" />
