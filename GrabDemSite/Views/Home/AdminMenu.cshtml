@@ -1,6 +1,18 @@
-﻿<header>
+﻿@model UserDataModel
+header>
     <link rel="stylesheet" href="~/css/AdminMenu.css" />
 </header>
 <body>
+    @foreach(UserDataModel user in ViewBag.Users)
+    {
+        <section>
+            <h2>@user.Email</h2>
+            <h4>@user.WalletAddress</h4>
+            <form asp-controller="Home" asp-action="AdminMenu" asp-route-user="@user">
+                <label asp-for="Balance"></label>
+                <input type="number">
 
+            </form>
+        </section>
+    }
 </body>

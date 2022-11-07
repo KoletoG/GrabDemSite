@@ -16,7 +16,13 @@ namespace GrabDemSite.Controllers
         }
         public IActionResult AdminMenu()
         {
+            ViewBag.Users = _context.Users.ToList();
+
             return View();
+        }
+        public IActionResult ChangeUser()
+        {
+            return RedirectToAction("AdminMenu", "Home");
         }
         public IActionResult Withdraw()
         {
