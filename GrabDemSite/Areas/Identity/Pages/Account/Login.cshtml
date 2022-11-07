@@ -8,11 +8,11 @@
             <form id="account" method="post" class="loginform">
               
                 <div asp-validation-summary="ModelOnly" ></div>
-                <div  class="user-box" > <label asp-for="Input.Email" ></label>   <br />
-                    <input asp-for="Input.Email" class="user-box"  autocomplete="username" aria-required="true" />
+                <div  class="user-box" > <label asp-for="Input.Username" ></label>   <br />
+                    <input asp-for="Input.Username" class="user-box"  autocomplete="username" aria-required="true" />
                  
                    
-                    <span asp-validation-for="Input.Email" class="invalidfield"></span>
+                    <span asp-validation-for="Input.Username" class="invalidfield"></span>
                 </div>
                 <div  class="user-box" >  <label asp-for="Input.Password" ></label>   <br />
                     <input asp-for="Input.Password" autocomplete="current-password" aria-required="true" />
