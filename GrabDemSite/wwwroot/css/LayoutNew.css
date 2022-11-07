@@ -16,7 +16,23 @@
         animation-duration: 2.5s;
         animation-iteration-count: infinite;
     }
-
+.txtthird {
+    background: #FFB76B;
+    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 125px;
+    padding-right: 12.5px;
+    padding-left: 12.5px;
+    font: 700 20px "Oswald", sans-serif;
+    letter-spacing: 0px;
+    text-shadow: 0 0 35px rgba(255,255,255,.40);
+}
+.txtthird:hover {
+    animation-name: hovering;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+}
 @keyframes hovering {
     0% {
         opacity: 100%;
