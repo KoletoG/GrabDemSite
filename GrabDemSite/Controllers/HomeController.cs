@@ -14,6 +14,10 @@ namespace GrabDemSite.Controllers
             _logger = logger;
             _context = context;
         }
+        public IActionResult Withdraw()
+        {
+            return View();
+        }
         public IActionResult Index()
         {
             return View();
