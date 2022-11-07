@@ -20,6 +20,11 @@ namespace GrabDemSite.Controllers
 
             return View();
         }
+        public ActionResult Edit(string id)
+        {
+            UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
+            return View(user);
+        }
         public IActionResult ChangeUser()
         {
             return RedirectToAction("AdminMenu", "Home");

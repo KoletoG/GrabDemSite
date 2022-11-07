@@ -1,5 +1,5 @@
 ﻿@model UserDataModel
-header>
+<header>
     <link rel="stylesheet" href="~/css/AdminMenu.css" />
 </header>
 <body>
@@ -8,9 +8,8 @@ header>
         <section>
             <h2>@user.Email</h2>
             <h4>@user.WalletAddress</h4>
-            <form asp-controller="Home" asp-action="AdminMenu" asp-route-user="@user">
-                <label asp-for="Balance"></label>
-                <input type="number">
+            <form asp-controller="Home" asp-action="Edit" asp-route-id="@user.Id">
+                <input type="submit" value="Button" placeholder="Crip">
 
             </form>
         </section>
