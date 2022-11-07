@@ -1,8 +1,15 @@
 ﻿@model UserDataModel
+@{
+    UserDataModel user = ViewBag.User;
+}
 <link rel="stylesheet" href="~/css/Edit.css" />
-<label asp-for="UserName" class="txt"></label>
-@Html.DisplayFor(x=>x.UserName);
+<label asp-for="UserName" class="txt">@user.UserName</label>
+<label asp-for="WalletAddress" class="txt">@user.WalletAddress</label>
 </br>
-<label asp-for="Balance" class="txt"></label>
+<form asp-controller="Home" asp-action="Edit" asp-route-id="@user.Id" method="get">
+<label asp-for="Balance" class="txt">@user.Balance</label>
+<input asp-for="Balance" />
 </br>
-<label asp-for="Id" class="txt"></label>
+<label asp-for="MoneySpent" class="txt">@user.MoneySpent</label>
+<button type="submit">Submit</button>
+</form>

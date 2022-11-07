@@ -1,6 +1,7 @@
 ﻿using GrabDemSite.Data;
 using GrabDemSite.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 
 namespace GrabDemSite.Controllers
@@ -20,10 +21,21 @@ namespace GrabDemSite.Controllers
 
             return View();
         }
-        public ActionResult Edit(string id)
+        public IActionResult Edit(string id)
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
+            ViewBag.User = user;
             return View(user);
+        }
+        [HttpGet]
+        public IActionResult Edit(string id, double balance)
+        {
+            UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
+            user.Balance += balance;
+            user.MoneySpent += balance;
+            _context.Users.Update(user);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
         public IActionResult ChangeUser()
         {
