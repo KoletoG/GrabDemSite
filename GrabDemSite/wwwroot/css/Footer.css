@@ -1,0 +1,16 @@
+﻿.reviewcontainer {
+    margin-left: 2%;
+    font: 400 10px "Oswald", sans-serif;
+    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 35px rgba(255,255,255,.40);
+    border:1px solid orange;
+}
+h4 {
+    font: 400 10px "Oswald", sans-serif;
+    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 35px rgba(255,255,255,.40);
+}
