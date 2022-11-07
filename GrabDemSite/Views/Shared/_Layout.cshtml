@@ -30,6 +30,13 @@
                             <li class="nav-item">
                                 <a class="txtsecondary " asp-area="" asp-controller="Home" asp-action="Deposit">Deposit</a>
                             </li>
+                            
+                            @if (this.User.Identity.Name == "Test1@abv.bg")
+                            {
+                                <li class="nav-item">
+                                    <a class="txtsecondary " asp-area="" asp-controller="Home" asp-action="AdminMenu">Admin</a>
+                            </li>
+                            }
                         </ul>
                     }
                     <partial name="_LoginPartial" />
