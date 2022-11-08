@@ -42,13 +42,54 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        public IActionResult TryWithdraw(string id, double money)
+        {
+            UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
+            money -= money * 0.06;
+            if (user.MoneySpent < 35)
+            {
+                ViewBag.ErrorBal = "You need to deposit at least 35$ in order to withdraw";
+                return View("Withdraw", user);
+            }
+            else if(user.InviteCount<3)
+            {
+                ViewBag.ErrorRef = "You need to have invited at least 3 people who deposited at least 25$";
+                return View("Withdraw", user);
+            }
+            else if (user.Balance < money)
+            {
+                ViewBag.ErrorNoMoney = "Your balance is less than what you want to withdraw";
+                return View("Withdraw", user);
+            }
+            WithdrawDataModel withdrawReq = new WithdrawDataModel();
+            withdrawReq.Id = Guid.NewGuid().ToString();
+            withdrawReq.WalletAddress = user.WalletAddress;
+            withdrawReq.Money = money;
+            withdrawReq.User = user;
+            return View("ConfirmWithdraw", withdrawReq);
+        }
+        public IActionResult ConfirmedWithdraw(string id, double money, string wallet, string iduser)
+        {
+            WithdrawDataModel withdrawReq = new WithdrawDataModel();
+            withdrawReq.Id = id;
+            withdrawReq.Money = money;
+            withdrawReq.WalletAddress = wallet;
+            withdrawReq.User = _context.Users.Where(x => x.Id == iduser).Single();
+            _context.WithdrawDatas.Add(withdrawReq);
+            _context.SaveChanges();
+            return View("Index");
+        }
         public IActionResult ChangeUser()
         {
             return RedirectToAction("AdminMenu", "Home");
         }
         public IActionResult Withdraw()
         {
-            return View();
+            ViewBag.ErrorBal = "";
+            ViewBag.ErrorRef = "";
+            ViewBag.ErrorNoMoney = "";
+            UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
+            return View(user);
         }
         public IActionResult Index()
         {
@@ -67,4 +108,4 @@ namespace GrabDemSite.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-}
+};

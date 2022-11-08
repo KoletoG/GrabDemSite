@@ -1,4 +1,22 @@
-﻿<header>
+﻿@model UserDataModel
+<header>
     <link rel="stylesheet" href="~/css/Withdraw.css" />
-
 </header>
+@{
+    <body>
+    @ViewBag.ErrorBal
+    @ViewBag.ErrorRef
+    @ViewBag.ErrorNoMoney
+            <section class="message">
+                Withdraws happen in 1 to 3 days,
+                depending on which country you are in.
+                Fees - 6%
+            </section>
+            <form asp-controller="Home" asp-action="TryWithdraw" asp-route-id="@Model.Id">
+            <input type="number" name="money">
+            <br/>
+            <input type="submit">
+            </form>
+    
+    </body>
+}

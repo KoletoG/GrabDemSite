@@ -1,0 +1,13 @@
+﻿@model WithdrawDataModel
+<label asp-for="Money">
+    Money after withdraw: 
+    @Model.Money
+</label>
+<form asp-controller="Home" asp-action="ConfirmedWithdraw" asp-route-id="@Model.Id" asp-route-money="@Model.Money" 
+asp-route-wallet="@Model.WalletAddress" asp-route-iduser="@Model.User.Id">
+    <input type="submit" value="Confirm"/>
+</form>
+
+<form asp-controller="Home" asp-action="Withdraw">
+    <input type="submit" value="Decline"/>
+</form>

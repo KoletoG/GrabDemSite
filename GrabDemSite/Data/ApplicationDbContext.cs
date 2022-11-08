@@ -10,6 +10,6 @@ namespace GrabDemSite.Data
             : base(options)
         {
         }
-       
+        public DbSet<WithdrawDataModel> WithdrawDatas { get; set; }
     }
 }
