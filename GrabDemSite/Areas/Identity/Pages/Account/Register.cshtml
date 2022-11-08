@@ -28,6 +28,12 @@
                 
                 <span asp-validation-for="Input.ConfirmPassword" class="invalidpasswordconfirm"></span>
             </div>
+            
+            <div class="user-box">
+                <label asp-for="Input.InviteWithLink"></label><br />
+                <input asp-for="Input.InviteWithLink" class="user-box" autocomplete="new-password" aria-required="true" />
+                
+            </div>
             <div class="login-box">
             <button id="login-submit" type="submit" >Register</button></div>
         </form>

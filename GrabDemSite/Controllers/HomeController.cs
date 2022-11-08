@@ -27,6 +27,11 @@ namespace GrabDemSite.Controllers
             ViewBag.User = user;
             return View(user);
         }
+        /* Tasks need to give money, based on a commision - 0.15%?
+         * Level1 Users give 0.03% to the inviter
+         * Level2 Users give 0.02% to the inviter
+         * Level3 Users give 0.01% to the inviter
+         */
         [HttpGet]
         public IActionResult Edit(string id, double balance)
         {
@@ -52,6 +57,7 @@ namespace GrabDemSite.Controllers
 
         public IActionResult Deposit()
         {
+
             return View();
         }
 

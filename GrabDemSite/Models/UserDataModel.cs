@@ -15,6 +15,8 @@ namespace GrabDemSite.Models
         [EmailAddress]
         public override string Email { get; set; }
         public string InviteLink { get; set; }
+        [Required]
+        public string InviteWithLink { get; set; }
         [DataType(DataType.DateTime)]
         public DateTimeOffset DateCreated { get; set; }
         [DataType(DataType.Currency)]
@@ -25,11 +27,6 @@ namespace GrabDemSite.Models
         public double MoneySpent { get; set; }
         [Display(Name = "User's wallet address: ")]
         public string WalletAddress { get; set; }
-        public List<UserDataModel> Level1 { get; set; }
-
-        public List<UserDataModel> Level2 { get; set; }
-
-        public List<UserDataModel> Level3 { get; set; }
         public int InviteCount { get; set; }
     }
 }

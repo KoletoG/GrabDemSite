@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using GrabDemSite.Models;
+using GrabDemSite.Data;
 
 namespace GrabDemSite.Areas.Identity.Pages.Account
 {
@@ -32,13 +33,14 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<UserDataModel> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private ApplicationDbContext _context;
         public RegisterModel(
             UserManager<UserDataModel> userManager,
             IUserStore<UserDataModel> userStore,
             SignInManager<UserDataModel> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -46,6 +48,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -103,6 +106,8 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Display(Name ="Invite code")]
+            public string InviteWithLink { get; set; }
         }
 
 
@@ -127,6 +132,18 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 user.Balance = 0.00;
                 user.WalletAddress = "";
                 user.InviteCount = 0;
+                if(_context.Users.Where(x=>x.InviteLink==Input.InviteWithLink).SingleOrDefault()==default)
+                {
+                    throw new Exception("Invalid Invite code");
+                }
+                else
+                {
+                    UserDataModel user1 = _context.Users.Where(x => x.InviteLink == Input.InviteWithLink).Single();
+                    user1.InviteCount++;
+                    _context.Update(user1);
+                    _context.SaveChanges();
+                }
+                user.InviteWithLink = Input.InviteWithLink;
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
