@@ -21,11 +21,15 @@ namespace GrabDemSite.Models
         [Display(Name = "Current user's balance: ")]
         public double Balance { get; set; }
         [DataType(DataType.Currency)]
-        [Display(Name ="Money spent by user: ")]
+        [Display(Name = "Money spent by user: ")]
         public double MoneySpent { get; set; }
         [Display(Name = "User's wallet address: ")]
         public string WalletAddress { get; set; }
-        public int Level { get; set; }
+        public List<UserDataModel> Level1 { get; set; }
+
+        public List<UserDataModel> Level2 { get; set; }
+
+        public List<UserDataModel> Level3 { get; set; }
         public int InviteCount { get; set; }
     }
 }

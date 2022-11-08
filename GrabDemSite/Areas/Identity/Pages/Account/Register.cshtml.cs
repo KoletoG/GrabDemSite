@@ -126,7 +126,6 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 user.MoneySpent = 0.00;
                 user.Balance = 0.00;
                 user.WalletAddress = "";
-                user.Level = 1;
                 user.InviteCount = 0;
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
