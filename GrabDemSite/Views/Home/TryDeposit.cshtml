@@ -1,0 +1,6 @@
+﻿@model DepositDataModel
+<h1>@ViewBag.Wallet</h1>
+<form asp-controller="Home" asp-action="TryTheDeposit" asp-route-userid=@Model.User.Id asp-route-id="@Model.Id" asp-route-money="@Model.MoneyForDeposit">
+    <button type="submit">I made the payment</button>
+</form>
+<h4>Your payment could take up to several hours to be confirmed.</h4>

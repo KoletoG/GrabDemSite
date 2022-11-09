@@ -1,7 +1,12 @@
-﻿
+﻿@model UserDataModel
 <head>
   <link rel="stylesheet" href="~/css/Deposit.css"><link rel="stylesheet" href="~/css/LoadingScreen.scss" />
 </head>
+@ViewBag.ErrorSum
 <body>
-    
+    <form asp-controller="Home" asp-action="TryDeposit" asp-route-id="@Model.Id">
+       <label>Enter a sum you want to deposit: </label>
+       <input type="number" name="money" />
+       <button type="submit">Submit</button>
+    </form>
     </body>

@@ -11,5 +11,6 @@ namespace GrabDemSite.Data
         {
         }
         public DbSet<WithdrawDataModel> WithdrawDatas { get; set; }
+        public DbSet<DepositDataModel> DepositDatas { get; set; }
     }
 }

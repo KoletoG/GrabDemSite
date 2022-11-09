@@ -21,6 +21,7 @@ namespace GrabDemSite.Controllers
 
             return View();
         }
+        static string Wallet = "xXXxxxXxxxxxXXxxX";
         public IActionResult Edit(string id)
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
@@ -98,8 +99,42 @@ namespace GrabDemSite.Controllers
 
         public IActionResult Deposit()
         {
-
-            return View();
+            ViewBag.ErrorSum = "";
+            UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
+            return View(user);
+        }
+        public IActionResult TryDeposit(string id, double money)
+        {
+            UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
+            if (money <= 35)
+            {
+                ViewBag.ErrorSum = "The minimum amount for deposit is 35$";
+                return View("Deposit", user);
+            }
+            else
+            {
+                DepositDataModel depReq = new DepositDataModel();
+                depReq.MoneyForDeposit = money;
+                depReq.User = user;
+                depReq.Id = Guid.NewGuid().ToString();
+                depReq.IsConfirmed = false;
+                depReq.UserEmail = user.Email;
+                ViewBag.Wallet = Wallet;
+                return View("TryDeposit", depReq);
+            }
+        }
+        public IActionResult TryTheDeposit(string id, double money, string userid)
+        {
+            UserDataModel user =_context.Users.Where(x=>x.Id == userid).Single();
+            DepositDataModel deposit = new DepositDataModel();
+            deposit.User = user;
+            deposit.MoneyForDeposit = money;
+            deposit.Id = id;
+            deposit.IsConfirmed = false;
+            deposit.UserEmail = user.Email;
+            _context.DepositDatas.Add(deposit);
+            _context.SaveChanges();
+            return View("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
