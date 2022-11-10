@@ -1,6 +1,6 @@
 ﻿@model WithdrawDataModel
 <label asp-for="Money">
-    Money after withdraw: 
+    Money for withdraw after fee: 
     @Model.Money
 </label>
 <form asp-controller="Home" asp-action="ConfirmedWithdraw" asp-route-id="@Model.Id" asp-route-money="@Model.Money" 

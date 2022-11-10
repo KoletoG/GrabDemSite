@@ -4,8 +4,8 @@
 </header>
 @{
     List<DepositDataModel> deposits = ViewBag.Orders;
-    
     List<WithdrawDataModel> withdraws = ViewBag.Withdraws;
+    
 }
 <body>
     @foreach(UserDataModel user in ViewBag.Users)
@@ -51,6 +51,9 @@
             @if(confirmW==false)
             {
                 <h5 style="color:red;">Pending withdraw</h5>
+                <form asp-controller="Home" asp-action="AdminWithdrawConfirm" asp-route-id="@user.WalletAddress">
+                    <button type="submit">Confirm Withdraw</button>
+                </form>
             }
             else
             {

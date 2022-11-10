@@ -1,1 +1,17 @@
-﻿@model List<WithdrawDataModel>
+﻿@model WithdrawDataModel
+@{
+    double sum = 0;
+    List<WithdrawDataModel> withdraws = ViewBag.Withdraws;
+    for(int i=0;i<withdraws.Count();i++)
+        {
+            sum += withdraws[i].Money;
+            
+        }
+        UserDataModel user = new UserDataModel();
+        user.WalletAddress = withdraws[0].WalletAddress;
+
+    }
+    <h5>Whole sum to withdraw: @sum</h5>
+    <form asp-controller="Home" asp-action="AdminWithdrawConfirmed" asp-route-id="@user.WalletAddress">
+        <button type="submit">Confirm these withdraws</button>
+    </form>

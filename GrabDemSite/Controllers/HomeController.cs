@@ -10,7 +10,7 @@ namespace GrabDemSite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private ApplicationDbContext _context;
-        static string Wallet = "xXXxxxXxxxxxXXxxX";
+        readonly string Wallet = "xXXxxxXxxxxxXXxxX";
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
@@ -19,7 +19,8 @@ namespace GrabDemSite.Controllers
         public IActionResult AdminMenu()
         {
             ViewBag.Users = _context.Users.ToList();
-            ViewBag.Orders = _context.DepositDatas.ToList();
+            ViewBag.Orders = _context.DepositDatas.ToList(); 
+            ViewBag.Withdraws = _context.WithdrawDatas.ToList();
             return View();
         }
         public IActionResult Edit(string id)
@@ -30,16 +31,37 @@ namespace GrabDemSite.Controllers
 
             return View(user);
         }
-        public IActionResult WithdrawResult(string id)
-        {
-            List<WithdrawDataModel> withdraws = _context.WithdrawDatas.Where(x => x.User.Id == id).ToList();
-            return View(withdraws);
-        }
         /* Tasks need to give money, based on a commision - 0.15%?
          * Level1 Users give 0.03% to the inviter
          * Level2 Users give 0.02% to the inviter
          * Level3 Users give 0.01% to the inviter
          */ 
+        public IActionResult AdminWithdrawConfirm(string wallet)
+        {
+            ViewBag.Withdraws = _context.WithdrawDatas.Where(x=>x.WalletAddress==wallet).ToList();
+            
+            return View();
+        }
+        public IActionResult ChangeWallet(string wallet)
+        {
+            UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
+            user.WalletAddress = wallet;
+            _context.Update(user);
+            _context.SaveChanges();
+            return View("Index");
+        }
+        public IActionResult AdminWithdrawConfirmed(string id)
+        {
+            List<WithdrawDataModel> withdraws = _context.WithdrawDatas.Where(x => x.User.Id == id).ToList();
+            for (int i=0;i< withdraws.Count();i++)
+            {
+                WithdrawDataModel withdraw = withdraws[i];
+                withdraw.IsConfirmed = true;
+                _context.Update(withdraw);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("AdminMenu", "Home");
+        }
         [HttpGet]
         public IActionResult Edit(string id, double balance)
         {
@@ -67,11 +89,6 @@ namespace GrabDemSite.Controllers
                 ViewBag.ErrorBal = "You need to deposit at least 35$ in order to withdraw";
                 return View("Withdraw", user);
             }
-            else if(user.InviteCount<3)
-            {
-                ViewBag.ErrorRef = "You need to have invited at least 3 people who deposited at least 25$";
-                return View("Withdraw", user);
-            }
             else if (user.Balance < money)
             {
                 ViewBag.ErrorNoMoney = "Your balance is less than what you want to withdraw";
@@ -87,13 +104,16 @@ namespace GrabDemSite.Controllers
         public IActionResult ConfirmedWithdraw(string id, double money, string wallet, string iduser)
         {
             WithdrawDataModel withdrawReq = new WithdrawDataModel();
+            UserDataModel user = _context.Users.Where(x => x.Id == iduser).Single();
             withdrawReq.Id = id;
             withdrawReq.Money = money;
             withdrawReq.DateCreated = DateTime.Now;
             withdrawReq.IsConfirmed = false;
-            withdrawReq.WalletAddress = wallet;
-            withdrawReq.User = _context.Users.Where(x => x.Id == iduser).Single();
+            withdrawReq.WalletAddress = "55555555555";
+            withdrawReq.User = user;
+            user.Balance -= money;
             _context.WithdrawDatas.Add(withdrawReq);
+            _context.Update(user);
             _context.SaveChanges();
             return View("Index");
         }
