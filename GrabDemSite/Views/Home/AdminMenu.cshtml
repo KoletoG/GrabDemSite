@@ -2,16 +2,38 @@
 <header>
     <link rel="stylesheet" href="~/css/AdminMenu.css" />
 </header>
+@{
+    List<DepositDataModel> deposits = ViewBag.Orders;
+}
 <body>
     @foreach(UserDataModel user in ViewBag.Users)
     {
+        bool confirm = true;
         <section>
             <h2>@user.Email</h2>
             <h4>@user.WalletAddress</h4>
             <form asp-controller="Home" asp-action="Edit" asp-route-id="@user.Id">
                 <input type="submit" value="Button" placeholder="Crip">
-
             </form>
+            @for(int i=0;i<deposits.Count();i++)
+            {
+                if (deposits[i].User.Id == user.Id)
+                {
+                    if(deposits[i].IsConfirmed==false)
+                    {
+                        confirm = false;
+                    }
+                }
+            }
+            @if(confirm==false)
+            {
+                <h5 style="color:red;">Not Confirmed</h5>
+            }
+            else
+            {
+                <h5 style="color:green">Confirmed</h5>
+            }
         </section>
+        confirm = true;
     }
 </body>

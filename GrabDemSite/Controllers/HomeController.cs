@@ -10,6 +10,7 @@ namespace GrabDemSite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private ApplicationDbContext _context;
+        static string Wallet = "xXXxxxXxxxxxXXxxX";
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
@@ -18,27 +19,33 @@ namespace GrabDemSite.Controllers
         public IActionResult AdminMenu()
         {
             ViewBag.Users = _context.Users.ToList();
-
+            ViewBag.Orders = _context.DepositDatas.ToList();
             return View();
         }
-        static string Wallet = "xXXxxxXxxxxxXXxxX";
         public IActionResult Edit(string id)
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
-            ViewBag.User = user;
+            ViewBag.Orders = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed==false).ToList();
             return View(user);
         }
         /* Tasks need to give money, based on a commision - 0.15%?
          * Level1 Users give 0.03% to the inviter
          * Level2 Users give 0.02% to the inviter
          * Level3 Users give 0.01% to the inviter
-         */
+         */ 
         [HttpGet]
         public IActionResult Edit(string id, double balance)
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
             user.Balance += balance;
             user.MoneySpent += balance;
+            List<DepositDataModel> deposits = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
+            for (int i=0;i<deposits.Count();i++)
+            {
+                DepositDataModel deposit = deposits[i];
+                deposit.IsConfirmed = true;
+                _context.Update(deposit);
+            }
             _context.Users.Update(user);
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -74,6 +81,8 @@ namespace GrabDemSite.Controllers
             WithdrawDataModel withdrawReq = new WithdrawDataModel();
             withdrawReq.Id = id;
             withdrawReq.Money = money;
+            withdrawReq.DateCreated = DateTime.Now;
+            withdrawReq.IsConfirmed = false;
             withdrawReq.WalletAddress = wallet;
             withdrawReq.User = _context.Users.Where(x => x.Id == iduser).Single();
             _context.WithdrawDatas.Add(withdrawReq);
@@ -117,7 +126,6 @@ namespace GrabDemSite.Controllers
                 depReq.MoneyForDeposit = money;
                 depReq.User = user;
                 depReq.Id = Guid.NewGuid().ToString();
-                depReq.IsConfirmed = false;
                 depReq.UserEmail = user.Email;
                 ViewBag.Wallet = Wallet;
                 return View("TryDeposit", depReq);
@@ -131,12 +139,12 @@ namespace GrabDemSite.Controllers
             deposit.MoneyForDeposit = money;
             deposit.Id = id;
             deposit.IsConfirmed = false;
+            deposit.DateCreated = DateTime.Now;
             deposit.UserEmail = user.Email;
             _context.DepositDatas.Add(deposit);
             _context.SaveChanges();
             return View("Index");
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

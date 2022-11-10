@@ -12,5 +12,7 @@ namespace GrabDemSite.Models
         [DataType(DataType.Currency)]
         public double MoneyForDeposit { get; set; }
         public bool IsConfirmed { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime DateCreated { get; set; }
     }
 }
