@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using GrabDemSite.Data;
 using GrabDemSite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +18,15 @@ namespace GrabDemSite.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<UserDataModel> _userManager;
         private readonly SignInManager<UserDataModel> _signInManager;
-
+        private ApplicationDbContext _context;
         public IndexModel(
             UserManager<UserDataModel> userManager,
-            SignInManager<UserDataModel> signInManager)
+            SignInManager<UserDataModel> signInManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         /// <summary>
@@ -78,7 +81,6 @@ namespace GrabDemSite.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
             await LoadAsync(user);
             return Page();
         }

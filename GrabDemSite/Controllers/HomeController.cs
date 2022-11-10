@@ -45,6 +45,11 @@ namespace GrabDemSite.Controllers
         public IActionResult ChangeWallet(string wallet)
         {
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
+            if (user.WalletAddress != null || user.WalletAddress!="" || String.IsNullOrEmpty(user.WalletAddress)==false)
+            {
+                ViewBag.ErrorCh = "You cannot change your wallet address.";
+                return View("Index");
+            }
             user.WalletAddress = wallet;
             _context.Update(user);
             _context.SaveChanges();
@@ -129,8 +134,10 @@ namespace GrabDemSite.Controllers
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             return View(user);
         }
+        // NEED ERROR PAGE WITH CUSTOM ERRORS
         public IActionResult Index()
         {
+            ViewBag.ErrorCh = "";
             return View();
         }
 

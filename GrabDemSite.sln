@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrabDemSite", "GrabDemSite\GrabDemSite.csproj", "{96D34399-6FF7-4367-A15A-81458F851646}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrabDemSite", "GrabDemSite\GrabDemSite.csproj", "{96D34399-6FF7-4367-A15A-81458F851646}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
