@@ -26,7 +26,14 @@ namespace GrabDemSite.Controllers
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
             ViewBag.Orders = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed==false).ToList();
+            ViewBag.Withdraws = _context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
+
             return View(user);
+        }
+        public IActionResult WithdrawResult(string id)
+        {
+            List<WithdrawDataModel> withdraws = _context.WithdrawDatas.Where(x => x.User.Id == id).ToList();
+            return View(withdraws);
         }
         /* Tasks need to give money, based on a commision - 0.15%?
          * Level1 Users give 0.03% to the inviter
@@ -40,6 +47,7 @@ namespace GrabDemSite.Controllers
             user.Balance += balance;
             user.MoneySpent += balance;
             List<DepositDataModel> deposits = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
+           
             for (int i=0;i<deposits.Count();i++)
             {
                 DepositDataModel deposit = deposits[i];
