@@ -109,7 +109,7 @@ namespace GrabDemSite.Controllers
             withdrawReq.Money = money;
             withdrawReq.DateCreated = DateTime.Now;
             withdrawReq.IsConfirmed = false;
-            withdrawReq.WalletAddress = "55555555555";
+            withdrawReq.WalletAddress = wallet;
             withdrawReq.User = user;
             user.Balance -= money;
             _context.WithdrawDatas.Add(withdrawReq);
