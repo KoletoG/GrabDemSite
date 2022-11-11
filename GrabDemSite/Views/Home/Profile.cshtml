@@ -1,0 +1,48 @@
+﻿@model UserDataModel
+@{
+    ViewData["Title"] = "Profile";
+}
+<link rel="stylesheet" href="~/css/UserLayout.css" />
+<h3>@ViewData["Title"]</h3>
+@{
+    <h1>@ViewBag.User</h1>
+        }
+        <h1>Your invite code: @Model.InviteLink</h1>
+@if(string.IsNullOrEmpty(Model.WalletAddress))
+{
+<div class="row">
+    <div class="col-md-6">
+        <form asp-controller="Home" asp-action="ChangeWallet">
+            <input name="wallet" type="text"/>
+            <button type="submit">Change wallet address</button>
+        </form>
+
+    </div>
+</div>
+}
+<div>
+    <h2>Level 1: </h2>
+        @foreach (UserDataModel userlv1 in ViewBag.Level1)
+        {
+            <h2>@userlv1.UserName</h2>
+        }
+
+    
+</div>
+<div>
+    <h2>Level 2: </h2>
+        @foreach (UserDataModel userlv2 in ViewBag.Level2)
+        {
+            <h2>@userlv2.UserName</h2>
+        }
+
+    
+</div>
+<div>
+    <h2>Level 3: </h2>
+        @foreach (UserDataModel userlv3 in ViewBag.Level3)
+        {
+            <h2>@userlv3.UserName</h2>
+        }
+
+</div>

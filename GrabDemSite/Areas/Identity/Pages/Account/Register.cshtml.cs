@@ -26,7 +26,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
     public class RegisterModel : PageModel
     {
         private Random rnd = new Random();
-        private static int count = 14140;
+        private static int count = 100000;
         private readonly SignInManager<UserDataModel> _signInManager;
         private readonly UserManager<UserDataModel> _userManager;
         private readonly IUserStore<UserDataModel> _userStore;
@@ -123,7 +123,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                count+=rnd.Next(1,999999);
+                count+=rnd.Next(1,500);
                 var user = CreateUser();
                 user.Id = Guid.NewGuid().ToString();
                 user.InviteLink = count.ToString();

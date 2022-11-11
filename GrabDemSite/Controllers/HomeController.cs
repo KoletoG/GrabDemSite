@@ -16,17 +16,56 @@ namespace GrabDemSite.Controllers
             _logger = logger;
             _context = context;
         }
+        public IActionResult Profile()
+        {
+            UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
+
+            List<UserDataModel> userslv1 = new List<UserDataModel>();
+            List<UserDataModel> userslv2 = new List<UserDataModel>();
+            List<UserDataModel> userslv3 = new List<UserDataModel>();
+            UserDataModel fakeUser = new UserDataModel();
+            fakeUser.UserName = "N/A";
+            userslv3.Add(fakeUser);
+            userslv1.Add(fakeUser);
+            userslv2.Add(fakeUser);
+            if (_context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefault() != default)
+            {
+                userslv1.Remove(fakeUser);
+                userslv1 = _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
+                ViewBag.Level1 = userslv1;
+                userslv1 = _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
+                if (_context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefault() != default)
+                {
+                    userslv2.Remove(fakeUser);
+                    for (int i = 0; i < userslv1.Count(); i++)
+                    {
+                        userslv2.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv1[i].InviteLink).ToList());
+                    }
+                    if(_context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefault() != default)
+                    {
+                        userslv3.Remove(fakeUser);
+                        for (int i = 0; i < userslv2.Count(); i++)
+                        {
+                            userslv3.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv2[i].InviteLink).ToList());
+                        }
+                    }
+                }
+            }
+            ViewBag.Level2 = userslv2;
+            ViewBag.Level3 = userslv3;
+            return View(user);
+        }
         public IActionResult AdminMenu()
         {
             ViewBag.Users = _context.Users.ToList();
-            ViewBag.Orders = _context.DepositDatas.ToList(); 
+            ViewBag.Orders = _context.DepositDatas.ToList();
             ViewBag.Withdraws = _context.WithdrawDatas.ToList();
             return View();
         }
         public IActionResult Edit(string id)
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
-            ViewBag.Orders = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed==false).ToList();
+            ViewBag.Orders = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
             ViewBag.Withdraws = _context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
 
             return View(user);
@@ -35,21 +74,16 @@ namespace GrabDemSite.Controllers
          * Level1 Users give 0.03% to the inviter
          * Level2 Users give 0.02% to the inviter
          * Level3 Users give 0.01% to the inviter
-         */ 
+         */
         public IActionResult AdminWithdrawConfirm(string wallet)
         {
-            ViewBag.Withdraws = _context.WithdrawDatas.Where(x=>x.WalletAddress==wallet).ToList();
-            
+            ViewBag.Withdraws = _context.WithdrawDatas.Where(x => x.WalletAddress == wallet).ToList();
+
             return View();
         }
         public IActionResult ChangeWallet(string wallet)
         {
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
-            if (user.WalletAddress != null || user.WalletAddress!="" || String.IsNullOrEmpty(user.WalletAddress)==false)
-            {
-                ViewBag.ErrorCh = "You cannot change your wallet address.";
-                return View("Index");
-            }
             user.WalletAddress = wallet;
             _context.Update(user);
             _context.SaveChanges();
@@ -58,7 +92,7 @@ namespace GrabDemSite.Controllers
         public IActionResult AdminWithdrawConfirmed(string id)
         {
             List<WithdrawDataModel> withdraws = _context.WithdrawDatas.Where(x => x.User.Id == id).ToList();
-            for (int i=0;i< withdraws.Count();i++)
+            for (int i = 0; i < withdraws.Count(); i++)
             {
                 WithdrawDataModel withdraw = withdraws[i];
                 withdraw.IsConfirmed = true;
@@ -74,8 +108,8 @@ namespace GrabDemSite.Controllers
             user.Balance += balance;
             user.MoneySpent += balance;
             List<DepositDataModel> deposits = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
-           
-            for (int i=0;i<deposits.Count();i++)
+
+            for (int i = 0; i < deposits.Count(); i++)
             {
                 DepositDataModel deposit = deposits[i];
                 deposit.IsConfirmed = true;
@@ -168,7 +202,7 @@ namespace GrabDemSite.Controllers
         }
         public IActionResult TryTheDeposit(string id, double money, string userid)
         {
-            UserDataModel user =_context.Users.Where(x=>x.Id == userid).Single();
+            UserDataModel user = _context.Users.Where(x => x.Id == userid).Single();
             DepositDataModel deposit = new DepositDataModel();
             deposit.User = user;
             deposit.MoneyForDeposit = money;
