@@ -12,6 +12,6 @@ namespace GrabDemSite.Models
         public int LevelOfTask { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime DateStarted { get; set; }
-
+        public bool NewAccount { get; set; }
     }
 }

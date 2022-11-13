@@ -4,6 +4,7 @@ using GrabDemSite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GrabDemSite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221112142922_ImageDataModel")]
+    partial class ImageDataModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,6 +52,24 @@ namespace GrabDemSite.Data.Migrations
                     b.ToTable("DepositDatas");
                 });
 
+            modelBuilder.Entity("GrabDemSite.Models.ImageDataModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Descrption")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Image")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ImageDatas");
+                });
+
             modelBuilder.Entity("GrabDemSite.Models.TaskDataModel", b =>
                 {
                     b.Property<string>("Id")
@@ -63,9 +83,6 @@ namespace GrabDemSite.Data.Migrations
 
                     b.Property<int>("LevelOfTask")
                         .HasColumnType("int");
-
-                    b.Property<bool>("NewAccount")
-                        .HasColumnType("bit");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

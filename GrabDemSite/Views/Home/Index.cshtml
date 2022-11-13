@@ -1,118 +1,59 @@
-﻿<head>
-    <link rel="stylesheet" href="~/css/Index.css">
+﻿@model TaskDataModel
+<head>
+    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true">
 </head>
 <body>
-
-    <section class="section-tours" id="section-tours">
-        <div class="u-center-text u-margin-bottom-big">
-            <h2 class="heading-secondary">
-                Daily tasks
-            </h2>
-        </div>
-
-        <div class="row">
-            <div class="col-1-of-3">
-                <div class="card">
-                    <div class="card__side card__side--front">
-                        <div class="card__picture card__picture--1">
-                            &nbsp;
-                        </div>
-                        <h4 class="card__heading">
-                            <span class="card__heading-span card__heading-span--1">text da pishe kolio</span>
-                        </h4>
-                        <div class="card__details">
-                            <ul>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card__side card__side--back card__side--back-1">
-                        <div class="card__cta">
-                            <div class="card__price-box">
-                                <p class="card__price-only">Simple as that</p>
-                                <p class="card__price-value">Your reward is awaiting</p>
-                            </div>
-                            <a href="#popup" class="btn btn--white">Claim reward</a>
-                        </div>
-                    </div>
+    @{
+        TaskDataModel task = Model;
+        UserDataModel user = ViewBag.User;
+        if (task.NewAccount== false)
+        {
+            DateTime now = task.DateStarted;
+            if (DateTime.UtcNow > now.AddDays(1) && task.Count > 0)
+            {
+                <h2>The bigger the balance, the bigger the amount of mini-miners you are going to use</h2>
+                <h2>Every deposit gives you 5 mines, each mine gives you apx. 15% of your balance</h2>
+           <form asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now">
+                    <label>Your blockchain to mine in this day: </label>
+                    <br />
+                    <h3>@ViewBag.BlockChain</h3>
+                    <button type="submit">Start mining</button>
+                </form>
+                <div class="u-center-text u-margin-top-huge">
+                    <a href="#" class="btn btn--green">Buy a part of a miner</a>
                 </div>
-            </div>
+                @ViewBag.ErrorCh
+    <h3>Your balance: @user.Balance $</h3>
+            }
+            else if(task.Count>0)
+            {
+                TimeSpan remaining = task.DateStarted.AddDays(1) - DateTime.UtcNow;
+                <h4>Time remaining till next mine: @remaining</h4>
+                <h5>There is a cooldown between minings because there are currently @ViewBag.Count users using the mini-miners</h5>
+                <h6>For every person you invited who deposited 35$, you get +1 mine free</h6>
+                <h3>Mines remaining: @task.Count</h3>
+                <h3>Your balance: @user.Balance $</h3>
+            }
+            else
+            {
+                <h3>You need to deposit or invite people who deposit in order to get more mines.</h3>
+            }
+        }
+        else
+        {
+                <h2>The bigger the balance, the bigger the amount of mini-miners you are going to use</h2>
+            <form asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now">
+                    <label>Your blockchain to mine in this day: </label>
+                    <br />
+                    <h3>@ViewBag.BlockChain</h3>
+                    <button type="submit">Start mining</button>
+                </form>
 
-
-            <div class="col-1-of-3">
-                <div class="card">
-                    <div class="card__side card__side--front">
-                        <div class="card__picture card__picture--2">
-                            &nbsp;
-                        </div>
-                        <h4 class="card__heading">
-                            <span class="card__heading-span card__heading-span--2">text da pishe kolio</span>
-                        </h4>
-                        <div class="card__details">
-                            <ul>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="card__side card__side--back card__side--back-2">
-                        <div class="card__cta">
-                            <div class="card__price-box">
-                                <p class="card__price-only">Simple as that</p>
-                                <p class="card__price-value">Your reward is awaiting</p>
-                            </div>
-                            <a href="#popup" class="btn btn--white">Claim reward</a>
-                        </div>
-                    </div>
+                <div class="u-center-text u-margin-top-huge">
+                    <a href="#" class="btn btn--green">Buy a part of a miner</a>
                 </div>
-            </div>
+    <h3>Your balance: @user.Balance $</h3>
+        }
+    }
 
-
-            <div class="col-1-of-3">
-                <div class="card">
-                    <div class="card__side card__side--front">
-                        <div class="card__picture card__picture--3">
-                            &nbsp;
-                        </div>
-                        <h4 class="card__heading">
-                            <span class="card__heading-span card__heading-span--3">text da pishe kolio</span>
-                        </h4>
-                        <div class="card__details">
-                            <ul>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                                <li>text da pishe kolio</li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="card__side card__side--back card__side--back-3">
-                        <div class="card__cta">
-                            <div class="card__price-box">
-                                <p class="card__price-only">Simple as that</p>
-                                <p class="card__price-value">Your reward is awaiting</p>
-                            </div>
-                            <a href="#popup" class="btn btn--white">Claim reward</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="u-center-text u-margin-top-huge">
-            <a href="#" class="btn btn--green">Deposit</a>
-        </div>
-    </section>
-
-    @ViewBag.ErrorCh
 </body>

@@ -95,7 +95,7 @@ namespace GrabDemSite.Controllers
             user.WalletAddress = wallet;
             _context.Update(user);
             _context.SaveChanges();
-            return View("Index");
+            return RedirectToAction("Index");
         }
         [Authorize]
         public IActionResult AdminWithdrawConfirmed(string id)
@@ -118,7 +118,10 @@ namespace GrabDemSite.Controllers
             user.Balance += balance;
             user.MoneySpent += balance;
             List<DepositDataModel> deposits = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
-
+            UserDataModel user1 = _context.Users.Where(x => x.InviteLink == user.InviteWithLink).Single();
+            TaskDataModel task = _context.TaskDatas.Where(x => x.User.Id == user1.Id).Single();
+            task.Count++;
+            _context.Update(task);
             for (int i = 0; i < deposits.Count(); i++)
             {
                 DepositDataModel deposit = deposits[i];
@@ -134,9 +137,9 @@ namespace GrabDemSite.Controllers
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
             money -= money * 0.06;
-            if (user.MoneySpent < 35)
+            if (user.MoneySpent < 25)
             {
-                ViewBag.ErrorBal = "You need to deposit at least 35$ in order to withdraw";
+                ViewBag.ErrorBal = "You need to deposit at least 25$ in order to withdraw";
                 return View("Withdraw", user);
             }
             else if (user.Balance < money)
@@ -167,7 +170,7 @@ namespace GrabDemSite.Controllers
             _context.WithdrawDatas.Add(withdrawReq);
             _context.Update(user);
             _context.SaveChanges();
-            return View("Index");
+            return RedirectToAction("Index");
         }
         [Authorize]
         public IActionResult ChangeUser()
@@ -187,8 +190,44 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            ViewBag.ErrorCh = "";
-            return View();
+            ViewBag.ErrorCh = ""; 
+            UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
+            TaskDataModel task = _context.TaskDatas.Where(x => x.User.Id == user.Id).Single();
+            ViewBag.User = user;
+            string block = RandomizeBlockchain();
+            int countUsers = _context.Users.ToList().Count() + 8634;
+            ViewBag.Count = countUsers;
+            ViewBag.BlockChain = block;
+            return View(task);
+        }
+        [Authorize]
+        public IActionResult Mine(DateTime date)
+        {
+            UserDataModel u = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
+            TaskDataModel t = _context.TaskDatas.Where(x => x.User.Id == u.Id).Single();
+            if(u.Balance==0)
+            {
+                return RedirectToAction("Deposit");
+            }
+            t.DateStarted = date;
+            t.Count--;
+            t.NewAccount = false;
+            _context.Update(t);
+            u.Balance += u.Balance * 0.15;
+            _context.Update(u);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        private string RandomizeBlockchain()
+        {
+            Random rndw = new Random();
+            string x = "";
+            string alphnum = "1234567890abcdefghijklmnopqrstuvwxyz";
+            for (int i=1;i<=65;i++)
+            {
+                x += alphnum[rndw.Next(0, alphnum.Length)];
+            }
+            return x;
         }
         [Authorize]
         public IActionResult CompletedTask()
@@ -199,17 +238,22 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Deposit()
         {
+            
             ViewBag.ErrorSum = "";
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
+            if(string.IsNullOrEmpty(user.WalletAddress))
+            {
+                return RedirectToAction("Profile");
+            }
             return View(user);
         }
         [Authorize]
         public IActionResult TryDeposit(string id, double money)
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
-            if (money <= 35)
+            if (money <= 25)
             {
-                ViewBag.ErrorSum = "The minimum amount for deposit is 35$";
+                ViewBag.ErrorSum = "The minimum amount for deposit is 25$";
                 return View("Deposit", user);
             }
             else
@@ -237,6 +281,7 @@ namespace GrabDemSite.Controllers
                 return View("TryDeposit", depReq);
             }
         }
+
         [Authorize]
         public IActionResult TryTheDeposit(string id, double money, string userid)
         {
