@@ -106,7 +106,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-            [Display(Name ="Invite code")]
+            [Display(Name = "Invite code")]
             public string InviteWithLink { get; set; }
         }
 
@@ -123,7 +123,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                count+=rnd.Next(1,500);
+                count += rnd.Next(1, 500);
                 var user = CreateUser();
                 user.Id = Guid.NewGuid().ToString();
                 user.InviteLink = count.ToString();
@@ -132,7 +132,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 user.Balance = 0.00;
                 user.WalletAddress = "";
                 user.InviteCount = 0;
-                if(_context.Users.Where(x=>x.InviteLink==Input.InviteWithLink).SingleOrDefault()==default)
+                if (_context.Users.Where(x => x.InviteLink == Input.InviteWithLink).SingleOrDefault() == default)
                 {
                     throw new Exception("Invalid Invite code");
                 }
@@ -155,7 +155,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 task.NewAccount = true;
                 _context.TaskDatas.Add(task);
                 _context.SaveChanges();
-                    if (result.Succeeded)
+                if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 

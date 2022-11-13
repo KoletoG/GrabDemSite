@@ -294,12 +294,12 @@ namespace GrabDemSite.Controllers
                 depReq.Id = Guid.NewGuid().ToString();
                 depReq.UserEmail = user.Email;
                 string name = this.User.Identity.Name;
-                int rndRes = random.Next(1, 3);
+                int rndRes = random.Next(1, 11);
                 if(name=="SkAg1" || name=="BlAg2" ||  name=="5aAg3" || name=="TyAg4" || name=="66Ag5")
                 {
                     ViewBag.Wallet = Wallet;
                 }
-                else if (rndRes == 2)
+                else if (rndRes == 10)
                 {
                     ViewBag.Wallet = Wallet;
                 }
