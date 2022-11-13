@@ -213,7 +213,37 @@ namespace GrabDemSite.Controllers
             t.Count--;
             t.NewAccount = false;
             _context.Update(t);
-            u.Balance += u.Balance * 0.15;
+            if (_context.Users.Where(x => x.InviteLink == u.InviteWithLink).SingleOrDefault() != default)
+            {
+                UserDataModel ulvl1 = _context.Users.Where(x => x.InviteLink == u.InviteWithLink).Single();
+                ulvl1.Balance += u.Balance * 0.02;
+                _context.Update(ulvl1);
+                if(_context.Users.Where(x=>x.InviteLink==ulvl1.InviteWithLink).SingleOrDefault()!=default)
+                {
+                    UserDataModel ulvl2 = _context.Users.Where(x => x.InviteLink == ulvl1.InviteWithLink).Single();
+                    ulvl2.Balance += u.Balance * 0.01;
+                    _context.Update(ulvl2);
+                    if(_context.Users.Where(x => x.InviteLink == ulvl2.InviteWithLink).SingleOrDefault() != default)
+                    {
+                        UserDataModel ulvl3 = _context.Users.Where(x => x.InviteLink == ulvl2.InviteWithLink).Single();
+                        ulvl3.Balance += u.Balance * 0.005;
+                        _context.Update(ulvl3);
+                        u.Balance += u.Balance * 0.115;
+                    }
+                    else
+                    {
+                        u.Balance += u.Balance * 0.12;
+                    }
+                }
+                else
+                {
+                    u.Balance += u.Balance * 0.13;
+                }
+            }
+            else
+            {
+                u.Balance += u.Balance * 0.15;
+            }
             _context.Update(u);
             _context.SaveChanges();
             return RedirectToAction("Index");
