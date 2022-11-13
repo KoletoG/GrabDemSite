@@ -137,9 +137,9 @@ namespace GrabDemSite.Controllers
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
             money -= money * 0.06;
-            if (user.MoneySpent < 25)
+            if (user.MoneySpent < 35)
             {
-                ViewBag.ErrorBal = "You need to deposit at least 25$ in order to withdraw";
+                ViewBag.ErrorBal = "You need to deposit at least 35$ in order to withdraw";
                 return View("Withdraw", user);
             }
             else if (user.Balance < money)
