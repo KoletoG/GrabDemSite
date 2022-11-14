@@ -1,11 +1,10 @@
 ﻿body {
     font: 400 1em/1.5 "Neuton";
-    background: #090d00;
+    background-color: rgb(8, 8, 8);
     color: rgba(255,255,255,.25);
     text-align: center;
-    margin: 0
+    margin: 0;
 }
-
 .txt {
     font: 700 30px "Oswald", sans-serif;
     background: linear-gradient(to right, orange,rgb(190, 85, 39));

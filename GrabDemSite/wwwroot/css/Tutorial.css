@@ -5,6 +5,12 @@
     text-align: center;
     margin: 0;
 }
-.but{
-    
+h1 {
+    color: orange;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+h2 {
+    color: white;
+    font-family: 'Agency FB';
+
 }

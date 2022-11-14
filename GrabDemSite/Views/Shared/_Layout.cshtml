@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GrabDemSite</title>
-    <link rel="stylesheet" href="~/css/LayoutNew.css" />
-    <link rel="stylesheet" href="~/css/Footer.css" />
+    <link rel="stylesheet" href="~/css/LayoutNew.css"asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Footer.css"asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GrabDemSite.styles.css" asp-append-version="true" />
@@ -30,7 +30,9 @@
                             <li class="nav-item">
                                 <a class="txtsecondary " asp-area="" asp-controller="Home" asp-action="Deposit">Deposit</a>
                             </li>
-                            
+                            <li class="nav-item">
+                                <a class="txtsecondary " asp-area="" asp-controller="Home" asp-action="Tutorial">About</a>
+                            </li>
                             @if (this.User.Identity.Name == "Test1")
                             {
                                 <li class="nav-item">

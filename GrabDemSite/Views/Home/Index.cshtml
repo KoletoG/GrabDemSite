@@ -1,6 +1,7 @@
 ﻿@model TaskDataModel
 <head>
     <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     @{
@@ -17,11 +18,8 @@
                     <label>Your blockchain to mine in this day: </label>
                     <br />
                     <h3>@ViewBag.BlockChain</h3>
-                    <button type="submit">Start mining</button>
+                    <button type="submit" class="btnstart">Use the miner</button>
                 </form>
-                <div class="u-center-text u-margin-top-huge">
-                    <a href="#" class="btn btn--green">Buy a part of a miner</a>
-                </div>
                 @ViewBag.ErrorCh
     <h3>Your balance: @user.Balance $</h3>
             }
@@ -36,7 +34,7 @@
             }
             else
             {
-                <h3>You need to deposit or invite people who deposit in order to get more mines.</h3>
+                <h3>You need to deposit or invite people who deposit in order to get more mini-mines.</h3>
             }
         }
         else
@@ -49,9 +47,6 @@
                     <button type="submit">Start mining</button>
                 </form>
 
-                <div class="u-center-text u-margin-top-huge">
-                    <a href="#" class="btn btn--green">Buy a part of a miner</a>
-                </div>
     <h3>Your balance: @user.Balance $</h3>
         }
     }

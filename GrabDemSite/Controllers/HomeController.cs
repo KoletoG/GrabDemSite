@@ -77,6 +77,10 @@ namespace GrabDemSite.Controllers
 
             return View(user);
         }
+        public IActionResult Tutorial()
+        {
+            return View();
+        }
         /* Tasks need to give money, based on a commision - 0.3%?
          * Level1 Users give 0.03% to the inviter
          * Level2 Users give 0.02% to the inviter
@@ -91,6 +95,10 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult ChangeWallet(string wallet)
         {
+            if(!wallet.StartsWith('T') || wallet.Length!=34)
+            {
+                return RedirectToAction("Profile");
+            }
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             user.WalletAddress = wallet;
             _context.Update(user);
