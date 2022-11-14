@@ -7,13 +7,14 @@
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     letter-spacing: 0px;
     text-decoration: none;
-    background-color:rgb(30,30,30);
+    background-color:black;
+    border:2px solid orange;
     background-clip:border-box;
     border-radius:9px;
 }
     .txtsecondary:hover {
         animation-name: hovering;
-        animation-duration: 2.5s;
+        animation-duration: 1.5s;
         animation-iteration-count: infinite;
     }
 .txtthird {

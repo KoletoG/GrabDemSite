@@ -4,8 +4,7 @@
 <link rel="stylesheet" href="~/css/LoginRegisterForm.css" />
 
 <div class="alignreg">
-        <form id="registerForm" class="loginform" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            
+        <form id="registerForm" class="loginform" asp-route-returnUrl="@Model.ReturnUrl" method="post">    
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="user-box">
                 <label asp-for="Input.Email"></label><br />

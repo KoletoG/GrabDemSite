@@ -5,6 +5,67 @@
     text-align: center;
     margin: 0;
 }
-.but{
-    
+.message{
+    color:grey;
+    font-size:1.2em;
+    font-style:italic;
+    font-weight:600;
+    margin-bottom:2em;
+}
+.button1{
+
+    font-family: 'Agency FB';
+    font-weight: 600;
+    background-color: orange;
+    color: black;
+    font-size: 2.3em;
+    border-radius: 15px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-family: 'Agency FB';
+    font-weight: 600;
+    background-color: orange;
+    color: black;
+    font-size: 2.3em;
+    border-radius: 15px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    margin-bottom: 2.4em;
+}
+.txtwith {
+    font-size: 2.2em;
+    color: white;
+    font-weight: 600;
+    font-family: 'Agency FB';
+    text-shadow: 1px 1px 2px orange;
+    margin-bottom: 0.3em;
+}
+.button1:hover {
+    animation-name: loadbutton;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+
+}
+@keyframes loadbutton {
+    0% {
+        background-color: orange;
+    }
+
+    100% {
+        background-color: black;
+        color: orange;
+        border: 2px solid orange;
+    }
+}
+.inputmon{
+    font-size:1.3em;
+    text-align:center;
+    max-width:3em;
+    font-family:'Agency FB';
+    font-weight:bolder;
+    background-color:white;
+    border-radius:12px;
+    margin-bottom:2em;
+    color:orange;
+    text-shadow:1px 1px 2px black;
 }

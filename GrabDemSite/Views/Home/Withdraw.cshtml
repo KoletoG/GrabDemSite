@@ -13,10 +13,11 @@
                 depending on which country you are in.
                 Fees - 6%
             </section>
+            <label class="txtwith">Enter a sum you want to withdraw:</label>
             <form asp-controller="Home" asp-action="TryWithdraw" asp-route-id="@Model.Id">
-            <input type="number" name="money">
+            <input type="number" name="money" class="inputmon">
             <br/>
-            <input type="submit">
+            <button type="submit" class="button1">Submit</button>
             </form>
     
     <h3>Your balance: @Model.Balance $</h3>

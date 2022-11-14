@@ -95,10 +95,6 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult ChangeWallet(string wallet)
         {
-            if(!wallet.StartsWith('T') || wallet.Length!=34)
-            {
-                return RedirectToAction("Profile");
-            }
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             user.WalletAddress = wallet;
             _context.Update(user);

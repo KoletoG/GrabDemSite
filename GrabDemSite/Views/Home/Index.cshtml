@@ -12,12 +12,13 @@
             DateTime now = task.DateStarted;
             if (DateTime.UtcNow > now.AddDays(1) && task.Count > 0)
             {
-                <h2>The bigger the balance, the bigger the amount of mini-miners you are going to use</h2>
-                <h2>Every deposit gives you 5 mines, each mine gives you apx. 15% of your balance</h2>
+                <h2>The bigger the balance, the bigger the amount of mini-miners you are going to use.
+                <br/>
+                Every deposit gives you 5 mines, each mine gives you approx. 15% of your balance.</h2>
            <form asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now">
-                    <label>Your blockchain to mine in this day: </label>
+                    <label id="tip">Miner will be mining in this blockchain: </label>
                     <br />
-                    <h3>@ViewBag.BlockChain</h3>
+                    <h5>@ViewBag.BlockChain</h5>
                     <button type="submit" class="btnstart">Use the miner</button>
                 </form>
                 @ViewBag.ErrorCh
@@ -29,12 +30,12 @@
                 <h4>Time remaining till next mine: @remaining</h4>
                 <h5>There is a cooldown between minings because there are currently @ViewBag.Count users using the mini-miners</h5>
                 <h6>For every person you invited who deposited 35$, you get +1 mine free</h6>
-                <h3>Mines remaining: @task.Count</h3>
-                <h3>Your balance: @user.Balance $</h3>
+                <h5>Mines remaining: @task.Count</h5>
+                <h5>Your balance: @user.Balance $</h5>
             }
             else
             {
-                <h3>You need to deposit or invite people who deposit in order to get more mini-mines.</h3>
+                <h5>You need to deposit or invite people who deposit in order to get more mini-mines.</h5>
             }
         }
         else
@@ -43,7 +44,7 @@
             <form asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now">
                     <label>Your blockchain to mine in this day: </label>
                     <br />
-                    <h3>@ViewBag.BlockChain</h3>
+                    <h5>@ViewBag.BlockChain</h5>
                     <button type="submit">Start mining</button>
                 </form>
 
