@@ -29,6 +29,7 @@ namespace GrabDemSite.Controllers
             List<UserDataModel> userslv3 = new List<UserDataModel>();
             UserDataModel fakeUser = new UserDataModel();
             fakeUser.UserName = "N/A";
+            fakeUser.MoneySpent = 0;
             userslv3.Add(fakeUser);
             userslv1.Add(fakeUser);
             userslv2.Add(fakeUser);
@@ -36,6 +37,7 @@ namespace GrabDemSite.Controllers
             {
                 userslv1.Remove(fakeUser);
                 userslv1 = _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
+                userslv1.OrderBy(x => x.MoneySpent);
                 ViewBag.Level1 = userslv1;
                 userslv1 = _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
                 if (_context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefault() != default)
@@ -44,6 +46,7 @@ namespace GrabDemSite.Controllers
                     for (int i = 0; i < userslv1.Count(); i++)
                     {
                         userslv2.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv1[i].InviteLink).ToList());
+                        userslv2.OrderBy(x => x.MoneySpent);
                     }
                     if (_context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefault() != default)
                     {
@@ -51,6 +54,7 @@ namespace GrabDemSite.Controllers
                         for (int i = 0; i < userslv2.Count(); i++)
                         {
                             userslv3.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv2[i].InviteLink).ToList());
+                            userslv2.OrderBy(x => x.MoneySpent);
                         }
                     }
                 }
@@ -95,6 +99,10 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult ChangeWallet(string wallet)
         {
+            if(!wallet.StartsWith('1') && !wallet.StartsWith('3') && !wallet.StartsWith("bc1"))
+            {
+                return RedirectToAction("Profile");
+            }
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             user.WalletAddress = wallet;
             _context.Update(user);
@@ -199,7 +207,8 @@ namespace GrabDemSite.Controllers
             TaskDataModel task = _context.TaskDatas.Where(x => x.User.Id == user.Id).Single();
             ViewBag.User = user;
             string block = RandomizeBlockchain();
-            int countUsers = _context.Users.ToList().Count() + 8634;
+            Random rnd = new Random();
+            int countUsers = _context.Users.ToList().Count() + rnd.Next(300,1200);
             ViewBag.Count = countUsers;
             ViewBag.BlockChain = block;
             return View(task);

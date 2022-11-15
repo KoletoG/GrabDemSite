@@ -15,3 +15,9 @@ h2 {
     font-family: 'Agency FB';
     margin-bottom:3em;
 }
+#farm{
+    max-width:50em;
+    max-height:30em;
+    border:5px solid orange;
+    filter:grayscale();
+}

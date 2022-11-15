@@ -1,7 +1,10 @@
 ﻿@model DepositDataModel
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<h1>@ViewBag.Wallet</h1>
+<link rel="stylesheet" href="~/css/TryDeposit.css" asp-append-version="true" />
+<label class="txtwith1">Send to this wallet: </label>
+<br />
+<label class="txtwith">@ViewBag.Wallet</label>
 <form asp-controller="Home" asp-action="TryTheDeposit" asp-route-userid=@Model.User.Id asp-route-id="@Model.Id" asp-route-money="@Model.MoneyForDeposit">
-    <button type="submit">I made the payment</button>
+    <button type="submit" class="button1">I made the payment</button>
 </form>
 <h4>Your payment could take up to several hours to be confirmed.</h4>

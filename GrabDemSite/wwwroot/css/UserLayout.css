@@ -5,3 +5,73 @@
     text-align: center;
     margin: 0;
 }
+h2{
+    color:orange;
+    font-family:'Agency FB';
+    font-weight:bold;
+}
+h4 {
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-shadow: 1px 1px 1px white;
+    font-size:3em;
+}
+h1 {
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-shadow: 1px 1px 2px orange;
+}
+h6 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color:grey;
+    font-style:italic;
+    font-size:2em;
+}
+.inputmon {
+    font-size: 1.3em;
+    text-align: center;
+    width:18em;
+    font-family: 'Agency FB';
+    font-weight: bolder;
+    background-color: white;
+    border-radius: 12px;
+    margin-bottom: 2em;
+    color: orange;
+    text-shadow: 1px 1px 2px black;
+    text-align:center;
+}
+#warn {
+    color: red;
+    font-size: 1.3em;
+    font-family: Cambria;
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 1px 1px 2px darkred;
+    margin-bottom:0.5em;
+}
+.button1 {
+    font-family: 'Agency FB';
+    font-weight: 600;
+    background-color: orange;
+    color: black;
+    font-size: 2.3em;
+    border-radius: 15px;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+}
+    .button1:hover {
+        animation-name: loadbutton;
+        animation-duration: 1s;
+        animation-fill-mode: forwards;
+    }   
+@keyframes loadbutton {
+    0% {
+        background-color: orange;
+    }
+
+    100% {
+        background-color: black;
+        color: orange;
+        border: 2px solid orange;
+    }
+}

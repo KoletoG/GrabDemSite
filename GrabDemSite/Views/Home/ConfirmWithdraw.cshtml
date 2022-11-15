@@ -1,14 +1,17 @@
 ﻿@model WithdrawDataModel
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<label asp-for="Money">
-    Money for withdraw after fee: 
+<link rel="stylesheet" href="~/css/Withdraw.css" asp-append-version="true"/>
+<label asp-for="Money" id="moneyafterwithdraw">
+    Money for withdraw after fee:
+    
+    <br />
     @Model.Money
 </label>
 <form asp-controller="Home" asp-action="ConfirmedWithdraw" asp-route-id="@Model.Id" asp-route-money="@Model.Money" 
 asp-route-wallet="@Model.WalletAddress" asp-route-iduser="@Model.User.Id">
-    <input type="submit" value="Confirm"/>
+    <input type="submit"class="button1" value="Confirm"/>
 </form>
 
 <form asp-controller="Home" asp-action="Withdraw">
-    <input type="submit" value="Decline"/>
+    <input type="submit"class="button1" value="Decline"/>
 </form>

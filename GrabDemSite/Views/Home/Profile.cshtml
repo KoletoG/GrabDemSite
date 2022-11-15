@@ -1,39 +1,35 @@
 ﻿@model UserDataModel
-@{
-    ViewData["Title"] = "Profile";
-}
+<h6>Your profile</h6>
 <link rel="stylesheet" href="~/css/UserLayout.css" asp-append-version="true" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <h3>@ViewData["Title"]</h3>
 @{
-            string name = this.User.Identity.Name;
+    string name = this.User.Identity.Name;
     <h1>@ViewBag.User</h1>
-        }
-        <h1>Your invite code: @Model.InviteLink</h1>
-@if(string.IsNullOrEmpty(Model.WalletAddress))
-{
-<div class="row">
-    <div class="col-md-6">
-        You can only change your wallet once!
-        <form asp-controller="Home" asp-action="ChangeWallet">
-            <input name="wallet" type="text"/>
-            <button type="submit">Change wallet address</button>
-        </form>
-
-    </div>
-</div>
 }
-    <h3>Your balance: @Model.Balance $</h3>
+<h4>Your invite code: @Model.InviteLink</h4>
+@if (string.IsNullOrEmpty(Model.WalletAddress))
+{
+    <label id="warn">You can only change your wallet once!</label>
+    <form asp-controller="Home" asp-action="ChangeWallet">
+        <input name="wallet" class="inputmon" placeholder="BTC Address" type="text" />
+        <br />
+        <button type="submit" class="button1">Change wallet address</button>
+    </form>
+}
+<h3>Your balance: @Model.Balance.ToString("0.00") $</h3>
 <div>
     <h1>Level 1: </h1>
-        @foreach (UserDataModel userlv1 in ViewBag.Level1)
-        {
+
+    @foreach (UserDataModel userlv1 in ViewBag.Level1)
+    {
+
         <h2>@userlv1.UserName</h2>
-        if(userlv1.MoneySpent<=35)
+        if (userlv1.MoneySpent <= 35)
         {
             <h3>0$</h3>
         }
-        else if (userlv1.MoneySpent>=35 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+        else if (userlv1.MoneySpent >= 35 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
         {
             <h3>35$</h3>
         }
@@ -43,17 +39,18 @@
         }
     }
 
-    
+
 </div>
 <div>
     <h1>Level 2: </h1>
-        @foreach (UserDataModel userlv2 in ViewBag.Level2)
-        {
-            <h2>@userlv2.UserName</h2> if(userlv2.MoneySpent<=35)
+    @foreach (UserDataModel userlv2 in ViewBag.Level2)
+    {
+        <h2>@userlv2.UserName</h2>
+        if (userlv2.MoneySpent <= 35)
         {
             <h3>0$</h3>
         }
-        else if (userlv2.MoneySpent>=35 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+        else if (userlv2.MoneySpent >= 35 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
         {
             <h3>35$</h3>
         }
@@ -61,20 +58,20 @@
         {
             <h3>@userlv2.MoneySpent $</h3>
         }
-        }
-        
-    
+    }
+
+
 </div>
 <div>
     <h1>Level 3: </h1>
-        @foreach (UserDataModel userlv3 in ViewBag.Level3)
-        {
-            <h2>@userlv3.UserName</h2>
-            if(userlv3.MoneySpent<=35)
+    @foreach (UserDataModel userlv3 in ViewBag.Level3)
+    {
+        <h2>@userlv3.UserName</h2>
+        if (userlv3.MoneySpent <= 35)
         {
             <h3>0$</h3>
         }
-        else if (userlv3.MoneySpent>=35 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+        else if (userlv3.MoneySpent >= 35 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
         {
             <h3>35$</h3>
         }
@@ -82,6 +79,6 @@
         {
             <h3>@userlv3.MoneySpent $</h3>
         }
-        } 
+    }
 
 </div>

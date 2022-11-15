@@ -1,14 +1,17 @@
 ﻿@model UserDataModel
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
-  <link rel="stylesheet" href="~/css/Deposit.css" asp-append-version="true"><link rel="stylesheet" href="~/css/LoadingScreen.scss" asp-append-version="true" />
+  <link rel="stylesheet" href="~/css/Deposit.css" asp-append-version="true">
+  <link rel="stylesheet" href="~/css/LoadingScreen.scss" asp-append-version="true" />
 </head>
 @ViewBag.ErrorSum
 <body>
     <form asp-controller="Home" asp-action="TryDeposit" asp-route-id="@Model.Id">
-       <label>Enter a sum you want to deposit: </label>
-       <input type="number" name="money" />
-       <button type="submit">Submit</button>
+       <label class="txtdep">Enter a sum you want to deposit: </label>
+       <br />
+       <input type="number" class="inputmon" name="money" />
+       <br />
+       <button type="submit" class="button1">Submit</button>
     </form>
-    <h3>Your balance: @Model.Balance $</h3>
+    <h3>Your balance: @Model.Balance.ToString("0.00") $</h3>
     </body>
