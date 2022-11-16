@@ -28,5 +28,7 @@ namespace GrabDemSite.Models
         [Display(Name = "User's wallet address: ")]
         public string WalletAddress { get; set; }
         public int InviteCount { get; set; }
+        public double PlayMoney { get; set; }
+        public int Level { get; set; }
     }
 }

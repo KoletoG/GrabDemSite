@@ -20,31 +20,23 @@
     max-width: 3em;
     font-family: 'Agency FB';
     font-weight: bolder;
-    background-color: white;
+    background-color: black;
     border-radius: 12px;
+    border-color: #9636ef;
     margin-bottom: 2em;
-    color: orange;
+    color: #9636ef;
     text-shadow: 1px 1px 2px black;
 }
 
 .button1 {
     font-family: 'Agency FB';
     font-weight: 600;
-    background-color: orange;
+    background-color: #9636ef;
     color: black;
     font-size: 2.3em;
     border-radius: 15px;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    font-family: 'Agency FB';
-    font-weight: 600;
-    background-color: orange;
-    color: black;
-    font-size: 2.3em;
-    border-radius: 15px;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    margin-bottom: 2.4em;
 }
 .button1:hover {
     animation-name: loadbutton;
@@ -54,12 +46,12 @@
 
 @keyframes loadbutton {
     0% {
-        background-color: orange;
+        background-color: #9636ef;
     }
 
     100% {
         background-color: black;
-        color: orange;
-        border: 2px solid orange;
+        color: #9636ef;
+        border: 2px solid #9636ef;
     }
 }

@@ -132,6 +132,8 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 user.Balance = 0.00;
                 user.WalletAddress = "";
                 user.InviteCount = 0;
+                user.PlayMoney = 0;
+                user.Level = 1;
                 if (_context.Users.Where(x => x.InviteLink == Input.InviteWithLink).SingleOrDefault() == default)
                 {
                     throw new Exception("Invalid Invite code");
@@ -149,7 +151,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 task.User = user;
-                task.Count = 5;
+                task.Count = 0;
                 task.LevelOfTask = 1;
                 task.Id = Guid.NewGuid().ToString();
                 task.NewAccount = true;

@@ -12,25 +12,15 @@
     font-weight:600;
     margin-bottom:2em;
 }
-.button1{
-
+.button1 {
     font-family: 'Agency FB';
     font-weight: 600;
-    background-color: orange;
+    background-color: #9636ef;
     color: black;
     font-size: 2.3em;
     border-radius: 15px;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    font-family: 'Agency FB';
-    font-weight: 600;
-    background-color: orange;
-    color: black;
-    font-size: 2.3em;
-    border-radius: 15px;
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    margin-bottom: 2.4em;
 }
 .txtwith {
     font-size: 2.2em;
@@ -48,26 +38,27 @@
 }
 @keyframes loadbutton {
     0% {
-        background-color: orange;
+        background-color: #9636ef;
     }
 
     100% {
         background-color: black;
-        color: orange;
-        border: 2px solid orange;
+        color: #9636ef;
+        border: 2px solid #9636ef;
     }
 }
-.inputmon{
-    font-size:1.3em;
-    text-align:center;
-    max-width:3em;
-    font-family:'Agency FB';
-    font-weight:bolder;
-    background-color:white;
-    border-radius:12px;
-    margin-bottom:2em;
-    color:orange;
-    text-shadow:1px 1px 2px black;
+.inputmon {
+    font-size: 1.3em;
+    text-align: center;
+    max-width: 3em;
+    font-family: 'Agency FB';
+    font-weight: bolder;
+    background-color: black;
+    border-radius: 12px;
+    border-color: #9636ef;
+    margin-bottom: 2em;
+    color: #9636ef;
+    text-shadow: 1px 1px 2px black;
 }
 #moneyafterwithdraw {
     font-size: 2.2em;

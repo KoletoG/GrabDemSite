@@ -5,10 +5,12 @@
     text-align: center;
     margin: 0;
 }
-h2{
-    color:orange;
-    font-family:'Agency FB';
-    font-weight:bold;
+h2 {
+    background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Agency FB';
+    font-weight: bold;
 }
 h4 {
     color: white;
@@ -30,15 +32,15 @@ h6 {
 .inputmon {
     font-size: 1.3em;
     text-align: center;
-    width:18em;
+    width: 18em;
     font-family: 'Agency FB';
     font-weight: bolder;
     background-color: white;
     border-radius: 12px;
     margin-bottom: 2em;
-    color: orange;
+    color: #9636ef;
     text-shadow: 1px 1px 2px black;
-    text-align:center;
+    text-align: center;
 }
 #warn {
     color: red;
@@ -74,4 +76,22 @@ h6 {
         color: orange;
         border: 2px solid orange;
     }
+}
+.row1 {
+    margin-top: 5%;
+    margin-right: 10em;
+    margin-left:10em;
+}
+.row2 {
+    margin-top: 5%;
+    margin-left:10em;
+    margin-right:10em;
+}
+.row3 {
+    margin-top: 5%;
+    margin-left:10em;
+}
+.rows{
+    position:static;
+    display:flex;
 }

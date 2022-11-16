@@ -14,57 +14,57 @@
     }
 }
 label {
-    font: 700 30px "Oswald", sans-serif;
-    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    font: 500 1.7em "Oswald", sans-serif;
+    background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 35px rgba(255,255,255,.40);
     padding-bottom: 15px;
     padding-top: 15px;
+    font-family: 'Goudy Stout';
 }
 
 input {
-    border: 5px solid orange;
+    border: 2px solid #3b1aa7;
     font: 700 25px "Oswald", sans-serif;
-    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 35px rgba(255,255,255,.40);
     text-align: center;
     margin-bottom: 15px;
+    border-radius: 25px;
+    opacity: 0.7;
 }
 .invalidfield {
     font: 700 15px "Oswald", sans-serif;
-    background: linear-gradient(to right, rgb(245, 75, 28),rgb(190, 85, 39));
+    background: linear-gradient(to right, #f682bd,#4e31b3);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    left:13%;
-    top:36%;
-    position:absolute;
+    left: 9%;
+    top: 36%;
+    position: absolute;
 }
 .invalidpassword {
     font: 700 15px "Oswald", sans-serif;
-    background: linear-gradient(to right, rgb(245, 75, 28),rgb(190, 85, 39));
+    background: linear-gradient(to right, #f682bd,#4e31b3);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    left: 13%;
+    left: 9%;
     top: 38%;
     position: absolute;
 }
 .invalidpasswordconfirm {
     font: 700 15px "Oswald", sans-serif;
-    background: linear-gradient(to right, rgb(245, 75, 28),rgb(190, 85, 39));
+    background: linear-gradient(to right, #f682bd,#4e31b3);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    left: 13%;
+    left: 9%;
     top: 40%;
     position: absolute;
 }
 input:focus {
-    animation-name: zoom;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -74,18 +74,20 @@ input:focus {
     }
     100% {
         font: 700 35px "Oswald", sans-serif;
+        opacity: 1;
     }
 }
 
 #login-submit {
-    border: 5px solid orange;
+    border: 5px solid #9636ef;
     margin-top: 15px;
     font: 700 30px "Oswald", sans-serif;
-    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 35px rgba(255,255,255,.40);
     padding: 10px;
+    border-radius: 20px;
 }
 
     #login-submit:hover {
@@ -98,14 +100,14 @@ input:focus {
     0% {
         font: 700 30px "Oswald", sans-serif;
         text-shadow: 0 0 35px rgba(255,255,255,.40);
-        border-radius: 0px;
-        background: linear-gradient(to right, orange,rgb(190, 85, 39));
+        border-radius: 20px;
+        background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
 
     100% {
-        background: linear-gradient(to right, orange,rgb(190, 85, 39));
+        background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         font: 700 45px "Oswald", sans-serif;
@@ -117,7 +119,7 @@ input:focus {
 .loginform {
     border-width: 3px;
     border-style: solid;
-    border-image: linear-gradient(to bottom, #FF7C00, rgba(0,0,0,0) ) 1 100%;
+    border-image: linear-gradient( to bottom, #9636ef, rgba(0,0,0,0) ) 1 100%;
 }
 
 .align {

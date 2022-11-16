@@ -17,68 +17,67 @@
         <button type="submit" class="button1">Change wallet address</button>
     </form>
 }
+<h3>Your level: @Model.Level</h3>
 <h3>Your balance: @Model.Balance.ToString("0.00") $</h3>
-<div>
-    <h1>Level 1: </h1>
+<h3>Team's money spent: @ViewBag.WholeBal $</h3>
+<div class="rows">
+    <div class="row1">
+        <h1>Level 1: </h1>
 
-    @foreach (UserDataModel userlv1 in ViewBag.Level1)
-    {
+        @foreach (UserDataModel userlv1 in ViewBag.Level1)
+        {
 
-        <h2>@userlv1.UserName</h2>
-        if (userlv1.MoneySpent <= 35)
-        {
-            <h3>0$</h3>
+            <h2>@userlv1.UserName</h2>
+            if (userlv1.MoneySpent <= 25)
+            {
+                <h3>0$</h3>
+            }
+            else if (userlv1.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+            {
+                <h3>25$</h3>
+            }
+            else
+            {
+                <h3>@userlv1.MoneySpent $</h3>
+            }
         }
-        else if (userlv1.MoneySpent >= 35 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+    </div>
+    <div class="row2">
+        <h1>Level 2: </h1>
+        @foreach (UserDataModel userlv2 in ViewBag.Level2)
         {
-            <h3>35$</h3>
+            <h2>@userlv2.UserName</h2>
+            if (userlv2.MoneySpent <= 25)
+            {
+                <h3>0$</h3>
+            }
+            else if (userlv2.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+            {
+                <h3>25$</h3>
+            }
+            else
+            {
+                <h3>@userlv2.MoneySpent $</h3>
+            }
         }
-        else
+    </div>
+    <div class="row3">
+        <h1>Level 3: </h1>
+        @foreach (UserDataModel userlv3 in ViewBag.Level3)
         {
-            <h3>@userlv1.MoneySpent $</h3>
+            <h2>@userlv3.UserName</h2>
+            if (userlv3.MoneySpent <= 25)
+            {
+                <h3>0$</h3>
+            }
+            else if (userlv3.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+            {
+                <h3>25$</h3>
+            }
+            else
+            {
+                <h3>@userlv3.MoneySpent $</h3>
+            }
         }
-    }
-
-
-</div>
-<div>
-    <h1>Level 2: </h1>
-    @foreach (UserDataModel userlv2 in ViewBag.Level2)
-    {
-        <h2>@userlv2.UserName</h2>
-        if (userlv2.MoneySpent <= 35)
-        {
-            <h3>0$</h3>
-        }
-        else if (userlv2.MoneySpent >= 35 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
-        {
-            <h3>35$</h3>
-        }
-        else
-        {
-            <h3>@userlv2.MoneySpent $</h3>
-        }
-    }
-
-
-</div>
-<div>
-    <h1>Level 3: </h1>
-    @foreach (UserDataModel userlv3 in ViewBag.Level3)
-    {
-        <h2>@userlv3.UserName</h2>
-        if (userlv3.MoneySpent <= 35)
-        {
-            <h3>0$</h3>
-        }
-        else if (userlv3.MoneySpent >= 35 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
-        {
-            <h3>35$</h3>
-        }
-        else
-        {
-            <h3>@userlv3.MoneySpent $</h3>
-        }
-    }
-
+    </div>
 </div>

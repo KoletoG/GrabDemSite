@@ -1,16 +1,17 @@
-﻿.txtsecondary {
-    color: orange;
-    margin-left: 1.5em;
-    padding-right: 12.5px;
-    padding-left: 12.5px;
+﻿@import url(https://fonts.googleapis.com/css?family=Montserrat);
+.txtsecondary {
+    color: #9636ef;
+    margin-left: 1em;
+    padding-right: 0.3em;
+    padding-left: 0.3em;
     font-size: 3em;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: 'Montserrat';
     letter-spacing: 0px;
     text-decoration: none;
-    background-color:black;
-    border:2px solid orange;
-    background-clip:border-box;
-    border-radius:9px;
+    background-color: black;
+    border: 3px solid rgb(119, 48, 161);
+    background-clip: border-box;
+    border-radius: 9px;
 }
     .txtsecondary:hover {
         animation-name: hovering;
@@ -19,7 +20,7 @@
     }
 .txtthird {
     background: #FFB76B;
-    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-left: 0.5em;
@@ -31,7 +32,7 @@
 }
 .txtthird1 {
     background: #FFB76B;
-    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-left: 0.5em;
@@ -53,34 +54,35 @@
 }
 @keyframes hovering {
     0% {
-        color: orange;
+        color: #9636ef;
         opacity: 100%;
     }
 
     50% {
-        color:white;
+        color:hotpink;
         opacity: 25%;
     }
 
     100% {
-        color: orange;
+        color: #9636ef;
         opacity: 100%;
     }
 }
 h3 {
-    background: linear-gradient(to right, orange,rgb(190, 85, 39));
+    background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font: bolder 25px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-shadow: 0 0 25px rgba(255,255,255,.40);
-    font-style:italic;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-shadow: 0 0 20px rgba(255,255,255,.30);
+    font-style: italic;
 }
 .txtmain {
     background: #090d00;
     color: rgba(255,255,255,.25);
-    font: 700 42px "Oswald", sans-serif;
+    font: 700 42px "Montserrat", sans-serif;
     letter-spacing: 0;
+    font-weight:700;
     padding: .25em 0 .325em;
     display: block;
     margin: 0 auto;
@@ -88,8 +90,8 @@ h3 {
     /* Clip Background Image */
     border-width: 3px;
     border-style: solid;
-    border-image: linear-gradient( to bottom, #FF7C00, rgba(0,0,0,0) ) 1 100%;
-    background: url(https://i.ibb.co/RDTnNrT/animated-text-fill.png) repeat-y;
+    border-image: linear-gradient( to bottom, #9636ef, rgba(0,0,0,0) ) 1 100%;
+    background: url(../Images/animated-text-fill.png) repeat-y;
     -webkit-background-clip: text;
     background-clip: text;
     /* Animate Background Image */
@@ -113,11 +115,12 @@ h3 {
 }
 
 .navsection {
-    border-bottom: 3px solid #FF7C00;
+    border-bottom: 3px solid #9636ef;
+    margin-top:0.5em;
 }
 
 .footersection {
-    border-top: 3px solid #FF7C00;
+    border-top: 3px solid #9636ef;
     max-block-size: 120px;
 }
 .review {

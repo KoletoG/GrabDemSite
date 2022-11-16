@@ -73,13 +73,13 @@
                 int number = rnd.Next(0, namesCount);
                 for (int i = 1; i <= 3; i++)
                 {
-                    <section class="review">
-                        <h3>@names[number]</h3>
-                        @for (int b = 1; b <= stars; b++)
+                            <section class="review">
+                                <h3>@names[number]</h3>
+                                @for (int b = 1; b <= stars; b++)
                         {
-                            <img src="~/Images/star.png" style="height:35px;width:35px" />
+                                    <img src="~/Images/star.png" style="height:35px;width:35px;filter:hue-rotate(-110deg);" />
                         }
-                        @{
+                                @{
                             stars = rnd.Next(3, 6);
                             int nextnum = rnd.Next(0, namesCount);
                             while (nextnum == number)
@@ -87,9 +87,9 @@
                                 nextnum = rnd.Next(0, namesCount);
                             }
                             number = nextnum;
-                        }
-                        
-                    </section>
+                                }
+                                
+                            </section>
 
                 }
 

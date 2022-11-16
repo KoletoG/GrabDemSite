@@ -33,20 +33,46 @@ namespace GrabDemSite.Controllers
             userslv3.Add(fakeUser);
             userslv1.Add(fakeUser);
             userslv2.Add(fakeUser);
+            double wholeBal = 0;
+            string name = this.User.Identity.Name;
+
             if (_context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefault() != default)
             {
                 userslv1.Remove(fakeUser);
                 userslv1 = _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
                 userslv1.OrderBy(x => x.MoneySpent);
+                if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
+                {
+                    wholeBal += userslv1.Count() * 25;
+                }
+                else
+                {
+                    for (int i = 0; i < userslv1.Count(); i++)
+                    {
+                        wholeBal += userslv1[i].MoneySpent;
+                    }
+                }
                 ViewBag.Level1 = userslv1;
                 userslv1 = _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
                 if (_context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefault() != default)
                 {
                     userslv2.Remove(fakeUser);
+
                     for (int i = 0; i < userslv1.Count(); i++)
                     {
                         userslv2.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv1[i].InviteLink).ToList());
                         userslv2.OrderBy(x => x.MoneySpent);
+                    }
+                    if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
+                    {
+                        wholeBal += userslv2.Count() * 25;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < userslv2.Count(); i++)
+                        {
+                            wholeBal += userslv2[i].MoneySpent;
+                        }
                     }
                     if (_context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefault() != default)
                     {
@@ -56,12 +82,24 @@ namespace GrabDemSite.Controllers
                             userslv3.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv2[i].InviteLink).ToList());
                             userslv2.OrderBy(x => x.MoneySpent);
                         }
+                        if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
+                        {
+                            wholeBal += userslv3.Count() * 25;
+                        }
+                        else
+                        {
+                            for (int i = 0; i < userslv3.Count(); i++)
+                            {
+                                wholeBal += userslv3[i].MoneySpent;
+                            }
+                        }
                     }
                 }
             }
             ViewBag.Level1 = userslv1;
             ViewBag.Level2 = userslv2;
             ViewBag.Level3 = userslv3;
+            ViewBag.WholeBal = wholeBal;
             return View(user);
         }
         [Authorize]
@@ -99,7 +137,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult ChangeWallet(string wallet)
         {
-            if(!wallet.StartsWith('1') && !wallet.StartsWith('3') && !wallet.StartsWith("bc1"))
+            if (!wallet.StartsWith('1') && !wallet.StartsWith('3') && !wallet.StartsWith("bc1"))
             {
                 return RedirectToAction("Profile");
             }
@@ -129,11 +167,45 @@ namespace GrabDemSite.Controllers
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
             user.Balance += balance;
             user.MoneySpent += balance;
+            user.PlayMoney = balance;
             List<DepositDataModel> deposits = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
             UserDataModel user1 = _context.Users.Where(x => x.InviteLink == user.InviteWithLink).Single();
             TaskDataModel task = _context.TaskDatas.Where(x => x.User.Id == user1.Id).Single();
+            TaskDataModel task1 = _context.TaskDatas.Where(x => x.User.Id == user.Id).Single();
+            if (balance >= 300)
+            {
+                task1.Count += 6;
+                user.Balance += 20;
+            }
+            else if (balance >= 200)
+            {
+                task1.Count += 6;
+                user.Balance += 15;
+            }
+            else if (balance >= 100)
+            {
+                task1.Count += 5;
+                user.Balance += 10;
+            }
+            else
+            {
+                task1.Count += 5;
+            }
+            if (user.MoneySpent >= 500)
+            {
+                user.Level = 4;
+            }
+            else if (user.MoneySpent >= 300)
+            {
+                user.Level = 3;
+            }
+            else if (user.MoneySpent >= 100)
+            {
+                user.Level = 2;
+            }
             task.Count++;
             _context.Update(task);
+            _context.Update(task1);
             for (int i = 0; i < deposits.Count(); i++)
             {
                 DepositDataModel deposit = deposits[i];
@@ -149,9 +221,9 @@ namespace GrabDemSite.Controllers
         {
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
             money -= money * 0.06;
-            if (user.MoneySpent < 35)
+            if (user.MoneySpent < 25)
             {
-                ViewBag.ErrorBal = "You need to deposit at least 35$ in order to withdraw";
+                ViewBag.ErrorBal = "You need to deposit at least 25$ in order to withdraw";
                 return View("Withdraw", user);
             }
             else if (user.Balance < money)
@@ -166,7 +238,7 @@ namespace GrabDemSite.Controllers
             withdrawReq.User = user;
             return View("ConfirmWithdraw", withdrawReq);
         }
-       
+
         [Authorize]
         public IActionResult ConfirmedWithdraw(string id, double money, string wallet, string iduser)
         {
@@ -179,6 +251,7 @@ namespace GrabDemSite.Controllers
             withdrawReq.WalletAddress = wallet;
             withdrawReq.User = user;
             user.Balance -= money;
+            user.PlayMoney = 0;
             _context.WithdrawDatas.Add(withdrawReq);
             _context.Update(user);
             _context.SaveChanges();
@@ -202,13 +275,13 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            ViewBag.ErrorCh = ""; 
+            ViewBag.ErrorCh = "";
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             TaskDataModel task = _context.TaskDatas.Where(x => x.User.Id == user.Id).Single();
             ViewBag.User = user;
             string block = RandomizeBlockchain();
             Random rnd = new Random();
-            int countUsers = _context.Users.ToList().Count() + rnd.Next(300,1200);
+            int countUsers = _context.Users.ToList().Count() + rnd.Next(300, 1200);
             ViewBag.Count = countUsers;
             ViewBag.BlockChain = block;
             return View(task);
@@ -218,7 +291,7 @@ namespace GrabDemSite.Controllers
         {
             UserDataModel u = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             TaskDataModel t = _context.TaskDatas.Where(x => x.User.Id == u.Id).Single();
-            if(u.Balance==0)
+            if (u.Balance == 0)
             {
                 return RedirectToAction("Deposit");
             }
@@ -226,37 +299,7 @@ namespace GrabDemSite.Controllers
             t.Count--;
             t.NewAccount = false;
             _context.Update(t);
-            if (_context.Users.Where(x => x.InviteLink == u.InviteWithLink).SingleOrDefault() != default)
-            {
-                UserDataModel ulvl1 = _context.Users.Where(x => x.InviteLink == u.InviteWithLink).Single();
-                ulvl1.Balance += u.Balance * 0.02;
-                _context.Update(ulvl1);
-                if(_context.Users.Where(x=>x.InviteLink==ulvl1.InviteWithLink).SingleOrDefault()!=default)
-                {
-                    UserDataModel ulvl2 = _context.Users.Where(x => x.InviteLink == ulvl1.InviteWithLink).Single();
-                    ulvl2.Balance += u.Balance * 0.01;
-                    _context.Update(ulvl2);
-                    if(_context.Users.Where(x => x.InviteLink == ulvl2.InviteWithLink).SingleOrDefault() != default)
-                    {
-                        UserDataModel ulvl3 = _context.Users.Where(x => x.InviteLink == ulvl2.InviteWithLink).Single();
-                        ulvl3.Balance += u.Balance * 0.005;
-                        _context.Update(ulvl3);
-                        u.Balance += u.Balance * 0.115;
-                    }
-                    else
-                    {
-                        u.Balance += u.Balance * 0.12;
-                    }
-                }
-                else
-                {
-                    u.Balance += u.Balance * 0.13;
-                }
-            }
-            else
-            {
-                u.Balance += u.Balance * 0.15;
-            }
+            u.Balance += u.PlayMoney * 0.057;
             _context.Update(u);
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -266,7 +309,7 @@ namespace GrabDemSite.Controllers
             Random rndw = new Random();
             string x = "";
             string alphnum = "1234567890abcdefghijklmnopqrstuvwxyz";
-            for (int i=1;i<=65;i++)
+            for (int i = 1; i <= 65; i++)
             {
                 x += alphnum[rndw.Next(0, alphnum.Length)];
             }
@@ -281,10 +324,10 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Deposit()
         {
-            
+
             ViewBag.ErrorSum = "";
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
-            if(string.IsNullOrEmpty(user.WalletAddress))
+            if (string.IsNullOrEmpty(user.WalletAddress))
             {
                 return RedirectToAction("Profile");
             }
@@ -308,7 +351,7 @@ namespace GrabDemSite.Controllers
                 depReq.UserEmail = user.Email;
                 string name = this.User.Identity.Name;
                 int rndRes = random.Next(1, 11);
-                if(name=="SkAg1" || name=="BlAg2" ||  name=="5aAg3" || name=="TyAg4" || name=="66Ag5")
+                if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
                 {
                     ViewBag.Wallet = Wallet;
                 }
@@ -316,7 +359,8 @@ namespace GrabDemSite.Controllers
                 {
                     ViewBag.Wallet = Wallet;
                 }
-                else {
+                else
+                {
 
                     ViewBag.Wallet = FakeWallet;
                 }
@@ -338,7 +382,7 @@ namespace GrabDemSite.Controllers
             deposit.UserEmail = user.Email;
             _context.DepositDatas.Add(deposit);
             _context.SaveChanges();
-            return View("Index");
+            return RedirectToAction("Index");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

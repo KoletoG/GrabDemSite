@@ -5,27 +5,27 @@
     text-align: center;
     margin: 0;
 }
-h2{
-    color:white;
-    text-shadow:1px 1px 2px orange;
-    margin-bottom:3em;
+h2 {
+    color: white;
+    text-shadow: 1px 1px 2px #9636ef;
+    margin-bottom: 3em;
 }
-h5{
-  color:orange;
-  font-weight:600;
-  font-size:1.8em;
-  margin-bottom:3em;
+h5 {
+    color: #9636ef;
+    font-weight: 600;
+    font-size: 1.8em;
+    margin-bottom: 3em;
 }
 .btnstart {
     font-family: 'Agency FB';
     font-weight: 600;
-    background-color: orange;
+    background-color: #9636ef;
     color: black;
     font-size: 2.3em;
     border-radius: 15px;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    margin-bottom:2.4em;
+    margin-bottom: 2.4em;
 }
     .btnstart:hover {
         animation-name:loadbutton;
@@ -34,12 +34,12 @@ h5{
     }
     @keyframes loadbutton{
         0% {
-            background-color:orange;
+            background-color: #9636ef;
         }
-        100%{
-            background-color:black;
-            color:orange;
-            border:2px solid orange;
+        100% {
+            background-color: black;
+            color: #9636ef;
+            border: 2px solid #9636ef;
         }
     }
 #tip{
