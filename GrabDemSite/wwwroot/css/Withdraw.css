@@ -30,6 +30,7 @@ body {
     font-family: 'Share Tech Mono', monospace;
     text-shadow: 1px 1px 2px orange;
     margin-bottom: 0.3em;
+    margin-bottom: 2em;
 }
 .button1:hover {
     animation-name: loadbutton;
@@ -49,7 +50,7 @@ body {
     }
 }
 .inputmon {
-    font-size: 1.3em;
+    font-size: 1.7em;
     text-align: center;
     max-width: 3em;
     font-family: 'Share Tech Mono', monospace;
