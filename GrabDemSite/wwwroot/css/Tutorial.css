@@ -1,5 +1,6 @@
-﻿body {
-    font: 400 1em/1.5 "Neuton";
+﻿@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+body {
+    font: 400 1em/1.5 'Share Tech Mono', monospace;
     background-color: rgb(8, 8, 8);
     color: rgba(255,255,255,.25);
     text-align: center;
@@ -9,13 +10,12 @@ h1 {
     background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    
+    font-family: Impact, Haettenschweiler, 'Share Tech Mono', monospace;
 }
 h2 {
     text-shadow: 1px 1px 2px #9636ef;
     color: white;
-    font-family: 'Agency FB';
+    font-family: 'Share Tech Mono', monospace;
     margin-bottom: 3em;
 }
 #farm {

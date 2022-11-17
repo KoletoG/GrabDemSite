@@ -1,16 +1,18 @@
-﻿@import url(https://fonts.googleapis.com/css?family=Montserrat);
+﻿@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 .txtsecondary {
-    color: #9636ef;
-    margin-left: 1em;
+    background: #FFB76B;
+    background: linear-gradient(225deg,#3b1aa7 0,#4e31b3 30.49%,#9636ef 64.35%,#f682bd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 2em;
     padding-right: 0.3em;
     padding-left: 0.3em;
-    font-size: 3em;
-    font-family: 'Montserrat';
+    font-size: 2em;
+    font-family: 'Share Tech Mono', monospace;
     letter-spacing: 0px;
     text-decoration: none;
     background-color: black;
-    border: 3px solid rgb(119, 48, 161);
-    background-clip: border-box;
+    border: 4px solid rgb(119, 48, 161);
     border-radius: 9px;
 }
     .txtsecondary:hover {
@@ -26,7 +28,7 @@
     margin-left: 0.5em;
     padding-right: 0.4em;
     padding-left: 0.4em;
-    font: 700 1.1em "Oswald", sans-serif;
+    font: 700 1.1em 'Share Tech Mono', monospace;
     letter-spacing: 0px;
     text-shadow: 0 0 35px rgba(255,255,255,.40);
 }
@@ -38,9 +40,11 @@
     margin-left: 0.5em;
     padding-right: 0.4em;
     padding-left: 0.4em;
-    font: 700 1.5em "Oswald", sans-serif;
+    font: 400 2em 'Share Tech Mono', monospace;
     letter-spacing: 0px;
     text-shadow: 0 0 35px rgba(255,255,255,.40);
+    border: 4px solid rgb(119, 48, 161);
+    border-radius: 9px;
 }
 .txtthird:hover {
     animation-name: hovering;
@@ -80,9 +84,10 @@ h3 {
 .txtmain {
     background: #090d00;
     color: rgba(255,255,255,.25);
-    font: 700 42px "Montserrat", sans-serif;
+    font-family: 'Share Tech Mono', monospace;
+    font-size:3em;
     letter-spacing: 0;
-    font-weight:700;
+    font-weight: 700;
     padding: .25em 0 .325em;
     display: block;
     margin: 0 auto;
@@ -146,3 +151,43 @@ h3 {
         opacity:100%;
     }
 }
+.txtlogin {
+    color: #9636ef;
+    margin-left:8.5em;
+    padding-right: 0.3em;
+    padding-left: 0.3em;
+    font-size: 3em;
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 0px;
+    text-decoration: none;
+    background-color: black;
+    border: 4px solid rgb(119, 48, 161);
+    background-clip: border-box;
+    border-radius: 9px;
+}
+
+    .txtlogin:hover {
+        animation-name: hovering;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+    }
+.txtlogin1 {
+    color: #9636ef;
+    margin-left: 1em;
+    padding-right: 0.3em;
+    padding-left: 0.3em;
+    font-size: 3em;
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 0px;
+    text-decoration: none;
+    background-color: black;
+    border: 4px solid rgb(119, 48, 161);
+    background-clip: border-box;
+    border-radius: 9px;
+}
+
+    .txtlogin1:hover {
+        animation-name: hovering;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+    }
