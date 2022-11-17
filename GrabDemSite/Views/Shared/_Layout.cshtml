@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GrabDemSite</title>
-    <link rel="stylesheet" href="~/css/LayoutNew.css"asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Footer.css"asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/LayoutNew.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Footer.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GrabDemSite.styles.css" asp-append-version="true" />
@@ -24,7 +24,7 @@
                     @if (this.User.Identity.IsAuthenticated == true)
                     {
                         <ul class="navbar-nav flex-grow-1">
-                            
+
                             <li class="nav-item">
                                 <a class="txtsecondary" asp-area="" asp-controller="Home" asp-action="Index">Mine</a>
                             </li>
@@ -41,7 +41,7 @@
                             {
                                 <li class="nav-item">
                                     <a class="txtsecondary " asp-area="" asp-controller="Home" asp-action="AdminMenu">Admin</a>
-                            </li>
+                                </li>
                             }
                         </ul>
                     }
@@ -66,8 +66,6 @@
             "420Josh","BlazeItGlazeIt","mOntero","snitch9ine","BobTheBuilder","32LivesEtc","PillTaker31xD","xXMeinKraftXx","GimmeTroll","Frog",
             "PopCornMike","LuvU","Weesly","PaNdorA","CringiestGuy","EmoKid","XXXshhh","waterdrinker83","AnUnluckyLuckyPerson","DaRealSanta","BigFootLazza",
             "Kylie","CarlMarx","FakeR","CartoonStar","JJOrangutunji"};
-
-
                 int stars = rnd.Next(3, 6);
                 int namesCount = names.Count();
                 int number = rnd.Next(0, namesCount);
@@ -88,14 +86,12 @@
                             }
                             number = nextnum;
                                 }
-                                
                             </section>
-
                 }
-
             }
-
         </div>
+        <label>Your account is </label>
+        <label style="color:green;margin-top:1em">protected</label>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

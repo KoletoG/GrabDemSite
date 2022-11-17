@@ -3,28 +3,35 @@
 
 
 <link rel="stylesheet" href="~/css/LoginRegisterForm.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/line.css" asp-append-version="true">
 
+<div class="lines1">
+    <div class="line1"></div>
+
+    <div class="line1"></div>
+</div>
 <div class="align">
-            <form id="account" method="post" class="loginform">
-              
-                <div asp-validation-summary="ModelOnly" ></div>
-                <div  class="user-box" > <label asp-for="Input.Username" ></label>   <br />
-                    <input asp-for="Input.Username" class="user-box"  autocomplete="username" aria-required="true" />
-                 
-                   
-                    <span asp-validation-for="Input.Username" class="invalidfield"></span>
-                </div>
-                <div  class="user-box" >  <label asp-for="Input.Password" ></label>   <br />
-                    <input asp-for="Input.Password" autocomplete="current-password" aria-required="true" />
-                  
-                    <span asp-validation-for="Input.Password" class="invalidpassword"></span>
-                </div>
-                <div class="login-box">
-                    <button id="login-submit" type="submit" >Log in</button>
-                </div>
-            </form>
-    </div>
+    <form id="account" method="post" class="loginform">
 
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="user-box">
+            <label asp-for="Input.Username"></label>   <br />
+            <input asp-for="Input.Username" class="user-box" autocomplete="username" aria-required="true" />
+
+
+            <span asp-validation-for="Input.Username" class="invalidfield"></span>
+        </div>
+        <div class="user-box">
+            <label asp-for="Input.Password"></label>   <br />
+            <input asp-for="Input.Password" autocomplete="current-password" aria-required="true" />
+
+            <span asp-validation-for="Input.Password" class="invalidpassword"></span>
+        </div>
+        <div class="login-box">
+            <input id="login-submit" type="submit" value="Login">
+        </div>
+    </form>
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

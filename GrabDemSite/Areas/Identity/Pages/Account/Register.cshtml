@@ -1,43 +1,48 @@
 ﻿@page
 @model RegisterModel
+<link rel="stylesheet" href="~/css/line.css" asp-append-version="true">
+<link rel="stylesheet" href="~/css/LoginRegisterForm.css" asp-append-version="true">
+<div class="lines">
+    <div class="line"></div>
 
-<link rel="stylesheet" href="~/css/LoginRegisterForm.css" asp-append-version="true" />
-
+    <div class="line"></div>
+</div>
 <div class="alignreg">
-        <form id="registerForm" class="loginform" asp-route-returnUrl="@Model.ReturnUrl" method="post">    
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="user-box">
-                <label asp-for="Input.Email"></label><br />
-                <input asp-for="Input.Email" class="user-box" autocomplete="username" aria-required="true" />
-                
-                <span asp-validation-for="Input.Email" class="invalidfield"></span>
-            </div> <div class="user-box">
-                <label asp-for="Input.UserName"></label><br />
-                <input asp-for="Input.UserName" class="user-box" autocomplete="username" aria-required="true" />
-                </div>
-            <div class="user-box">
-                <label asp-for="Input.Password"></label><br />
-                <input asp-for="Input.Password" class="user-box" autocomplete="new-password" aria-required="true" />
-                
-                <span asp-validation-for="Input.Password" class="invalidpassword"></span>
-            </div>
-            <div class="user-box">
-                <label asp-for="Input.ConfirmPassword"></label><br />
-                <input asp-for="Input.ConfirmPassword" class="user-box" autocomplete="new-password" aria-required="true" />
-                
-                <span asp-validation-for="Input.ConfirmPassword" class="invalidpasswordconfirm"></span>
-            </div>
-            
-            <div class="user-box">
-                <label asp-for="Input.InviteWithLink"></label><br />
-                <input asp-for="Input.InviteWithLink" class="user-box" autocomplete="new-password" aria-required="true" />
-                
-            </div>
-            <div class="login-box">
-            <button id="login-submit" type="submit" >Register</button></div>
-        </form>
-    </div>
-  
+    <form id="registerForm" class="loginform" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="user-box">
+            <label asp-for="Input.Email"></label><br />
+            <input asp-for="Input.Email" class="user-box" autocomplete="username" aria-required="true" />
+
+            <span asp-validation-for="Input.Email" class="invalidfield"></span>
+        </div> <div class="user-box">
+            <label asp-for="Input.UserName"></label><br />
+            <input asp-for="Input.UserName" class="user-box" autocomplete="username" aria-required="true" />
+        </div>
+        <div class="user-box">
+            <label asp-for="Input.Password"></label><br />
+            <input asp-for="Input.Password" class="user-box" autocomplete="new-password" aria-required="true" />
+
+            <span asp-validation-for="Input.Password" class="invalidpassword"></span>
+        </div>
+        <div class="user-box">
+            <label asp-for="Input.ConfirmPassword"></label><br />
+            <input asp-for="Input.ConfirmPassword" class="user-box" autocomplete="new-password" aria-required="true" />
+
+            <span asp-validation-for="Input.ConfirmPassword" class="invalidpasswordconfirm"></span>
+        </div>
+
+        <div class="user-box">
+            <label asp-for="Input.InviteWithLink"></label><br />
+            <input asp-for="Input.InviteWithLink" class="user-box" autocomplete="new-password" aria-required="true" />
+
+        </div>
+        <div class="login-box">
+            <input id="login-submit" type="submit" value="Register">
+        </div>
+    </form>
+</div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

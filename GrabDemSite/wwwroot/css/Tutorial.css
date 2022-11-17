@@ -22,5 +22,19 @@ h2 {
     max-width: 50em;
     max-height: 30em;
     border: 5px solid #9636ef;
+    border-radius:20px;
     filter: grayscale();
+}
+#farm:hover{
+   animation-name:hoverimg;
+   animation-duration:1s;
+   animation-fill-mode:forwards;
+}
+@keyframes hoverimg{
+    0%{
+        
+    }
+    100%{
+        filter:none;
+    }
 }

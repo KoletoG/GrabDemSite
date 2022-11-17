@@ -121,12 +121,6 @@ input:focus {
     }
 }
 
-.loginform {
-    border-width: 3px;
-    border-style: solid;
-    border-image: linear-gradient( to bottom, #9636ef, rgba(0,0,0,0) ) 1 100%;
-}
-
 .align {
     margin-top: 7%;
 }

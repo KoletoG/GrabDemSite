@@ -105,6 +105,10 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult AdminMenu()
         {
+            if (this.User.Identity.Name != "Test1")
+            {
+                return RedirectToAction("Index");
+            }
             ViewBag.Users = _context.Users.ToList();
             ViewBag.Orders = _context.DepositDatas.ToList();
             ViewBag.Withdraws = _context.WithdrawDatas.ToList();
@@ -113,6 +117,10 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Edit(string id)
         {
+            if (this.User.Identity.Name != "Test1")
+            {
+                return RedirectToAction("Index");
+            }
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
             ViewBag.Orders = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
             ViewBag.Withdraws = _context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
@@ -131,6 +139,10 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult AdminWithdrawConfirm(string wallet)
         {
+            if (this.User.Identity.Name != "Test1")
+            {
+                return RedirectToAction("Index");
+            }
             ViewBag.Withdraws = _context.WithdrawDatas.Where(x => x.WalletAddress == wallet).ToList();
             return View();
         }
@@ -150,6 +162,10 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult AdminWithdrawConfirmed(string id)
         {
+            if (this.User.Identity.Name != "Test1")
+            {
+                return RedirectToAction("Index");
+            }
             List<WithdrawDataModel> withdraws = _context.WithdrawDatas.Where(x => x.User.Id == id).ToList();
             for (int i = 0; i < withdraws.Count(); i++)
             {
@@ -164,6 +180,10 @@ namespace GrabDemSite.Controllers
         [HttpGet]
         public IActionResult Edit(string id, double balance)
         {
+            if(this.User.Identity.Name!="Test1")
+            {
+                return RedirectToAction("Index");
+            }
             UserDataModel user = _context.Users.Where(x => x.Id == id).Single();
             user.Balance += balance;
             user.MoneySpent += balance;
@@ -299,7 +319,18 @@ namespace GrabDemSite.Controllers
             t.Count--;
             t.NewAccount = false;
             _context.Update(t);
-            u.Balance += u.PlayMoney * 0.057;
+            if (u.Level == 1)
+            {
+                u.Balance += u.PlayMoney * 0.055;
+            }
+            else if(u.Level==2)
+                    {
+                u.Balance += u.PlayMoney * 0.07;
+            }
+            else if(u.Level==3)
+            {
+                u.Balance += u.PlayMoney * 0.085;
+            }
             _context.Update(u);
             _context.SaveChanges();
             return RedirectToAction("Index");
