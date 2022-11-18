@@ -24,6 +24,7 @@ h2 {
     border: 5px solid #9636ef;
     border-radius:20px;
     filter: grayscale();
+    margin-bottom:2em;
 }
 #farm:hover{
    animation-name:hoverimg;

