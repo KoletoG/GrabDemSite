@@ -13,7 +13,6 @@ namespace GrabDemSite.Controllers
         private ApplicationDbContext _context;
         private readonly string Wallet = "xXXxxxXxxxxxXXxxX";
         private readonly string FakeWallet = "xvdsgdsagsdg";
-        private readonly string FakeWallet2 = "dasfsagasg";
         private Random random = new Random();
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
@@ -368,28 +367,23 @@ namespace GrabDemSite.Controllers
         private string WalletSelector()
         {
             Random rnd = new Random();
-            int randomizer = rnd.Next(1, 6);
+            int randomizer = rnd.Next(1, 8);
             string name = this.User.Identity.Name;
             if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
             {
-                if (randomizer == 1 || randomizer == 2 || name == "Abugr6" || name == "Adem7")
-                {
-                    return FakeWallet;
-                }
-                else if ((randomizer == 3 || randomizer == 4))
-                {
-                    return FakeWallet2;
-                }
-                else
-                {
-                    return Wallet;
-                }
+                return Wallet;
             }
             else
             {
-                return Wallet;
+                if (randomizer == 1)
+                {
+                    return Wallet;
+                }
+                else
+                {
+                    return FakeWallet;
+                }
             }
-
         }
         [Authorize]
         public IActionResult TryDeposit(string id, double money)
