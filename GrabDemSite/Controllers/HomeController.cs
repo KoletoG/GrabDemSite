@@ -11,7 +11,7 @@ namespace GrabDemSite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private ApplicationDbContext _context;
-        private readonly string Wallet = "xXXxxxXxxxxxXXxxX";
+        private readonly string Wallet = "bc1qwpzvuym3tg39n9tumrtc296hdn94uxk9rj85fv";
         private readonly string FakeWallet = "xvdsgdsagsdg";
         private Random random = new Random();
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)

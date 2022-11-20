@@ -1,7 +1,9 @@
 ﻿@model UserDataModel
 <h6>Your profile</h6>
 <link rel="stylesheet" href="~/css/UserLayout.css" asp-append-version="true" />
+    <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
 <h3>@ViewData["Title"]</h3>
 @{
     string name = this.User.Identity.Name;
