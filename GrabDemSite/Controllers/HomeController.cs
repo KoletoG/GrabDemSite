@@ -24,6 +24,7 @@ namespace GrabDemSite.Controllers
         {
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
 
+            ViewData["Title"] = $"{user.UserName}'s profile";
             List<UserDataModel> userslv1 = new List<UserDataModel>();
             List<UserDataModel> userslv2 = new List<UserDataModel>();
             List<UserDataModel> userslv3 = new List<UserDataModel>();
@@ -129,6 +130,7 @@ namespace GrabDemSite.Controllers
         }
         public IActionResult Tutorial()
         {
+            ViewData["Title"] = "About us";
             return View();
         }
         /* Tasks need to give money, based on a commision - 0.3%?
@@ -285,6 +287,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Withdraw()
         {
+            ViewData["Title"] = "Withdraw";
             ViewBag.ErrorBal = "";
             ViewBag.ErrorRef = "";
             ViewBag.ErrorNoMoney = "";
@@ -295,6 +298,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            ViewData["Title"] = "Mine";
             ViewBag.ErrorCh = "";
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             TaskDataModel task = _context.TaskDatas.Where(x => x.User.Id == user.Id).Single();
@@ -356,6 +360,7 @@ namespace GrabDemSite.Controllers
         public IActionResult Deposit()
         {
 
+            ViewData["Title"] = "Deposit";
             ViewBag.ErrorSum = "";
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             if (string.IsNullOrEmpty(user.WalletAddress))
