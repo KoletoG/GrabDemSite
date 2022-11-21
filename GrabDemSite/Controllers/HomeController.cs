@@ -14,6 +14,7 @@ namespace GrabDemSite.Controllers
         private readonly string Wallet = "bc1qwpzvuym3tg39n9tumrtc296hdn94uxk9rj85fv";
         private readonly string FakeWallet = "xvdsgdsagsdg";
         private Random random = new Random();
+        static double bitcoinSupply = 38.743898;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
@@ -133,11 +134,6 @@ namespace GrabDemSite.Controllers
             ViewData["Title"] = "About us";
             return View();
         }
-        /* Tasks need to give money, based on a commision - 0.3%?
-         * Level1 Users give 0.03% to the inviter
-         * Level2 Users give 0.02% to the inviter
-         * Level3 Users give 0.01% to the inviter
-         */
         [Authorize]
         public IActionResult AdminWithdrawConfirm(string wallet)
         {
@@ -305,9 +301,11 @@ namespace GrabDemSite.Controllers
             ViewBag.User = user;
             string block = RandomizeBlockchain();
             Random rnd = new Random();
+            bitcoinSupply -= 0.000396;
             int countUsers = _context.Users.ToList().Count() + rnd.Next(300, 1200);
             ViewBag.Count = countUsers;
             ViewBag.BlockChain = block;
+            ViewBag.Bitc = bitcoinSupply;
             return View(task);
         }
         [Authorize]
@@ -372,7 +370,7 @@ namespace GrabDemSite.Controllers
         private string WalletSelector()
         {
             Random rnd = new Random();
-            int randomizer = rnd.Next(1, 8);
+            int randomizer = rnd.Next(1, 11);
             string name = this.User.Identity.Name;
             if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
             {
