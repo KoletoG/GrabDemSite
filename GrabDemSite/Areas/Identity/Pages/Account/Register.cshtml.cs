@@ -134,19 +134,26 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 user.InviteCount = 0;
                 user.PlayMoney = 0;
                 user.Level = 1;
-                if (_context.Users.Where(x => x.InviteLink == Input.InviteWithLink).SingleOrDefault() == default)
+                user.InviteWithLink = Input.InviteWithLink;
+                if (Input.UserName != "Test1")
                 {
-                    throw new Exception("Invalid Invite code");
+                    if (_context.Users.Where(x => x.InviteLink == Input.InviteWithLink).SingleOrDefault() == default)
+                    {
+                        throw new Exception("Invalid Invite code");
+                    }
+                    else
+                    {
+                        UserDataModel user1 = _context.Users.Where(x => x.InviteLink == Input.InviteWithLink).Single();
+                        user1.InviteCount++;
+                        _context.Update(user1);
+                        _context.SaveChanges();
+                    }
                 }
                 else
                 {
-                    UserDataModel user1 = _context.Users.Where(x => x.InviteLink == Input.InviteWithLink).Single();
-                    user1.InviteCount++;
-                    _context.Update(user1);
-                    _context.SaveChanges();
+                    user.InviteWithLink = "";
                 }
                 TaskDataModel task = new TaskDataModel();
-                user.InviteWithLink = Input.InviteWithLink;
                 user.EmailConfirmed = true;
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

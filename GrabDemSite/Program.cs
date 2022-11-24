@@ -1,9 +1,12 @@
 using GrabDemSite.Data;
 using GrabDemSite.Models;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using System.Net;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Systemd;
 namespace GrabDemSite
 {
     public class Program
@@ -11,7 +14,10 @@ namespace GrabDemSite
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Host.UseSystemd().ConfigureServices((hostContext, services) =>
+            {
+                services.AddHostedService<Worker>();
+            });
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -22,7 +28,10 @@ namespace GrabDemSite
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
             var app = builder.Build();
-
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -34,8 +43,6 @@ namespace GrabDemSite
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -51,4 +58,21 @@ namespace GrabDemSite
             app.Run();
         }
     }
+    public class Worker : BackgroundService
+    {
+        private readonly ILogger<Worker> _logger;
+        public Worker(ILogger<Worker> logger)
+        {
+            _logger = logger;
+        }
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                await Task.Delay(1000, stoppingToken);
+            }
+        }
+    }
+
 }

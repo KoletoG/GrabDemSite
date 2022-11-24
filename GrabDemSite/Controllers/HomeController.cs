@@ -3,8 +3,9 @@ using GrabDemSite.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-
+using System.Threading.Tasks;
 namespace GrabDemSite.Controllers
 {
     public class HomeController : Controller
@@ -12,7 +13,7 @@ namespace GrabDemSite.Controllers
         private readonly ILogger<HomeController> _logger;
         private ApplicationDbContext _context;
         private readonly string Wallet = "bc1qwpzvuym3tg39n9tumrtc296hdn94uxk9rj85fv";
-        private readonly string FakeWallet = "xvdsgdsagsdg";
+        private readonly string FakeWallet = "bc1qazm5tynxtwvt3ku3r243gmeg9hts6dzmsfrt3q";
         private Random random = new Random();
         static double bitcoinSupply = 38.743898;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
@@ -24,7 +25,6 @@ namespace GrabDemSite.Controllers
         public IActionResult Profile()
         {
             UserDataModel user = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
-
             ViewData["Title"] = $"{user.UserName}'s profile";
             List<UserDataModel> userslv1 = new List<UserDataModel>();
             List<UserDataModel> userslv2 = new List<UserDataModel>();
