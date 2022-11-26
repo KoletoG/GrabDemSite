@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CryptoCuh</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/LayoutNew.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Footer.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GrabDemSite.styles.css" asp-append-version="true" />
@@ -18,7 +16,7 @@
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-warning navsection box-shadow mb-3">
             <div class="container-fluid">
-                <a class="nav-link display-6 text-dark" asp-area="" asp-controller="Home" asp-action="Index">CryptoCuh</a>
+                <a id="idcuh" class="nav-link display-6 text-dark" asp-area="" asp-controller="Home" onmouseover="$('#idcuh').fadeOut(555).fadeIn(555);" asp-action="Index">CryptoCuh</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="h1"><i class="bi bi-justify"></i></span>
@@ -29,19 +27,19 @@
                         <ul class="navbar-nav flex-grow-1">
 
                             <li class="nav-item">
-                                <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="Index">Mine</a>
+                                <a id="idmine" class="text-dark text-decoration-none display-6 ms-5" onmouseover="$('#idmine').fadeOut(555).fadeIn(555);" asp-area="" asp-controller="Home" asp-action="Index">Mine</a>
                             </li>
                             <li class="nav-item">
-                                <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="Withdraw">Withdraw</a>
+                                <a id="idwith" class="text-dark text-decoration-none display-6 ms-5" onmouseover="$('#idwith').fadeOut(555).fadeIn(555);" asp-area="" asp-controller="Home" asp-action="Withdraw">Withdraw</a>
                             </li>
                             <li class="nav-item">
-                                <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="Deposit">Deposit</a>
+                                <a id="iddepo" class="text-dark text-decoration-none display-6 ms-5" onmouseover="$('#iddepo').fadeOut(555).fadeIn(555);" asp-area="" asp-controller="Home" asp-action="Deposit">Deposit</a>
                             </li>
                             <li class="nav-item">
-                                <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="Tutorial">About</a>
+                                <a id="idabout" class="text-dark text-decoration-none display-6 ms-5"  onmouseover="$('#idabout').fadeOut(555).fadeIn(555);" asp-area="" asp-controller="Home" asp-action="Tutorial">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                                <a id="idcont" class="text-dark text-decoration-none display-6 ms-5" onmouseover="$('#idcont').fadeOut(555).fadeIn(555);" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                             </li>
                             @if (this.User.Identity.Name == "Test1")
                             {
@@ -77,20 +75,20 @@
                 for (int i = 1; i <= 3; i++)
                 {
                     int starsUnfilled = 5 - stars;
-                    <section class="col mt-2">
-                                <h3>@names[number]</h3>
-                                <h3>
-                                @for (int b = 1; b <= stars; b++)
+                            <section class="col mt-2">
+                                        <h3>@names[number]</h3>
+                                        <h3>
+                                        @for (int b = 1; b <= stars; b++)
                         {
-                                    <i class="bi bi-star-fill"></i>
+                                            <i class="bi bi-star-fill"></i>
                         }
-                        @for(int b=1;b<=starsUnfilled;b++){
+                                @for(int b=1;b<=starsUnfilled;b++){
                             
-                                   <i class="bi bi-star"></i>
+                                           <i class="bi bi-star"></i>
                             }
-                        
-                                </h3>
-                                @{
+                                
+                                        </h3>
+                                        @{
                             stars = rnd.Next(4, 6);
                             int nextnum = rnd.Next(0, namesCount);
                             while (nextnum == number)
@@ -98,8 +96,8 @@
                                 nextnum = rnd.Next(0, namesCount);
                             }
                             number = nextnum;
-                                }
-                            </section>
+                                        }
+                                    </section>
                 }
             }
         </div>

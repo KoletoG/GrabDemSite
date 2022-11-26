@@ -64,6 +64,11 @@ namespace GrabDemSite.Controllers
             {
                 ViewBag.Error = "You need to set your wallet first";
             }
+            else
+            {
+                ViewBag.Error = null;
+
+            }
             if (_context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefault() != default)
             {
                 userslv1.Remove(fakeUser);

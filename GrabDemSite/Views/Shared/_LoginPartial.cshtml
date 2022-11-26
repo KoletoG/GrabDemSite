@@ -8,11 +8,11 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="text-dark text-decoration-none display-6 ms-5" asp-controller="Home" asp-action="Profile" asp-route-tr=@true title="Manage">@this.User.Identity.Name</a>
+        <a id="idprof" class="text-dark text-decoration-none display-6 ms-5" asp-controller="Home" onmouseover="$('#idprof').fadeOut(555).fadeIn(555);" asp-action="Profile" asp-route-tr=@true title="Manage">@this.User.Identity.Name</a>
     </li>
     <li class="nav-item">
         <form  class="" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="bg-warning border-0 text-dark text-decoration-none display-6 ms-4 ">Logout</button>
+            <button id="idlogout" type="submit" onmouseover="$('#idlogout').fadeOut(555).fadeIn(555);" class="bg-warning border-0 text-dark text-decoration-none display-6 ms-4 ">Logout</button>
         </form>
     </li>
 }

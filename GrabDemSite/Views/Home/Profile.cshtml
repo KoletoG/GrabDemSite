@@ -5,45 +5,49 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" asp-append-version="true">
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <script>
+    $(document).ready(function() {
+        $("#mena").hide();
+        $("#mena").show(2000);
+    });
     function fades() {
         $('[id=txt1]').fadeOut(4000);
-       
+
         $('[id=txt1]').fadeIn(4000);
         setTimeout(fades, 1000);
     }
     $(document).ready(fades);
 
-function clicc() {
-    $('#btn1').toggleClass('btn-dark');
-}function clicc2() {
-    $('#btn2').toggleClass('btn-dark');
-}function clicc3() {
-    $('#btn3').toggleClass('btn-dark');
-}function clicc4() {
-    $('#btn4').toggleClass('btn-dark');
-}function clicc5() {
-    $('#btn5').toggleClass('btn-dark');
-}
+    function clicc() {
+        $('#btn1').toggleClass('btn-dark');
+    } function clicc2() {
+        $('#btn2').toggleClass('btn-dark');
+    } function clicc3() {
+        $('#btn3').toggleClass('btn-dark');
+    } function clicc4() {
+        $('#btn4').toggleClass('btn-dark');
+    } function clicc5() {
+        $('#btn5').toggleClass('btn-dark');
+    }
 </script>
-<div class="container shadow-lg w-75 border-bottom border-top mt-5 text-center mb-5">
+<div id="mena" class="container shadow-lg w-75 border-bottom border-top mt-5 text-center mb-5">
     <h1 class="mt-2 mb-5 fst-italic">@this.User.Identity.Name's profile</h1>
     <div id="txtcont" class="container shadow-lg w-75 border-bottom border-top mt-5 text-center mb-5">
-       
 
-                <h3 id="txt1" class="text-dark fs-3 mt-4 mb-4 fst-italic">
-                    Upgrade your level by making bigger deposits <br>
-                    Bigger levels get higher commission
-                </h3>
 
-                <h3 id="txt1" class="text-dark fs-3 mt-4 mb-4 fst-italic">
-                    At <span class="text-warning">100$</span> deposit you gain <span class="text-warning">10$</span> bonus
-                    <br />
-                    At <span class="text-warning">200$</span> deposit you gain <span class="text-warning">15$</span> bonus and <span class="text-danger">1</span> free mine
-                    <br />
-                    At <span class="text-warning">300$</span> deposit you gain <span class="text-warning">20$</span> bonus and <span class="text-danger">1</span> free mine
-                </h3>
-            
-        
+        <h3 id="txt1" class="text-dark fs-3 mt-4 mb-4 fst-italic">
+            Upgrade your level by making bigger deposits <br>
+            Bigger levels get higher commission
+        </h3>
+
+        <h3 id="txt1" class="text-dark fs-3 mt-4 mb-4 fst-italic">
+            At <span class="text-warning">100$</span> deposit you gain <span class="text-warning">10$</span> bonus
+            <br />
+            At <span class="text-warning">200$</span> deposit you gain <span class="text-warning">15$</span> bonus and <span class="text-danger">1</span> free mine
+            <br />
+            At <span class="text-warning">300$</span> deposit you gain <span class="text-warning">20$</span> bonus and <span class="text-danger">1</span> free mine
+        </h3>
+
+
     </div>
     @if (ViewBag.Error != null)
     {
@@ -168,11 +172,11 @@ function clicc() {
                     foreach (DepositDataModel deposit in ViewBag.DepositOrders)
                     {
 
-                                                                                                                                                            <div class="p-2">
-                                                                                                                                                                <h3 class="fst-italic">Order number: @count</h3>
-                                                                                                                                                                <h3 class="text-dark ">Date deposit made on: @deposit.DateCreated.ToShortDateString()</h3>
-                                                                                                                                                                <h3 class="text-warning display-6">@deposit.MoneyForDeposit $</h3>
-                                                                                                                                                            </div>
+                        <div class="p-2">
+                            <h3 class="fst-italic">Order number: @count</h3>
+                            <h3 class="text-dark ">Date deposit made on: @deposit.DateCreated.ToShortDateString()</h3>
+                            <h3 class="text-warning display-6">@deposit.MoneyForDeposit $</h3>
+                        </div>
                         count++;
                     }
                 }
@@ -187,11 +191,11 @@ function clicc() {
                     foreach (WithdrawDataModel deposit in ViewBag.WithdrawOrders)
                     {
 
-                                                                                                                                                            <div class="p-2">
-                                                                                                                                                                <h3 class="fst-italic">Order number: @count1</h3>
-                                                                                                                                                                <h3 class="text-dark ">Date deposit made on: @deposit.DateCreated.ToShortDateString()</h3>
-                                                                                                                                                                <h3 class="text-warning display-6">@deposit.Money $</h3>
-                                                                                                                                                            </div>
+                        <div class="p-2">
+                            <h3 class="fst-italic">Order number: @count1</h3>
+                            <h3 class="text-dark ">Date deposit made on: @deposit.DateCreated.ToShortDateString()</h3>
+                            <h3 class="text-warning display-6">@deposit.Money $</h3>
+                        </div>
                         count++;
                     }
                 }

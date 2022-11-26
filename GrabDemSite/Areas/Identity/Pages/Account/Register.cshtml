@@ -11,7 +11,7 @@
     <div class="container shadow-lg w-75 border-bottom border-top mt-5 text-center mb-5 w-25">
 
         <form id="registerForm" class="mt-3" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="fs-5 text-danger"></div>
             <div class="user-box">
                 <label asp-for="Input.Email" class="text-dark display-5"></label><br />
                 <span asp-validation-for="Input.Email" class="fs-5 text-danger"></span>

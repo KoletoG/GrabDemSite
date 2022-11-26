@@ -86,7 +86,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             public string Email { get; set; }
             [Required]
             [Display(Name = "Username")]
-            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 4)]
             public string UserName { get; set; }
 
             /// <summary>
@@ -179,9 +179,9 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 task.Id = Guid.NewGuid().ToString();
                 task.NewAccount = true;
                 _context.TaskDatas.Add(task);
-                _context.SaveChanges();
                 if (result.Succeeded)
                 {
+                    _context.SaveChanges();
                     _logger.LogInformation("User created a new account with password.");
                     ViewData["Error"] = null;
                         return RedirectToAction("Index");

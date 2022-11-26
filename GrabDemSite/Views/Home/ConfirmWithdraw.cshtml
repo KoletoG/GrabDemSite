@@ -2,8 +2,15 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="~/css/Withdraw.css" asp-append-version="true"/>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
-    <div class="container shadow-lg w-75 border-bottom border-top mt-5 text-center mb-5">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/><script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        $("#mena").hide();
+        $("#mena").show(2000);
+    });
+
+</script>
+    <div id="mena" class="container shadow-lg w-75 border-bottom border-top mt-5 text-center mb-5">
   
 <label asp-for="Money" class="mt-3 display-5 text-dark">
     Money for withdraw after fee:
