@@ -18,6 +18,7 @@ namespace GrabDemSite
             {
                 services.AddHostedService<Worker>();
             });
+            builder.Services.AddRazorPages();
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -49,7 +50,6 @@ namespace GrabDemSite
 
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

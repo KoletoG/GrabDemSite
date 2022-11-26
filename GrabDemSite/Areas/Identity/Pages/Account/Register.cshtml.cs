@@ -86,6 +86,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             public string Email { get; set; }
             [Required]
             [Display(Name = "Username")]
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             public string UserName { get; set; }
 
             /// <summary>
@@ -103,9 +104,13 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
+            [Required]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+
             [Display(Name = "Invite code")]
             public string InviteWithLink { get; set; }
         }
@@ -125,6 +130,16 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             {
                 count += rnd.Next(1, 500);
                 var user = CreateUser();
+                if(_context.Users.Where(x=>x.UserName==Input.UserName).SingleOrDefault()!=default)
+                {
+                    ViewData["ErrorU"] = "Username already in use";
+                    return Page();
+                }
+                if(_context.Users.Where(x => x.Email == Input.Email).SingleOrDefault() != default)
+                {
+                    ViewData["ErrorE"] = "Email already in use";
+                    return Page();
+                }
                 user.Id = Guid.NewGuid().ToString();
                 user.InviteLink = count.ToString();
                 user.DateCreated = DateTimeOffset.Now;
@@ -168,7 +183,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
+                    ViewData["Error"] = null;
                         return RedirectToAction("Index");
                     
                 }

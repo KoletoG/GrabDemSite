@@ -1,7 +1,5 @@
 ﻿@model TaskDataModel
 <head>
-    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/line.css" asp-append-version="true" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
@@ -14,68 +12,63 @@
         if (task.NewAccount == false)
         {
             DateTime now = task.DateStarted;
-            if (DateTime.UtcNow > now.AddHours(4) && task.Count > 0)
-            {
-                            <h2>
-                                Every deposit gives you 5 mines, each mine gives you approx. 6% of your balance.
-                            </h2>
-                            <form asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now">
-                                <label id="tip">Miner will be mining in this blockchain: </label>
-                                <br />
-                                <h5>@ViewBag.BlockChain</h5>
-                                <button type="submit" class="btnstart">Use the miner</button>
-                            </form>
-                            @ViewBag.ErrorCh
-                            <h3>Your balance: @user.Balance $</h3>
-            }
-            else if (task.Count > 0)
-            {
-                TimeSpan remaining = task.DateStarted.AddHours(4) - DateTime.UtcNow;
-                if (remaining.Hours >= 1)
-                {
-                                <h4>Time remaining till next mine: @remaining.TotalHours.ToString("0") hours</h4>
-                }
-                else
-                {
-                                <h4>Time remaining till next mine: @remaining.TotalMinutes.ToString("0") hours</h4>
-                }
-                            <h5>There is a cooldown between minings because there are currently @ViewBag.Count users using the miners</h5>
-                            <h6>For every person you invite who deposits 25$, you get +1 mine free</h6>
-                            <h2>Mines remaining: @task.Count</h2>
-                if (user.Level == 1)
-                {
-                                <h5>Your current level gives you 5.5% per mine</h5>
-                }
-                else if (user.Level == 2)
-                {
-                                <h5>Your current level gives you 7% per mine</h5>
-                }
+            <div class="container text-center shadow-lg w-75 border-bottom border-top mt-5 mb-5">
+                @{
+                    if (task.Count > 0)
+                    {
+                        TimeSpan remaining = task.DateStarted.AddHours(4) - DateTime.UtcNow;
+                        if (remaining.Hours >= 1)
+                        {
+                            <h4 class="text-dark display-6 mb-3 mt-2">Time remaining till next mine: <span class="text-warning">@remaining.TotalHours.ToString("0") hours</span></h4>
+                        }
+                        else
+                        {
+                            <h4 class="text-dark display-6 mb-3 mt-2">Time remaining till next mine: <span class="text-warning">@remaining.TotalHours.ToString("0") minutes </span></h4>
+                        }
+                        <h5 class="fs-5 mb-4 mt-5">There is a cooldown between minings because there are currently <span class="text-danger">@ViewBag.Count users</span> using the miners</h5>
+                        <h6 class="h5 fst-italic text-dark">For every person you invite who deposits, you get +1 mine free</h6>
+                        <h2 class="display-5 mt-5 mb-5">Mines remaining: <span class="text-warning">@task.Count</span></h2>
+                        if (user.Level == 1)
+                        {
+                            <h5 class="text-dark">Your current level gives you <span class="text-warning">5%</span> per mine</h5>
+                        }
+                        else if (user.Level == 2)
+                        {
+                            <h5 class="text-dark">Your current level gives you <span class="text-warning">6.5%</span> per mine</h5>
+                        }
 
-                else if (user.Level == 3)
-                {
+                        else if (user.Level == 3)
+                        {
 
-                                <h5>Your current level gives you 8.5% per mine</h5>
+                            <h5 class="text-dark">Your current level gives you<span class="text-warning">8%</span> per mine</h5>
+                        }
+                        <h4 class="text-dark mt-2 mb-2">Bitcoin supply left to transfer: <span class="text-warning">@ViewBag.Bitc</span></h4>
+                        <h3 class="text-dark mt-2 mb-4">Your balance: <span class="text-warning">@user.Balance $</span></h3>
+
+                    }
                 }
-                            <h4>Bitcoin supply left to transfer: @ViewBag.Bitc</h4>
-                            <h3>Your balance: @user.Balance $</h3>
-                            
-                            <img src="~/Images/LevelsREAL.png" id="img1" />
-            }
-            else
-            {
-                            <h5>You need to deposit or invite people who deposit in order to get more mines.</h5>
-            }
+                @{
+                    if (task.NewAccount == true)
+                    {
+                        <h5 class="display-6">You need to deposit or invite people who deposit in order to get more mines.</h5>
+                    }
+                }
+            </div>
         }
         else
         {
-                        <h2>The bigger the balance, the bigger the amount of money you are going to get</h2>
-                        <form asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now">
-                            <label>Your blockchain to mine in this day: </label>
-                            <br />
-                            <h5>@ViewBag.BlockChain</h5>
-                            <button type="submit" class="btnstart">Start mining</button>
-                        </form>
-                        <h3>Your balance: @user.Balance $</h3>
+            <div class="container shadow-lg w-75 border-bottom border-top mt-5 mb-5">
+                <form class="text-center" asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now">
+                    <h3 class="mt-3 display-5 text-warning">Your blockchain to mine in this day: </h3>
+                    <h5 class="h4 mb-5 opacity-50 fst-italic mt-2 text-truncate">@ViewBag.BlockChain</h5>
+                    <br>
+                    <h4 class="h5 text-center mt-3 fst-italic">The bigger the balance, the bigger the amount of money you are going to get</h4>
+
+                    <input type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-5 fs-2" value="Start mining">
+                    <h3 class="text-dark mt-5 mb-3">Your balance: <span class="text-warning">@user.Balance $</span></h3>
+
+                </form>
+            </div>
         }
     }
 </body>

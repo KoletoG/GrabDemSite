@@ -8,13 +8,16 @@
 </head>
 @ViewBag.ErrorSum
 <body>
-    <form asp-controller="Home" asp-action="TryDeposit" asp-route-id="@Model.Id">
-       <label class="txtdep">Enter a sum you want to deposit: </label>
+                <div class="container shadow-lg w-75 border-bottom border-top mt-5 mb-5">
+    <form asp-controller="Home" class="text-center" asp-action="TryDeposit" asp-route-id="@Model.Id">
+       <h3 class="mt-3 display-5 text-warning">Enter a sum you want to deposit: </h3>
+      <input type="number" placeholder="0" name="money" class="text-dark mt-3 h4 text-center rounded-3 w-25">
        <br />
-       <input type="number" class="inputmon" name="money" />
-       <br />
-       <button type="submit" class="button1">Submit</button>
+                <h2 class="h5 text-center mt-5 fst-italic">
+                    Deposits might take up to several hours to be completed</h2>
+       <button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-5 fs-2">Submit</button>
+       <h3 class="text-dark mt-5 mb-3" >Your balance: <span class="text-warning">@Model.Balance $</span></h3>
+                
     </form>
-    <h3>Your balance: @Model.Balance.ToString("0.00") $</h3>
-    <img src="~/Images/Levels.png" class="img1"/>
+    </div>
     </body>

@@ -10,17 +10,18 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GrabDemSite.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" asp-append-version="true">
     <link rel="shortcut icon" href="~/Images/btc.png" />
 </head>
 <body>
     <header>
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navsection box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm bg-warning navsection box-shadow mb-3">
             <div class="container-fluid">
-                <a class="nav-link txtmain" asp-area="" asp-controller="Home" asp-action="Index">CryptoCuh</a>
+                <a class="nav-link display-6 text-dark" asp-area="" asp-controller="Home" asp-action="Index">CryptoCuh</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                    <span class="h1"><i class="bi bi-justify"></i></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     @if (this.User.Identity.IsAuthenticated == true)
@@ -28,21 +29,24 @@
                         <ul class="navbar-nav flex-grow-1">
 
                             <li class="nav-item">
-                                <a class="txtsecondary" asp-area="" asp-controller="Home" asp-action="Index">Mine</a>
+                                <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="Index">Mine</a>
                             </li>
                             <li class="nav-item">
-                                <a class="txtsecondary" asp-area="" asp-controller="Home" asp-action="Withdraw">Withdraw</a>
+                                <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="Withdraw">Withdraw</a>
                             </li>
                             <li class="nav-item">
-                                <a class="txtsecondary " asp-area="" asp-controller="Home" asp-action="Deposit">Deposit</a>
+                                <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="Deposit">Deposit</a>
                             </li>
                             <li class="nav-item">
-                                <a class="txtsecondary " asp-area="" asp-controller="Home" asp-action="Tutorial">About</a>
+                                <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="Tutorial">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                             </li>
                             @if (this.User.Identity.Name == "Test1")
                             {
                                 <li class="nav-item">
-                                    <a class="txtsecondary " asp-area="" asp-controller="Home" asp-action="AdminMenu">Admin</a>
+                                    <a class="text-dark text-decoration-none display-6 ms-5" asp-area="" asp-controller="Home" asp-action="AdminMenu">Admin</a>
                                 </li>
                             }
                         </ul>
@@ -58,9 +62,8 @@
             @RenderBody()
         </main>
     </div>
-
-    <footer class="footer1 footersection">
-        <div class="container">
+    <footer class="footer text-center border-top position-static">
+        <div class="row align-items-start">
             @{
                 Random rnd = new Random();
                 string[] names ={"IndexeR","SalamiKebabi","MACEDONIAA","GGGG!","Messi","Cr3pto","IceMan","IceWallowCome","DEEZNUTZ","Hobbit"
@@ -68,19 +71,27 @@
             "420Josh","BlazeItGlazeIt","mOntero","snitch9ine","BobTheBuilder","32LivesEtc","PillTaker31xD","xXMeinKraftXx","GimmeTroll","Frog",
             "PopCornMike","LuvU","Weesly","PaNdorA","CringiestGuy","EmoKid","XXXshhh","waterdrinker83","AnUnluckyLuckyPerson","DaRealSanta","BigFootLazza",
             "Kylie","CarlMarx","FakeR","CartoonStar","JJOrangutunji"};
-                int stars = rnd.Next(3, 6);
+                int stars = rnd.Next(4, 6);
                 int namesCount = names.Count();
                 int number = rnd.Next(0, namesCount);
                 for (int i = 1; i <= 3; i++)
                 {
-                            <section class="review">
+                    int starsUnfilled = 5 - stars;
+                    <section class="col mt-2">
                                 <h3>@names[number]</h3>
+                                <h3>
                                 @for (int b = 1; b <= stars; b++)
                         {
-                                    <img src="~/Images/star.png" style="height:35px;width:35px;filter:hue-rotate(-110deg);" />
+                                    <i class="bi bi-star-fill"></i>
                         }
+                        @for(int b=1;b<=starsUnfilled;b++){
+                            
+                                   <i class="bi bi-star"></i>
+                            }
+                        
+                                </h3>
                                 @{
-                            stars = rnd.Next(3, 6);
+                            stars = rnd.Next(4, 6);
                             int nextnum = rnd.Next(0, namesCount);
                             while (nextnum == number)
                             {

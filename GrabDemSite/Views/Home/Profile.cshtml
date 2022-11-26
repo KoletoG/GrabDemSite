@@ -1,85 +1,201 @@
 ﻿@model UserDataModel
-<h6>Your profile</h6>
-<link rel="stylesheet" href="~/css/UserLayout.css" asp-append-version="true" />
-    <meta charset="utf-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
-<h3>@ViewData["Title"]</h3>
-@{
-    string name = this.User.Identity.Name;
-    <h1>@ViewBag.User</h1>
-}
-<h4>Your invite code: @Model.InviteLink</h4>
-@if (string.IsNullOrEmpty(Model.WalletAddress))
-{
-    <label id="warn">You can only change your wallet once!</label>
-    <form asp-controller="Home" asp-action="ChangeWallet">
-        <input name="wallet" class="inputmon" placeholder="BTC Address" type="text" />
-        <br />
-        <button type="submit" class="button1">Change wallet address</button>
-    </form>
-}
-<h3>Your level: @Model.Level</h3>
-<h3>Your balance: @Model.Balance.ToString("0.00") $</h3>
-<h3>Team's money spent: @ViewBag.WholeBal $</h3>
-<div class="rows">
-    <div class="row1">
-        <h1>Level 1: </h1>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" asp-append-version="true">
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script>
+    function fades() {
+        $('[id=txt1]').fadeOut(4000);
+       
+        $('[id=txt1]').fadeIn(4000);
+        setTimeout(fades, 1000);
+    }
+    $(document).ready(fades);
 
-        @foreach (UserDataModel userlv1 in ViewBag.Level1)
-        {
+function clicc() {
+    $('#btn1').toggleClass('btn-dark');
+}function clicc2() {
+    $('#btn2').toggleClass('btn-dark');
+}function clicc3() {
+    $('#btn3').toggleClass('btn-dark');
+}function clicc4() {
+    $('#btn4').toggleClass('btn-dark');
+}function clicc5() {
+    $('#btn5').toggleClass('btn-dark');
+}
+</script>
+<div class="container shadow-lg w-75 border-bottom border-top mt-5 text-center mb-5">
+    <h1 class="mt-2 mb-5 fst-italic">@this.User.Identity.Name's profile</h1>
+    <div id="txtcont" class="container shadow-lg w-75 border-bottom border-top mt-5 text-center mb-5">
+       
 
-            <h2>@userlv1.UserName</h2>
-            if (userlv1.MoneySpent <= 25)
-            {
-                <h3>0$</h3>
-            }
-            else if (userlv1.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
-            {
-                <h3>25$</h3>
-            }
-            else
-            {
-                <h3>@userlv1.MoneySpent $</h3>
-            }
-        }
+                <h3 id="txt1" class="text-dark fs-3 mt-4 mb-4 fst-italic">
+                    Upgrade your level by making bigger deposits <br>
+                    Bigger levels get higher commission
+                </h3>
+
+                <h3 id="txt1" class="text-dark fs-3 mt-4 mb-4 fst-italic">
+                    At <span class="text-warning">100$</span> deposit you gain <span class="text-warning">10$</span> bonus
+                    <br />
+                    At <span class="text-warning">200$</span> deposit you gain <span class="text-warning">15$</span> bonus and <span class="text-danger">1</span> free mine
+                    <br />
+                    At <span class="text-warning">300$</span> deposit you gain <span class="text-warning">20$</span> bonus and <span class="text-danger">1</span> free mine
+                </h3>
+            
+        
     </div>
-    <div class="row2">
-        <h1>Level 2: </h1>
-        @foreach (UserDataModel userlv2 in ViewBag.Level2)
-        {
-            <h2>@userlv2.UserName</h2>
-            if (userlv2.MoneySpent <= 25)
-            {
-                <h3>0$</h3>
-            }
-            else if (userlv2.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
-            {
-                <h3>25$</h3>
-            }
-            else
-            {
-                <h3>@userlv2.MoneySpent $</h3>
-            }
-        }
+    @if (ViewBag.Error != null)
+    {
+        <h2 class="text-danger display-5">@ViewBag.Error</h2>
+    }
+
+    <button id="btn1" class="btn-lg btn-warning shadow-sm mt-3 mb-4 fs-5" type="button" onclick="clicc()" data-bs-toggle="collapse" data-bs-target="#collapseTeams" aria-expanded="false" aria-controls="collapseExample">
+        Team status <i class="bi bi-people-fill"></i>
+    </button>
+    <button id="btn2" class="btn-lg btn-warning shadow-sm mt-3 mb-4 fs-5" type="button" onclick="clicc2()" data-bs-toggle="collapse" data-bs-target="#collapseDeposits" aria-expanded="false" aria-controls="collapseExample">
+        Deposit history <i class="bi bi-cart-plus-fill"></i>
+    </button>
+    <button id="btn3" class="btn-lg btn-warning shadow-sm mt-3 mb-4 fs-5" type="button" onclick="clicc3()" data-bs-toggle="collapse" data-bs-target="#collapseWithdraws" aria-expanded="false" aria-controls="collapseExample">
+        Withdraws history <i class="bi bi-cart-dash-fill"></i>
+    </button>
+    <button id="btn4" class="btn-lg btn-warning shadow-sm mt-3 mb-4 fs-5" type="button" onclick="clicc4()" data-bs-toggle="collapse" data-bs-target="#collapseInfo" aria-expanded="false" aria-controls="collapseExample">
+        Account info <i class="bi bi-person-fill"></i>
+    </button>
+    <button id="btn5" class="btn-lg btn-warning shadow-sm mt-3 mb-4 fs-5" type="button" onclick="clicc5()" data-bs-toggle="collapse" data-bs-target="#collapseWallet" aria-expanded="false" aria-controls="collapseExample">
+        Your wallet <i class="bi bi-wallet-fill"></i>
+    </button>
+    <div class="collapse" id="collapseTeams">
+        <div class="card card-body mb-3  shadow-sm">
+            <h2 class="text-dark display-5 text-center"> Team's money spent: <span class="text-warning">@ViewBag.WholeBal $</span></h2>
+
+            <div class="d-flex justify-content-around">
+                @{
+                    string name = this.User.Identity.Name;
+                }
+                <div class="p-2">
+                    <h1 class="display-4 text-warning">Level 1: </h1>
+                    @foreach (UserDataModel userlv1 in ViewBag.Level1)
+                    {
+
+                        <h2 class="fs-3">@userlv1.UserName</h2>
+                        if (userlv1.MoneySpent <= 25)
+                        {
+                            <h3>0$</h3>
+                        }
+                        else if (userlv1.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+                        {
+                            <h3>25$</h3>
+                        }
+                        else
+                        {
+                            <h3>@userlv1.MoneySpent $</h3>
+                        }
+                    }
+                </div>
+                <div class="p-2">
+                    <h1 class="display-4 text-warning">Level 2: </h1>
+                    @foreach (UserDataModel userlv2 in ViewBag.Level2)
+                    {
+                        <h2 class="fs-3">@userlv2.UserName</h2>
+                        if (userlv2.MoneySpent <= 25)
+                        {
+                            <h3>0$</h3>
+                        }
+                        else if (userlv2.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+                        {
+                            <h3>25$</h3>
+                        }
+                        else
+                        {
+                            <h3>@userlv2.MoneySpent $</h3>
+                        }
+                    }
+                </div>
+                <div class="p-2">
+                    <h1 class="display-4 text-warning">Level 3: </h1>
+                    @foreach (UserDataModel userlv3 in ViewBag.Level3)
+                    {
+                        <h2 class="fs-3">@userlv3.UserName</h2>
+                        if (userlv3.MoneySpent <= 25)
+                        {
+                            <h3>0$</h3>
+                        }
+                        else if (userlv3.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+                        {
+                            <h3>25$</h3>
+                        }
+                        else
+                        {
+                            <h3>@userlv3.MoneySpent $</h3>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="row3">
-        <h1>Level 3: </h1>
-        @foreach (UserDataModel userlv3 in ViewBag.Level3)
-        {
-            <h2>@userlv3.UserName</h2>
-            if (userlv3.MoneySpent <= 25)
+    <div class="collapse" id="collapseWallet">
+        <div class="card card-body mb-3  shadow-sm">
+            @if (string.IsNullOrEmpty(Model.WalletAddress))
             {
-                <h3>0$</h3>
-            }
-            else if (userlv3.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
-            {
-                <h3>25$</h3>
+                <form asp-controller="Home" class="text-center mt-5" asp-action="ChangeWallet">
+                    <h2 class="text-danger display-6 mb-3">You can only change your wallet once!</h2>
+                    <input name="wallet" class="text-dark fs-3 rounded-3 text-center border-dark border-2 mt-3 mb-3 w-50" placeholder="BTC Address" type="text" />
+                    <br />
+                    <button type="submit" class="btn-lg btn-warning shadow-sm mt-3 mb-4 fs-5">Set wallet address</button>
+                </form>
             }
             else
             {
-                <h3>@userlv3.MoneySpent $</h3>
+                <h2 class="text-warning display-4">@Model.WalletAddress</h2>
             }
-        }
+        </div>
+    </div>
+
+    <div class="collapse" id="collapseInfo">
+        <div class="card card-body mb-3  shadow-sm">
+            <h2 class="text-dark display-4">Your invite code: <span class="text-warning display-2 fw-semibold">@Model.InviteLink</span></h2>
+            <h2 class="text-dark display-5"> Your balance: <span class="text-warning">@Model.Balance.ToString("0.00") $</span></h2>
+            <h2 class="text-dark display-5"> Your level: <span class="text-warning">@Model.Level</span></h2>
+
+        </div>
+    </div>
+    <div class="collapse" id="collapseDeposits">
+        <div class="card card-body mb-3 shadow-sm">
+            <div class="d-flex flex-column mb-3">
+                @{
+                    int count = 1;
+                    foreach (DepositDataModel deposit in ViewBag.DepositOrders)
+                    {
+
+                                                                                                                                                            <div class="p-2">
+                                                                                                                                                                <h3 class="fst-italic">Order number: @count</h3>
+                                                                                                                                                                <h3 class="text-dark ">Date deposit made on: @deposit.DateCreated.ToShortDateString()</h3>
+                                                                                                                                                                <h3 class="text-warning display-6">@deposit.MoneyForDeposit $</h3>
+                                                                                                                                                            </div>
+                        count++;
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="collapse" id="collapseWithdraws">
+        <div class="card card-body mb-3 shadow-sm">
+            <div class="d-flex flex-column mb-3">
+                @{
+                    int count1 = 1;
+                    foreach (WithdrawDataModel deposit in ViewBag.WithdrawOrders)
+                    {
+
+                                                                                                                                                            <div class="p-2">
+                                                                                                                                                                <h3 class="fst-italic">Order number: @count1</h3>
+                                                                                                                                                                <h3 class="text-dark ">Date deposit made on: @deposit.DateCreated.ToShortDateString()</h3>
+                                                                                                                                                                <h3 class="text-warning display-6">@deposit.Money $</h3>
+                                                                                                                                                            </div>
+                        count++;
+                    }
+                }
+            </div>
+        </div>
     </div>
 </div>

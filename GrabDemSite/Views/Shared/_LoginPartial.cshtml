@@ -2,30 +2,27 @@
 @inject SignInManager<UserDataModel> SignInManager
 @inject UserManager<UserDataModel> UserManager
 
-    <link rel="stylesheet" href="~/css/LayoutNew.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"  asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GrabDemSite.styles.css" asp-append-version="true" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="txtthird1" asp-controller="Home" asp-action="Profile"  title="Manage">@this.User.Identity.Name</a>
+        <a  class="text-dark text-decoration-none display-6 ms-5" asp-controller="Home" asp-action="Profile" asp-route-tr=@true title="Manage">@this.User.Identity.Name</a>
     </li>
     <li class="nav-item">
-        <form  class="txtthird" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="txtthird">Logout</button>
+        <form  class="" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button  type="submit" class="bg-warning border-0 text-dark text-decoration-none display-6 ms-4 ">Logout</button>
         </form>
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a class="txtlogin" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a class="text-dark text-decoration-none display-6 ms-5" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
     <li class="nav-item">
-        <a class="txtlogin1" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="text-dark text-decoration-none display-6 ms-5" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
 </ul>

@@ -1,6 +1,5 @@
 ﻿@model UserDataModel
 <header>
-    <link rel="stylesheet" href="~/css/AdminMenu.css" asp-append-version="true"/>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
@@ -15,12 +14,12 @@
     {
         bool confirmD = true;
         bool confirmW = true;
-        <section>
-            <h2>@user.Email</h2>
-            <h4>@user.WalletAddress</h4>
-            <h3>@user.InviteCount</h3>
+            <div class="container shadow-lg w-75 border-bottom border-top mt-5 text-center">
+            <h2 class="text-warning display-6">@user.Email</h2>
+            <h4 class="h3 fst-italic">Wallet: @user.WalletAddress</h4>
+            <h3>Invite count: @user.InviteCount</h3>
             <form asp-controller="Home" asp-action="Edit" asp-route-id="@user.Id">
-                <input type="submit" value="Button" placeholder="Crip">
+                <input type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-2 fs-5" value="Edit" placeholder="Crip">
             </form>
             @for(int i=0;i<deposits.Count();i++)
             {
@@ -43,6 +42,7 @@
                             {
                                 confirmW = false;
                             }
+                           
                         }
                     }
                 }
@@ -55,8 +55,8 @@
             @if(confirmW==false)
             {
                 <h5 style="color:red;">Pending withdraw</h5>
-                <form asp-controller="Home" asp-action="AdminWithdrawConfirm" asp-route-id="@user.WalletAddress">
-                    <button type="submit">Confirm Withdraw</button>
+                <form asp-controller="Home" asp-action="AdminWithdrawConfirm" asp-route-wallet="@user.WalletAddress">
+                    <button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-2 fs-5">Confirm Withdraw</button>
                 </form>
             }
             else
@@ -71,6 +71,6 @@
             {
                 <h5 style="color:green">Confirmed deposit</h5>
             }
-        </section>
+        </div>
     }
 </body>

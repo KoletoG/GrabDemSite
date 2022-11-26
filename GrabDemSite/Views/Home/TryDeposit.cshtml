@@ -1,12 +1,13 @@
 ﻿@model DepositDataModel
-    <meta charset="utf-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
-<link rel="stylesheet" href="~/css/TryDeposit.css" asp-append-version="true" />
-<label class="txtwith1">Send to this wallet: </label>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
+<link href="~/js/site.js" asp-append-version="true"/>
+<div class="container shadow-lg w-75 border-bottom border-top mt-5 text-center mb-5">
+<h3 class="mt-3 display-5 text-warning">Send to this wallet: </h3>
 <br />
-<label class="txtwith">@ViewBag.Wallet</label>
+<h2 class="mb-5 h2 text-dark display-6 fst-italic" id="wallet">@ViewBag.Wallet</h2>
 <form asp-controller="Home" asp-action="TryTheDeposit" asp-route-userid=@Model.User.Id asp-route-id="@Model.Id" asp-route-money="@Model.MoneyForDeposit">
-    <button type="submit" class="button1">I made the payment</button>
+    <button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-5 fs-2">I made the payment</button>
 </form>
-<h4>Your payment could take up to several hours to be confirmed.</h4>
+</div>

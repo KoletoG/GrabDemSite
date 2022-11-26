@@ -43,8 +43,4 @@
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Images\" />
-  </ItemGroup>
-
 </Project>

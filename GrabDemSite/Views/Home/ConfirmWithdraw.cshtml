@@ -3,17 +3,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="~/css/Withdraw.css" asp-append-version="true"/>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
-<label asp-for="Money" id="moneyafterwithdraw">
+    <div class="container shadow-lg w-75 border-bottom border-top mt-5 text-center mb-5">
+  
+<label asp-for="Money" class="mt-3 display-5 text-dark">
     Money for withdraw after fee:
     
     <br />
-    @Model.Money
 </label>
+<h1 class="mt-3 display-5 text-warning"> @Model.Money $</h1>
 <form asp-controller="Home" asp-action="ConfirmedWithdraw" asp-route-id="@Model.Id" asp-route-money="@Model.Money" 
 asp-route-wallet="@Model.WalletAddress" asp-route-iduser="@Model.User.Id">
-    <input type="submit"class="button1" value="Confirm"/>
+    <input type="submit" class="btn-lg btn-warning shadow-sm mt-5 mb-2 fs-2" value="Confirm"/>
 </form>
 
 <form asp-controller="Home" asp-action="Withdraw">
-    <input type="submit"class="button1" value="Decline"/>
+    <input type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-5 fs-2" value="Decline"/>
 </form>
+</div>
