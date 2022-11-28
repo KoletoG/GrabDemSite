@@ -23,6 +23,31 @@ namespace GrabDemSite.Controllers
             _logger = logger;
             _context = context;
         }
+        public async Task<IActionResult> DeleteAccount(string id)
+        {
+            var user = await _context.Users.Where(x => x.Id == id).SingleAsync();
+            var task = await _context.TaskDatas.Where(x => x.User == user).SingleAsync();
+            var deposits = await _context.DepositDatas.Where(x => x.User == user).ToListAsync();
+            var withdraws = await _context.WithdrawDatas.Where(x => x.User == user).ToListAsync();
+            if (deposits.DefaultIfEmpty() != default)
+            {
+                for(int i=0;i<deposits.Count();i++)
+                {
+                    _context.DepositDatas.Remove(deposits[i]);
+                }
+            }
+            if (withdraws.DefaultIfEmpty() != default)
+            {
+                for (int i = 0; i < withdraws.Count(); i++)
+                {
+                    _context.WithdrawDatas.Remove(withdraws[i]);
+                }
+            }
+            _context.TaskDatas.Remove(task);
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return RedirectToAction("AdminMenu");
+        }
         [Authorize]
         public IActionResult Contact()
         {
@@ -74,9 +99,15 @@ namespace GrabDemSite.Controllers
                 userslv1.Remove(fakeUser);
                 userslv1 = await _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
                 userslv1.OrderBy(x => x.MoneySpent);
-                if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
+                if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5" || name == "SpecAg")
                 {
-                    wholeBal += userslv1.Count() * 25;
+                    foreach(var user11 in userslv1)
+                    {
+                        if(user11.MoneySpent>=25)
+                        {
+                            wholeBal += userslv1.Count() * 25;
+                        }
+                    }
                 }
                 else
                 {
@@ -102,9 +133,15 @@ namespace GrabDemSite.Controllers
                             userslv2.OrderBy(x => x.MoneySpent);
                         }
                     });
-                    if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
+                    if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5" || name == "SpecAg")
                     {
-                        wholeBal += userslv2.Count() * 25;
+                        foreach (var user11 in userslv2)
+                        {
+                            if (user11.MoneySpent >= 25)
+                            {
+                                wholeBal += userslv1.Count() * 25;
+                            }
+                        }
                     }
                     else
                     {
@@ -127,9 +164,15 @@ namespace GrabDemSite.Controllers
                                 userslv2.OrderBy(x => x.MoneySpent);
                             }
                         });
-                        if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
+                        if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5" || name=="SpecAg")
                         {
-                            wholeBal += userslv3.Count() * 25;
+                            foreach (var user11 in userslv3)
+                            {
+                                if (user11.MoneySpent >= 25)
+                                {
+                                    wholeBal += userslv1.Count() * 25;
+                                }
+                            }
                         }
                         else
                         {
@@ -304,6 +347,10 @@ namespace GrabDemSite.Controllers
                 ViewBag.ErrorNoMoney = "Your balance is less than what you want to withdraw";
                 return View("Withdraw", user);
             }
+            else if(user.Balance==0)
+            {
+                return RedirectToAction("Index");
+            }
             WithdrawDataModel withdrawReq = new WithdrawDataModel();
             withdrawReq.Id = Guid.NewGuid().ToString();
             withdrawReq.WalletAddress = user.WalletAddress;
@@ -323,7 +370,7 @@ namespace GrabDemSite.Controllers
             withdrawReq.IsConfirmed = false;
             withdrawReq.WalletAddress = wallet;
             withdrawReq.User = user;
-            user.Balance -= money;
+            user.Balance = 0;
             user.PlayMoney = 0;
             await _context.WithdrawDatas.AddAsync(withdrawReq);
             _context.Update(user);

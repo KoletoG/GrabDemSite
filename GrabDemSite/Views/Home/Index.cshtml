@@ -8,7 +8,7 @@
 <script>
     $(document).ready(function () {
         $("#mena").hide();
-        $("#mena").show(2000);
+        $("#mena").show(1000);
     });
 
 </script>
@@ -21,7 +21,7 @@
             DateTime now = task.DateStarted;
                     <div id="mena" class="container text-center shadow-lg w-75 border-bottom border-top mt-5 mb-5">
                         @{
-                    if (DateTime.UtcNow > now.AddHours(6) && task.Count > 0)
+                    if (DateTime.UtcNow > now.AddMinutes(360) && task.Count > 0)
                     {
                         
                                 <form class="text-center" asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now">
