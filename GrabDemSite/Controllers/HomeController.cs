@@ -17,7 +17,7 @@ namespace GrabDemSite.Controllers
         private readonly string FakeWallet = "bc1qazm5tynxtwvt3ku3r243gmeg9hts6dzmsfrt3q";
         private Random random = new Random();
         static double bitcoinSupply = 38.743898;
-        
+
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
@@ -31,7 +31,7 @@ namespace GrabDemSite.Controllers
             var withdraws = await _context.WithdrawDatas.Where(x => x.User == user).ToListAsync();
             if (deposits.DefaultIfEmpty() != default)
             {
-                for(int i=0;i<deposits.Count();i++)
+                for (int i = 0; i < deposits.Count(); i++)
                 {
                     _context.DepositDatas.Remove(deposits[i]);
                 }
@@ -83,7 +83,7 @@ namespace GrabDemSite.Controllers
             userslv2.Add(fakeUser);
             double wholeBal = 0;
             string name = user.UserName;
-            ViewBag.DepositOrders = await _context.DepositDatas.Where(x => x.User == user && x.IsConfirmed==true).ToListAsync();
+            ViewBag.DepositOrders = await _context.DepositDatas.Where(x => x.User == user && x.IsConfirmed == true).ToListAsync();
             ViewBag.WithdrawOrders = await _context.WithdrawDatas.Where(x => x.User == user).ToListAsync();
             if (tr == false)
             {
@@ -101,9 +101,9 @@ namespace GrabDemSite.Controllers
                 userslv1.OrderBy(x => x.MoneySpent);
                 if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5" || name == "SpecAg")
                 {
-                    foreach(var user11 in userslv1)
+                    foreach (var user11 in userslv1)
                     {
-                        if(user11.MoneySpent>=25)
+                        if (user11.MoneySpent >= 25)
                         {
                             wholeBal += userslv1.Count() * 25;
                         }
@@ -164,7 +164,7 @@ namespace GrabDemSite.Controllers
                                 userslv2.OrderBy(x => x.MoneySpent);
                             }
                         });
-                        if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5" || name=="SpecAg")
+                        if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5" || name == "SpecAg")
                         {
                             foreach (var user11 in userslv3)
                             {
@@ -231,7 +231,7 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet).ToListAsync();
+            ViewBag.Withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed==false).ToListAsync();
             return View();
         }
         [Authorize]
@@ -258,17 +258,15 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            List<WithdrawDataModel> withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet).ToListAsync();
-            await Task.Run(() =>
-            {
-                for (int i = 0; i < withdraws.Count(); i++)
-                {
-                    withdraws[i].IsConfirmed = true;
+            List<WithdrawDataModel> withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed == false).ToListAsync();
 
-                    _context.Update(withdraws[i]);
-                }
-                _context.SaveChanges();
-            });
+            for (int i = 0; i < withdraws.Count(); i++)
+            {
+                withdraws[i].IsConfirmed = true;
+
+                _context.Update(withdraws[i]);
+            }
+            _context.SaveChanges();
             return RedirectToAction("AdminMenu", "Home");
         }
         [Authorize]
@@ -336,6 +334,7 @@ namespace GrabDemSite.Controllers
         public async Task<IActionResult> TryWithdraw(string id, double money)
         {
             UserDataModel user = await _context.Users.Where(x => x.Id == id).SingleAsync();
+            double money1 = money;
             money -= money * 0.06;
             if (user.MoneySpent < 25)
             {
@@ -347,14 +346,15 @@ namespace GrabDemSite.Controllers
                 ViewBag.ErrorNoMoney = "Your balance is less than what you want to withdraw";
                 return View("Withdraw", user);
             }
-            else if(user.Balance==0)
+            else if (user.Balance == 0)
             {
                 return RedirectToAction("Index");
             }
             WithdrawDataModel withdrawReq = new WithdrawDataModel();
+            ViewBag.Mon = money;
             withdrawReq.Id = Guid.NewGuid().ToString();
             withdrawReq.WalletAddress = user.WalletAddress;
-            withdrawReq.Money = money;
+            withdrawReq.Money = money1;
             withdrawReq.User = user;
             return View("ConfirmWithdraw", withdrawReq);
         }
@@ -365,13 +365,13 @@ namespace GrabDemSite.Controllers
             WithdrawDataModel withdrawReq = new WithdrawDataModel();
             UserDataModel user = await _context.Users.FindAsync(iduser);
             withdrawReq.Id = id;
-            withdrawReq.Money = money;
+            withdrawReq.Money = money - (money * 0.06);
             withdrawReq.DateCreated = DateTime.Now;
             withdrawReq.IsConfirmed = false;
             withdrawReq.WalletAddress = wallet;
             withdrawReq.User = user;
-            user.Balance = 0;
-            user.PlayMoney = 0;
+            user.Balance -= money;
+            user.PlayMoney -= money;
             await _context.WithdrawDatas.AddAsync(withdrawReq);
             _context.Update(user);
             _context.SaveChanges();

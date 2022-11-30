@@ -15,12 +15,12 @@
 <label asp-for="UserName" class="text-warning display-6 mt-2">@Model.UserName</label>
 <br />
 <label asp-for="WalletAddress" class="h3 fst-italic">@Model.WalletAddress</label>
-</br>
+<br/>
 <form asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id" method="get">
 <label class="text-dark h5">Person has deposited: @sum $</label>
 <br />
 <input asp-for="Balance" class="text-dark mt-3 h4 text-center rounded-3 w-25"/>
-</br>
+<br/>
 <label asp-for="MoneySpent" class="h5 fst-italic">Person has spent: @Model.MoneySpent</label>
 <br />
 <button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-4 fs-5">Confirm edit</button>
