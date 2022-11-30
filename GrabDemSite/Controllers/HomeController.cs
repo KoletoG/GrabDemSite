@@ -231,7 +231,7 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet).ToListAsync();
+            ViewBag.Withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed==false).ToListAsync();
             return View();
         }
         [Authorize]
@@ -258,17 +258,15 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            List<WithdrawDataModel> withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet).ToListAsync();
-            await Task.Run(() =>
-            {
-                for (int i = 0; i < withdraws.Count(); i++)
-                {
-                    withdraws[i].IsConfirmed = true;
+            List<WithdrawDataModel> withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed == false).ToListAsync();
 
-                    _context.Update(withdraws[i]);
-                }
-                _context.SaveChanges();
-            });
+            for (int i = 0; i < withdraws.Count(); i++)
+            {
+                withdraws[i].IsConfirmed = true;
+
+                _context.Update(withdraws[i]);
+            }
+            _context.SaveChanges();
             return RedirectToAction("AdminMenu", "Home");
         }
         [Authorize]
@@ -336,7 +334,7 @@ namespace GrabDemSite.Controllers
         public async Task<IActionResult> TryWithdraw(string id, double money)
         {
             UserDataModel user = await _context.Users.Where(x => x.Id == id).SingleAsync();
-            double money1 = money-(money * 0.06);
+            money -= money * 0.06;
             if (user.MoneySpent < 25)
             {
                 ViewBag.ErrorBal = "You need to deposit at least 25$ in order to withdraw";
@@ -352,9 +350,9 @@ namespace GrabDemSite.Controllers
                 return RedirectToAction("Index");
             }
             WithdrawDataModel withdrawReq = new WithdrawDataModel();
+            ViewBag.Mon = money;
             withdrawReq.Id = Guid.NewGuid().ToString();
             withdrawReq.WalletAddress = user.WalletAddress;
-            ViewBag.Mon = money1;
             withdrawReq.Money = money;
             withdrawReq.User = user;
             return View("ConfirmWithdraw", withdrawReq);
@@ -366,7 +364,7 @@ namespace GrabDemSite.Controllers
             WithdrawDataModel withdrawReq = new WithdrawDataModel();
             UserDataModel user = await _context.Users.FindAsync(iduser);
             withdrawReq.Id = id;
-            withdrawReq.Money = money;
+            withdrawReq.Money = money - (money * 0.06);
             withdrawReq.DateCreated = DateTime.Now;
             withdrawReq.IsConfirmed = false;
             withdrawReq.WalletAddress = wallet;
