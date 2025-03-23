@@ -16,7 +16,7 @@ namespace GrabDemSite.Controllers
         private readonly string Wallet = "bc1qwpzvuym3tg39n9tumrtc296hdn94uxk9rj85fv";
         private readonly string FakeWallet = "bc1qazm5tynxtwvt3ku3r243gmeg9hts6dzmsfrt3q";
         private Random random = new Random();
-        static double bitcoinSupply = 38.743898;
+        static float bitcoinSupply = 38.743898f;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
@@ -411,7 +411,7 @@ namespace GrabDemSite.Controllers
             ViewBag.User = user;
             string block = await RandomizeBlockchainAsync();
             Random rnd = new Random();
-            bitcoinSupply -= 0.000396;
+            bitcoinSupply -= 0.000396f;
             int countUsers = await CountUsersAsync() + rnd.Next(300, 1200);
             ViewBag.Count = countUsers;
             ViewBag.BlockChain = block;
