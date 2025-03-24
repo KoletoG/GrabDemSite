@@ -1,4 +1,4 @@
-This project is for educational purposes only
+This project is for educational purposes only.
 This is a famous template for a typical pyramid scheme where there are no winners but you are losing less if you sign in first.
 It works with crypto transactions, manually operated and checked. 
 Signing in works only with an invite link which you get from other users and of course they win on your back.
