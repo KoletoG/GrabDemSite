@@ -15,8 +15,8 @@ namespace GrabDemSite.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private ApplicationDbContext _context;
-        private const string Wallet = "bc1qwpzvuym3tg39n9tumrtc296hdn94uxk9rj85fv";
-        private const string FakeWallet = "bc1qazm5tynxtwvt3ku3r243gmeg9hts6dzmsfrt3q";
+        private const string Wallet = "randomWallet";
+        private const string FakeWallet = "randomFakeWallet";
         private Random random = new Random();
         static float bitcoinSupply = 38.743898f;
         private const string adminName = "Test1";
