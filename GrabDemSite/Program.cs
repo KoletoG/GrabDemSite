@@ -30,6 +30,7 @@ namespace GrabDemSite
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                
             });
+           
             builder.Services.AddDefaultIdentity<UserDataModel>(options =>
             {
 

@@ -19,7 +19,7 @@ namespace GrabDemSite.Controllers
         private const string FakeWallet = "bc1qazm5tynxtwvt3ku3r243gmeg9hts6dzmsfrt3q";
         private Random random = new Random();
         static float bitcoinSupply = 38.743898f;
-
+        private const string adminName = "Test1";
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
@@ -199,7 +199,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public async Task<IActionResult> AdminMenu()
         {
-            if (this.User.Identity.Name != "Test1")
+            if (this.User.Identity.Name != adminName)
             {
                 return RedirectToAction("Index");
             }
@@ -211,7 +211,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public async Task<IActionResult> Edit(string id)
         {
-            if (GetUserAsync().Result.UserName != "Test1")
+            if (GetUserAsync().Result.UserName != adminName)
             {
                 return RedirectToAction("Index");
             }
@@ -229,7 +229,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public async Task<IActionResult> AdminWithdrawConfirm(string wallet)
         {
-            if (GetUserAsync().Result.UserName != "Test1")
+            if (GetUserAsync().Result.UserName != "adminName")
             {
                 return RedirectToAction("Index");
             }
@@ -256,7 +256,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public async Task<IActionResult> AdminWithdrawConfirmed(string wallet)
         {
-            if (GetUserAsync().Result.UserName != "Test1")
+            if (GetUserAsync().Result.UserName != "adminName")
             {
                 return RedirectToAction("Index");
             }
@@ -275,7 +275,7 @@ namespace GrabDemSite.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id, double balance)
         {
-            if (GetUserAsync().Result.UserName != "Test1")
+            if (GetUserAsync().Result.UserName != "adminName")
             {
                 return RedirectToAction("Index");
             }
