@@ -22,6 +22,7 @@ namespace GrabDemSite.Controllers
         private const string adminName = "Test1";
         private readonly string[] listOfNamesToAvoid = {"SkAg1","BlAg2","5aAg3","TyAg4","66Ag5","SpecAg"};
         private Random rnd = new Random();
+        private const string alphnum = "1234567890abcdefghijklmnopqrstuvwxyz";
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
@@ -374,7 +375,7 @@ namespace GrabDemSite.Controllers
             var user = _context.GetUserByName(this.User.Identity.Name);
             var task = _context.GetTaskByUser(user);
             ViewBag.User = user;
-            string block = await RandomizeBlockchainAsync();
+            string block = RandomizeBlockchain();
             bitcoinSupply -= 0.000396f;
             int countUsers = await CountUsersAsync() + rnd.Next(300, 1200);
             ViewBag.Count = countUsers;
@@ -405,19 +406,14 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-        private async Task<string> RandomizeBlockchainAsync()
+        private string RandomizeBlockchain()
         {
             string x = "";
-            string alphnum = "1234567890abcdefghijklmnopqrstuvwxyz";
-            await Task.Run(() =>
-            {
                 for (int i = 1; i <= 65; i++)
                 {
                     x += alphnum[rnd.Next(0, alphnum.Length)];
                 }
                 return x;
-            });
-            return x;
         }
         [Authorize]
         public async Task<IActionResult> CompletedTask()
