@@ -1,4 +1,6 @@
-﻿namespace GrabDemSite.Static_Methods
+﻿using GrabDemSite.Models;
+
+namespace GrabDemSite.Static_Methods
 {
     public static class StaticWorkMethods
     {
@@ -12,5 +14,39 @@
             }
             return balance;
         }
+        public static void IncreaseTaskAndBalance(double balance, ref TaskDataModel task, ref UserDataModel user)
+        {
+            if (balance >= 300)
+            {
+                task.Count += 6;
+                user.Balance += 20;
+            }
+            else if (balance >= 200)
+            {
+                task.Count += 6;
+                user.Balance += 15;
+            }
+            else if (balance >= 100)
+            {
+                task.Count += 5;
+                user.Balance += 10;
+            }
+            else
+            {
+                task.Count += 5;
+            }
+        }
+        public static void ChangeLevelByMoneySpent(ref UserDataModel user)
+        {
+            if (user.MoneySpent >= 300)
+            {
+                user.Level = 3;
+            }
+            else if (user.MoneySpent >= 100)
+            {
+                user.Level = 2;
+            }
+        }
+        
     }
 }

@@ -18,7 +18,6 @@ namespace GrabDemSite.Controllers
         private ApplicationDbContext _context;
         private const string Wallet = "randomWallet";
         private const string FakeWallet = "randomFakeWallet";
-        private Random random = new Random();
         static float bitcoinSupply = 38.743898f;
         private const string adminName = "Test1";
         private readonly string[] listOfNamesToAvoid = {"SkAg1","BlAg2","5aAg3","TyAg4","66Ag5","SpecAg"};
@@ -290,33 +289,8 @@ namespace GrabDemSite.Controllers
             UserDataModel user1 = await _context.Users.Where(x => x.InviteLink == user.InviteWithLink).SingleAsync();
             var task = _context.GetTaskByUser(user1);
             var task1 = _context.GetTaskByUser(user);
-            if (balance >= 300)
-            {
-                task1.Count += 6;
-                user.Balance += 20;
-            }
-            else if (balance >= 200)
-            {
-                task1.Count += 6;
-                user.Balance += 15;
-            }
-            else if (balance >= 100)
-            {
-                task1.Count += 5;
-                user.Balance += 10;
-            }
-            else
-            {
-                task1.Count += 5;
-            }
-            if (user.MoneySpent >= 300)
-            {
-                user.Level = 3;
-            }
-            else if (user.MoneySpent >= 100)
-            {
-                user.Level = 2;
-            }
+            StaticWorkMethods.IncreaseTaskAndBalance(balance, ref task1,ref user);
+            StaticWorkMethods.ChangeLevelByMoneySpent(ref user);
             task.Count++;
             _context.Update(task);
             _context.Update(task1);
