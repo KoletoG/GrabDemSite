@@ -2,7 +2,7 @@
 
 namespace GrabDemSite.Models
 {
-    public class DepositDataModel 
+    public class DepositDataModel
     {
         [Key]
         public string Id { get; set; }

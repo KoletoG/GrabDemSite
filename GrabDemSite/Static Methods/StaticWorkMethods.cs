@@ -1,4 +1,5 @@
 ﻿using GrabDemSite.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GrabDemSite.Static_Methods
 {
@@ -47,6 +48,5 @@ namespace GrabDemSite.Static_Methods
                 user.Level = 2;
             }
         }
-        
     }
 }
