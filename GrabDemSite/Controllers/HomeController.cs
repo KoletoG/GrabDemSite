@@ -32,7 +32,7 @@ namespace GrabDemSite.Controllers
             var user = _context.GetUserById(id);
             var task = _context.GetTaskByUser(user);
             var deposits = _context.GetDepositByUser(user);
-            var withdraws = await _context.WithdrawDatas.Where(x => x.User == user).ToListAsync();
+            var withdraws = _context.GetWithdrawsByUser(user);
             if (deposits.DefaultIfEmpty() != default)
             {
                 for (int i = 0; i < deposits.Count(); i++)

@@ -22,5 +22,8 @@ namespace GrabDemSite.Extension_methods
         public static UserDataModel GetUserByName(this ApplicationDbContext context, string name) {
             return context.Users.Where(x => x.UserName == name).Single();
         }
+        public static List<WithdrawDataModel> GetWithdrawsByUser(this ApplicationDbContext context, UserDataModel user) {
+            return context.WithdrawDatas.Where(x => x.User == user).ToList();
+        }
     }
 }
