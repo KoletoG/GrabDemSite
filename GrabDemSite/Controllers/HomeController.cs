@@ -28,7 +28,7 @@ namespace GrabDemSite.Controllers
             _logger = logger;
             _context = context;
         }
-        public async Task<IActionResult> DeleteAccount(string id)
+        public IActionResult DeleteAccount(string id)
         {
             var user = _context.GetUserById(id);
             var task = _context.GetTaskByUser(user);
@@ -59,7 +59,7 @@ namespace GrabDemSite.Controllers
             return View();
         }
         [Authorize]
-        public async Task<IActionResult> Deposit()
+        public IActionResult Deposit()
         {
 
             ViewData["Title"] = "Deposit";
@@ -73,9 +73,9 @@ namespace GrabDemSite.Controllers
             return View(user);
         }
         [Authorize]
-        public async Task<IActionResult> Profile(bool tr)
+        public IActionResult Profile(bool tr)
         {
-            var user = await GetUserAsync();
+            var user = GetUser();
             ViewData["Title"] = $"{user.UserName}'s profile";
             List<UserDataModel> userslv1 = new List<UserDataModel>();
             List<UserDataModel> userslv2 = new List<UserDataModel>();
@@ -88,8 +88,8 @@ namespace GrabDemSite.Controllers
             userslv2.Add(fakeUser);
             double wholeBal = 0;
             string name = user.UserName;
-            ViewBag.DepositOrders = await _context.DepositDatas.Where(x => x.User == user && x.IsConfirmed == true).ToListAsync();
-            ViewBag.WithdrawOrders = await _context.WithdrawDatas.Where(x => x.User == user).ToListAsync();
+            ViewBag.DepositOrders = _context.DepositDatas.Where(x => x.User == user && x.IsConfirmed == true).ToList();
+            ViewBag.WithdrawOrders = _context.WithdrawDatas.Where(x => x.User == user).ToList();
             if (tr == false)
             {
                 ViewBag.Error = "You need to set your wallet first";
@@ -101,7 +101,7 @@ namespace GrabDemSite.Controllers
             if (_context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefault() != default)
             {
                 userslv1.Remove(fakeUser);
-                userslv1 = await _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
+                userslv1 = _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
                 userslv1.OrderBy(x => x.MoneySpent);
                 if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                 {
@@ -118,25 +118,24 @@ namespace GrabDemSite.Controllers
                     for (int i = 0; i < userslv1.Count(); i++)
                     {
                         userslv2.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv1[i].InviteLink).ToList());
-                        userslv2.OrderBy(x => x.MoneySpent);
                     }
+                    userslv2.OrderBy(x => x.MoneySpent);
                     if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                     {
-
                         StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv2);
                     }
                     else
                     {
                         StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv2);
                     }
-                    if (await _context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefaultAsync() != default)
+                    if (_context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefault() != default)
                     {
                         userslv3.Remove(fakeUser);
                         for (int i = 0; i < userslv2.Count(); i++)
                         {
                             userslv3.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv2[i].InviteLink).ToList());
-                            userslv3.OrderBy(x => x.MoneySpent);
                         }
+                        userslv3.OrderBy(x => x.MoneySpent);
                         if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                         {
                             StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv3);
@@ -156,27 +155,27 @@ namespace GrabDemSite.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> AdminMenu()
+        public IActionResult AdminMenu()
         {
             if (this.User.Identity.Name != adminName)
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Users = await _context.Users.ToListAsync();
-            ViewBag.Orders = await _context.DepositDatas.ToListAsync();
-            ViewBag.Withdraws = await _context.WithdrawDatas.ToListAsync();
+            ViewBag.Users =  _context.Users.ToList();
+            ViewBag.Orders =  _context.DepositDatas.ToList();
+            ViewBag.Withdraws =  _context.WithdrawDatas.ToList();
             return View();
         }
         [Authorize]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
-            if (GetUserAsync().Result.UserName != adminName)
+            if (GetUser().UserName != adminName)
             {
                 return RedirectToAction("Index");
             }
             var user = _context.GetUserById(id);
-            ViewBag.Orders = await _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToListAsync();
-            ViewBag.Withdraws = await _context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToListAsync();
+            ViewBag.Orders =  _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
+            ViewBag.Withdraws =  _context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
 
             return View(user);
         }
@@ -186,17 +185,17 @@ namespace GrabDemSite.Controllers
             return View();
         }
         [Authorize]
-        public async Task<IActionResult> AdminWithdrawConfirm(string wallet)
+        public IActionResult AdminWithdrawConfirm(string wallet)
         {
-            if (GetUserAsync().Result.UserName != "adminName")
+            if (GetUser().UserName != "adminName")
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed == false).ToListAsync();
+            ViewBag.Withdraws = _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed == false).ToList();
             return View();
         }
         [Authorize]
-        public async Task<IActionResult> ChangeWallet(string wallet)
+        public IActionResult ChangeWallet(string wallet)
         {
             if (wallet == null)
             {
@@ -213,13 +212,13 @@ namespace GrabDemSite.Controllers
             return RedirectToAction("Index");
         }
         [Authorize]
-        public async Task<IActionResult> AdminWithdrawConfirmed(string wallet)
+        public IActionResult AdminWithdrawConfirmed(string wallet)
         {
-            if (GetUserAsync().Result.UserName != "adminName")
+            if (GetUser().UserName != "adminName")
             {
                 return RedirectToAction("Index");
             }
-            List<WithdrawDataModel> withdraws = await _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed == false).ToListAsync();
+            List<WithdrawDataModel> withdraws = _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed == false).ToList();
 
             for (int i = 0; i < withdraws.Count(); i++)
             {
@@ -232,9 +231,9 @@ namespace GrabDemSite.Controllers
         }
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Edit(string id, double balance)
+        public IActionResult Edit(string id, double balance)
         {
-            if (GetUserAsync().Result.UserName != "adminName")
+            if (GetUser().UserName != "adminName")
             {
                 return RedirectToAction("Index");
             }
@@ -242,8 +241,8 @@ namespace GrabDemSite.Controllers
             user.Balance += balance;
             user.MoneySpent += balance;
             user.PlayMoney = balance;
-            List<DepositDataModel> deposits = await _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToListAsync();
-            UserDataModel user1 = await _context.Users.Where(x => x.InviteLink == user.InviteWithLink).SingleAsync();
+            List<DepositDataModel> deposits = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
+            UserDataModel user1 = _context.Users.Where(x => x.InviteLink == user.InviteWithLink).Single();
             var task = _context.GetTaskByUser(user1);
             var task1 = _context.GetTaskByUser(user);
             StaticWorkMethods.IncreaseTaskAndBalance(balance, ref task1, ref user);
@@ -251,21 +250,18 @@ namespace GrabDemSite.Controllers
             task.Count++;
             _context.Update(task);
             _context.Update(task1);
-            await Task.Run(() =>
+            for (int i = 0; i < deposits.Count(); i++)
             {
-                for (int i = 0; i < deposits.Count(); i++)
-                {
-                    DepositDataModel deposit = deposits[i];
-                    deposit.IsConfirmed = true;
-                    _context.Update(deposit);
-                }
-            });
+                DepositDataModel deposit = deposits[i];
+                deposit.IsConfirmed = true;
+                _context.Update(deposit);
+            }
             _context.Users.Update(user);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
         [Authorize]
-        public async Task<IActionResult> TryWithdraw(string id, double money)
+        public IActionResult TryWithdraw(string id, double money)
         {
             var user = _context.GetUserById(id);
             money -= money * 0.06;
@@ -289,25 +285,25 @@ namespace GrabDemSite.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> ConfirmedWithdraw(string id, double money, string wallet, string iduser)
+        public IActionResult ConfirmedWithdraw(string id, double money, string wallet, string iduser)
         {
             var user = _context.GetUserById(iduser);
             var withdrawReq = new WithdrawDataModel(id, wallet, money - (money * 0.06), user, false, DateTime.Now);
             user.Balance -= money;
             user.PlayMoney -= money;
-            await _context.WithdrawDatas.AddAsync(withdrawReq);
+            _context.WithdrawDatas.Add(withdrawReq);
             _context.Update(user);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
         [Authorize]
-        public async Task<IActionResult> Withdraw()
+        public IActionResult Withdraw()
         {
             ViewData["Title"] = "Withdraw";
             ViewBag.ErrorBal = "";
             ViewBag.ErrorRef = "";
             ViewBag.ErrorNoMoney = "";
-            var user = await GetUserAsync();
+            var user = GetUser();
             if (string.IsNullOrEmpty(user.WalletAddress))
             {
                 return RedirectToAction("Profile", false);
@@ -318,13 +314,13 @@ namespace GrabDemSite.Controllers
         /// Gets current user asynchronously
         /// </summary>
         /// <returns>Current Users</returns>
-        private async Task<UserDataModel> GetUserAsync()
+        private UserDataModel GetUser()
         {
-            var current = await _context.Users.Where(x => x.UserName == this.User.Identity.Name).SingleAsync();
+            var current = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             return current;
         }
         [Authorize]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             ViewData["Title"] = "Mine";
             ViewBag.ErrorCh = "";
@@ -333,21 +329,21 @@ namespace GrabDemSite.Controllers
             ViewBag.User = user;
             string block = RandomizeBlockchain();
             bitcoinSupply -= 0.000396f;
-            int countUsers = await CountUsersAsync() + rnd.Next(300, 1200);
+            int countUsers = CountUsers() + rnd.Next(300, 1200);
             ViewBag.Count = countUsers;
             ViewBag.BlockChain = block;
             ViewBag.Bitc = bitcoinSupply;
             return View(task);
         }
-        private async Task<int> CountUsersAsync()
+        private int CountUsers()
         {
-            List<UserDataModel> users = await _context.Users.ToListAsync();
+            List<UserDataModel> users = _context.Users.ToList();
             return users.Count();
         }
         [Authorize]
-        public async Task<IActionResult> Mine(DateTime date)
+        public IActionResult Mine(DateTime date)
         {
-            UserDataModel u = await _context.Users.Where(x => x.UserName == this.User.Identity.Name).SingleAsync();
+            UserDataModel u = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
             var t = _context.GetTaskByUser(u);
             if (u.Balance == 0)
             {
@@ -372,7 +368,7 @@ namespace GrabDemSite.Controllers
             return x;
         }
         [Authorize]
-        public async Task<IActionResult> CompletedTask()
+        public IActionResult CompletedTask()
         {
             var user = _context.GetUserByName(this.User.Identity.Name);
             return RedirectToAction("Index");
@@ -390,7 +386,7 @@ namespace GrabDemSite.Controllers
             }
         }
         [Authorize]
-        public async Task<IActionResult> TryDeposit(string id, double money)
+        public IActionResult TryDeposit(string id, double money)
         {
             var user = _context.GetUserById(id);
             if (money < 25)
@@ -407,11 +403,11 @@ namespace GrabDemSite.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> TryTheDeposit(string id, double money, string userid)
+        public IActionResult TryTheDeposit(string id, double money, string userid)
         {
             var user = _context.GetUserById(id);
             DepositDataModel deposit = new DepositDataModel(id, user, user.Email, money, false, DateTime.Now);
-            await _context.DepositDatas.AddAsync(deposit);
+            _context.DepositDatas.Add(deposit);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Person tries to deposit \n\n\n\n");
             _context.SaveChanges();
