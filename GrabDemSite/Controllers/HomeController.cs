@@ -366,14 +366,8 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public async Task<IActionResult> ConfirmedWithdraw(string id, double money, string wallet, string iduser)
         {
-            WithdrawDataModel withdrawReq = new WithdrawDataModel();
             var user = _context.GetUserById(iduser);
-            withdrawReq.Id = id;
-            withdrawReq.Money = money - (money * 0.06);
-            withdrawReq.DateCreated = DateTime.Now;
-            withdrawReq.IsConfirmed = false;
-            withdrawReq.WalletAddress = wallet;
-            withdrawReq.User = user;
+            var withdrawReq = new WithdrawDataModel(id,wallet,money-(money*0.06),user,false,DateTime.Now);
             user.Balance -= money;
             user.PlayMoney -= money;
             await _context.WithdrawDatas.AddAsync(withdrawReq);

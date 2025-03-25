@@ -12,5 +12,16 @@ namespace GrabDemSite.Models
         public UserDataModel User { get; set; }
         public bool IsConfirmed { get; set; }
         public DateTime DateCreated { get; set; }
+
+        public WithdrawDataModel(string id, string walletAddress,double money, UserDataModel user, bool isConfirmed, DateTime dateCreated)
+        {
+            this.Id = id;
+            this.WalletAddress = walletAddress;
+            this.Money = money;
+            this.User = user;
+            this.IsConfirmed = isConfirmed;
+            this.DateCreated = dateCreated;
+        }
+        public WithdrawDataModel() { }
     }
 }
