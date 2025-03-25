@@ -103,8 +103,7 @@ namespace GrabDemSite.Controllers
             if (_context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefault() != default)
             {
                 userslv1.Remove(fakeUser);
-                userslv1 = _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
-                userslv1.OrderBy(x => x.MoneySpent);
+                _context.AddUsersToTeamBy(ref userslv1, user);
                 if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                 {
                     StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv1);
@@ -117,11 +116,8 @@ namespace GrabDemSite.Controllers
                 if (_context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefault() != default)
                 {
                     userslv2.Remove(fakeUser);
-                    for (int i = 0; i < userslv1.Count(); i++)
-                    {
-                        userslv2.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv1[i].InviteLink).ToList());
-                    }
-                    userslv2.OrderBy(x => x.MoneySpent);
+
+                    _context.AddUsersToTeamByLevel(ref userslv1, ref userslv2);
                     if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                     {
                         StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv2);
@@ -133,11 +129,7 @@ namespace GrabDemSite.Controllers
                     if (_context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefault() != default)
                     {
                         userslv3.Remove(fakeUser);
-                        for (int i = 0; i < userslv2.Count(); i++)
-                        {
-                            userslv3.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv2[i].InviteLink).ToList());
-                        }
-                        userslv3.OrderBy(x => x.MoneySpent);
+                        _context.AddUsersToTeamByLevel(ref userslv2, ref userslv3);
                         if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                         {
                             StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv3);
