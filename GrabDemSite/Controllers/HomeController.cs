@@ -1,6 +1,7 @@
 ﻿using GrabDemSite.Data;
 using GrabDemSite.Extension_methods;
 using GrabDemSite.Models;
+using GrabDemSite.Static_Methods;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -429,18 +430,7 @@ namespace GrabDemSite.Controllers
             t.Count--;
             t.NewAccount = false;
             _context.Update(t);
-            if (u.Level == 1)
-            {
-                u.Balance += u.PlayMoney * 0.05;
-            }
-            else if (u.Level == 2)
-            {
-                u.Balance += u.PlayMoney * 0.06;
-            }
-            else if (u.Level == 3)
-            {
-                u.Balance += u.PlayMoney * 0.07;
-            }
+            u.Balance = StaticWorkMethods.AddBalanceByLevel(u.Balance,u.PlayMoney, u.Level);
             _context.Update(u);
             _context.SaveChanges();
             return RedirectToAction("Index");
@@ -499,7 +489,6 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public async Task<IActionResult> TryTheDeposit(string id, double money, string userid)
         {
-
             var user = _context.GetUserById(id);
             DepositDataModel deposit = new DepositDataModel(id,user,user.Email,money,false,DateTime.Now);
             await _context.DepositDatas.AddAsync(deposit);
