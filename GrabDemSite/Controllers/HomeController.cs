@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using GrabDemSite.Methods;
 namespace GrabDemSite.Controllers
 {
     public class HomeController : Controller
@@ -23,10 +24,12 @@ namespace GrabDemSite.Controllers
         private readonly string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
         private Random rnd = new Random();
         private const string alphnum = "1234567890abcdefghijklmnopqrstuvwxyz";
+        private MethodsCall methods;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
+            methods = new MethodsCall(_context, this);
         }
         public IActionResult DeleteAccount(string id)
         {
@@ -75,7 +78,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Profile(bool tr)
         {
-            var user = GetUser();
+            var user = methods.GetUser();
             ViewData["Title"] = $"{user.UserName}'s profile";
             List<UserDataModel> userslv1 = new List<UserDataModel>();
             List<UserDataModel> userslv2 = new List<UserDataModel>();
@@ -169,7 +172,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Edit(string id)
         {
-            if (GetUser().UserName != adminName)
+            if (methods.GetUser().UserName != adminName)
             {
                 return RedirectToAction("Index");
             }
@@ -187,7 +190,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult AdminWithdrawConfirm(string wallet)
         {
-            if (GetUser().UserName != "adminName")
+            if (methods.GetUser().UserName != "adminName")
             {
                 return RedirectToAction("Index");
             }
@@ -214,7 +217,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult AdminWithdrawConfirmed(string wallet)
         {
-            if (GetUser().UserName != "adminName")
+            if (methods.GetUser().UserName != "adminName")
             {
                 return RedirectToAction("Index");
             }
@@ -233,7 +236,7 @@ namespace GrabDemSite.Controllers
         [HttpGet]
         public IActionResult Edit(string id, double balance)
         {
-            if (GetUser().UserName != "adminName")
+            if (methods.GetUser().UserName != "adminName")
             {
                 return RedirectToAction("Index");
             }
@@ -303,7 +306,7 @@ namespace GrabDemSite.Controllers
             ViewBag.ErrorBal = "";
             ViewBag.ErrorRef = "";
             ViewBag.ErrorNoMoney = "";
-            var user = GetUser();
+            var user = methods.GetUser();
             if (string.IsNullOrEmpty(user.WalletAddress))
             {
                 return RedirectToAction("Profile", false);
@@ -314,11 +317,6 @@ namespace GrabDemSite.Controllers
         /// Gets current user asynchronously
         /// </summary>
         /// <returns>Current Users</returns>
-        private UserDataModel GetUser()
-        {
-            var current = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
-            return current;
-        }
         [Authorize]
         public IActionResult Index()
         {
