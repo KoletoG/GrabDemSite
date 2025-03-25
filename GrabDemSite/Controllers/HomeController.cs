@@ -351,12 +351,8 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            WithdrawDataModel withdrawReq = new WithdrawDataModel();
+            WithdrawDataModel withdrawReq = new WithdrawDataModel(Guid.NewGuid().ToString(),user.WalletAddress,money,user);
             ViewBag.Mon = money;
-            withdrawReq.Id = Guid.NewGuid().ToString();
-            withdrawReq.WalletAddress = user.WalletAddress;
-            withdrawReq.Money = money;
-            withdrawReq.User = user;
             return View("ConfirmWithdraw", withdrawReq);
         }
 
