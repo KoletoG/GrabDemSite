@@ -33,9 +33,10 @@ namespace GrabDemSite.Extension_methods
                             userslv3.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv2[i].InviteLink).ToList());
                         }
          */
-        public static void AddUsersToTeamByLevel(this ApplicationDbContext context, ref List<UserDataModel> users1, ref List<UserDataModel> users2)
+        public static void AddUsersToTeamByLevel(this ApplicationDbContext context, ref List<UserDataModel> users1, ref List<UserDataModel> users2, UserDataModel fakeUser)
         {
             UserDataModel user = new UserDataModel();
+            users2.Remove(fakeUser);
             for (int i = 0; i < users1.Count(); i++)
             {
                 user = users1[i];
@@ -43,8 +44,9 @@ namespace GrabDemSite.Extension_methods
             }
             users2.OrderBy(x => x.MoneySpent);
         }
-        public static void AddUsersToTeamBy(this ApplicationDbContext context, ref List<UserDataModel> users, UserDataModel user)
+        public static void AddUsersToTeamByLevel(this ApplicationDbContext context, ref List<UserDataModel> users, UserDataModel user, UserDataModel fakeUser)
         {
+            users.Remove(fakeUser);
             users = context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
             users.OrderBy(x => x.MoneySpent);
         }

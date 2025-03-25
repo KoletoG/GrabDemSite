@@ -19,7 +19,7 @@ namespace GrabDemSite.Controllers
         private ApplicationDbContext _context;
         private const string Wallet = "randomWallet";
         private const string FakeWallet = "randomFakeWallet";
-        static float bitcoinSupply = 38.743898f;
+        private static float bitcoinSupply = 38.743898f;
         private const string adminName = "Test1";
         private readonly string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
         private Random rnd = new Random();
@@ -28,8 +28,9 @@ namespace GrabDemSite.Controllers
         {
             _logger = logger;
             _context = context;
-            methods = new MethodsCall(_context, this,Wallet,FakeWallet,listOfNamesToAvoid,rnd);
+            methods = new MethodsCall(_context, this, Wallet, FakeWallet, listOfNamesToAvoid, rnd);
         }
+        [Authorize]
         public IActionResult DeleteAccount(string id)
         {
             var user = _context.GetUserById(id);
@@ -100,8 +101,7 @@ namespace GrabDemSite.Controllers
             }
             if (_context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefault() != default)
             {
-                userslv1.Remove(fakeUser);
-                _context.AddUsersToTeamBy(ref userslv1, user);
+                _context.AddUsersToTeamByLevel(ref userslv1, user, fakeUser);
                 if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                 {
                     StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv1);
@@ -113,8 +113,7 @@ namespace GrabDemSite.Controllers
                 ViewBag.Level1 = userslv1;
                 if (_context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefault() != default)
                 {
-                    userslv2.Remove(fakeUser);
-                    _context.AddUsersToTeamByLevel(ref userslv1, ref userslv2);
+                    _context.AddUsersToTeamByLevel(ref userslv1, ref userslv2, fakeUser);
                     if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                     {
                         StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv2);
@@ -125,8 +124,7 @@ namespace GrabDemSite.Controllers
                     }
                     if (_context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefault() != default)
                     {
-                        userslv3.Remove(fakeUser);
-                        _context.AddUsersToTeamByLevel(ref userslv2, ref userslv3);
+                        _context.AddUsersToTeamByLevel(ref userslv2, ref userslv3, fakeUser);
                         if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                         {
                             StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv3);
@@ -144,7 +142,6 @@ namespace GrabDemSite.Controllers
             ViewBag.WholeBal = wholeBal;
             return View(user);
         }
-
         [Authorize]
         public IActionResult AdminMenu()
         {
@@ -152,9 +149,9 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Users =  _context.Users.ToList();
-            ViewBag.Orders =  _context.DepositDatas.ToList();
-            ViewBag.Withdraws =  _context.WithdrawDatas.ToList();
+            ViewBag.Users = _context.Users.ToList();
+            ViewBag.Orders = _context.DepositDatas.ToList();
+            ViewBag.Withdraws = _context.WithdrawDatas.ToList();
             return View();
         }
         [Authorize]
@@ -165,8 +162,8 @@ namespace GrabDemSite.Controllers
                 return RedirectToAction("Index");
             }
             var user = _context.GetUserById(id);
-            ViewBag.Orders =  _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
-            ViewBag.Withdraws =  _context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
+            ViewBag.Orders = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
+            ViewBag.Withdraws = _context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
 
             return View(user);
         }
