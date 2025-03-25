@@ -20,6 +20,7 @@ namespace GrabDemSite.Controllers
         private Random random = new Random();
         static float bitcoinSupply = 38.743898f;
         private const string adminName = "Test1";
+        private readonly string[] listOfNamesToAvoid = {"SkAg1","BlAg2","5aAg3","TyAg4","66Ag5","SpecAg"};
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
@@ -101,7 +102,7 @@ namespace GrabDemSite.Controllers
                 userslv1.Remove(fakeUser);
                 userslv1 = await _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
                 userslv1.OrderBy(x => x.MoneySpent);
-                if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5" || name == "SpecAg")
+                if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                 {
                     foreach (var user11 in userslv1)
                     {
@@ -135,7 +136,7 @@ namespace GrabDemSite.Controllers
                             userslv2.OrderBy(x => x.MoneySpent);
                         }
                     });
-                    if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5" || name == "SpecAg")
+                    if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                     {
                         foreach (var user11 in userslv2)
                         {
@@ -166,7 +167,7 @@ namespace GrabDemSite.Controllers
                                 userslv2.OrderBy(x => x.MoneySpent);
                             }
                         });
-                        if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5" || name == "SpecAg")
+                        if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                         {
                             foreach (var user11 in userslv3)
                             {
@@ -482,7 +483,7 @@ namespace GrabDemSite.Controllers
         private string WalletSelector()
         {
             string name = this.User.Identity.Name;
-            if (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5")
+            if (name.IsNameToAvoidHere(listOfNamesToAvoid))
             {
                 return Wallet;
             }
