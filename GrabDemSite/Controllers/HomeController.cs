@@ -63,7 +63,6 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Deposit()
         {
-
             ViewData["Title"] = "Deposit";
             ViewBag.ErrorSum = "";
             var user = _context.GetUserByName(this.User.Identity.Name);
@@ -71,7 +70,6 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Profile", false);
             }
-
             return View(user);
         }
         [Authorize]
@@ -116,7 +114,6 @@ namespace GrabDemSite.Controllers
                 if (_context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefault() != default)
                 {
                     userslv2.Remove(fakeUser);
-
                     _context.AddUsersToTeamByLevel(ref userslv1, ref userslv2);
                     if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                     {
