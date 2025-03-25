@@ -61,7 +61,6 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public async Task<IActionResult> Deposit()
         {
-
             ViewData["Title"] = "Deposit";
             ViewBag.ErrorSum = "";
             var user = _context.GetUserByName(this.User.Identity.Name);
@@ -69,7 +68,6 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Profile", false);
             }
-
             return View(user);
         }
         [Authorize]
@@ -123,7 +121,6 @@ namespace GrabDemSite.Controllers
                             wholeBal += userslv1[i].MoneySpent;
                         }
                     });
-
                 }
                 ViewBag.Level1 = userslv1;
                 userslv1 = await _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
@@ -198,7 +195,6 @@ namespace GrabDemSite.Controllers
             ViewBag.WholeBal = wholeBal;
             return View(user);
         }
-
         [Authorize]
         public async Task<IActionResult> AdminMenu()
         {
@@ -331,7 +327,6 @@ namespace GrabDemSite.Controllers
             ViewBag.Mon = money;
             return View("ConfirmWithdraw", withdrawReq);
         }
-
         [Authorize]
         public async Task<IActionResult> ConfirmedWithdraw(string id, double money, string wallet, string iduser)
         {
@@ -421,7 +416,6 @@ namespace GrabDemSite.Controllers
             var user = _context.GetUserByName(this.User.Identity.Name);
             return RedirectToAction("Index");
         }
-
         private string WalletSelector()
         {
             string name = this.User.Identity.Name;
@@ -450,7 +444,6 @@ namespace GrabDemSite.Controllers
                 return View("TryDeposit", depReq);
             }
         }
-
         [Authorize]
         public async Task<IActionResult> TryTheDeposit(string id, double money, string userid)
         {
