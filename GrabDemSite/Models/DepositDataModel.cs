@@ -14,5 +14,22 @@ namespace GrabDemSite.Models
         public bool IsConfirmed { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
+        public DepositDataModel() { }
+        public DepositDataModel(string id, UserDataModel user, string userEmail, double moneyForDeposit, bool isConfirmed, DateTime dateCreated)
+        {
+            Id = id;
+            User = user;
+            UserEmail = userEmail;
+            MoneyForDeposit = moneyForDeposit;
+            IsConfirmed = isConfirmed;
+            DateCreated = dateCreated;
+        }
+        public DepositDataModel(string id,UserDataModel user, string userEmail,double moneyForDeposit)
+        {
+            Id = id; 
+            User = user;
+            UserEmail = userEmail; 
+            MoneyForDeposit = moneyForDeposit;
+        }
     }
 }

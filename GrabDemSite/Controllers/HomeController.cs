@@ -498,11 +498,7 @@ namespace GrabDemSite.Controllers
             }
             else
             {
-                DepositDataModel depReq = new DepositDataModel();
-                depReq.MoneyForDeposit = money;
-                depReq.User = user;
-                depReq.Id = Guid.NewGuid().ToString();
-                depReq.UserEmail = user.Email;
+                DepositDataModel depReq = new DepositDataModel(Guid.NewGuid().ToString(),user,user.Email,money);
                 ViewBag.Wallet = WalletSelector();
                 return View("TryDeposit", depReq);
             }
@@ -513,13 +509,7 @@ namespace GrabDemSite.Controllers
         {
 
             var user = _context.GetUserById(id);
-            DepositDataModel deposit = new DepositDataModel();
-            deposit.User = user;
-            deposit.MoneyForDeposit = money;
-            deposit.Id = id;
-            deposit.IsConfirmed = false;
-            deposit.DateCreated = DateTime.Now;
-            deposit.UserEmail = user.Email;
+            DepositDataModel deposit = new DepositDataModel(id,user,user.Email,money,false,DateTime.Now);
             await _context.DepositDatas.AddAsync(deposit);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Person tries to deposit \n\n\n\n");
