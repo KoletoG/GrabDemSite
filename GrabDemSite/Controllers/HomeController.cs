@@ -280,16 +280,12 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-
             var user = _context.GetUserById(id);
             user.Balance += balance;
             user.MoneySpent += balance;
             user.PlayMoney = balance;
             List<DepositDataModel> deposits = await _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToListAsync();
-
             UserDataModel user1 = await _context.Users.Where(x => x.InviteLink == user.InviteWithLink).SingleAsync();
-
-
             var task = _context.GetTaskByUser(user1);
             var task1 = _context.GetTaskByUser(user);
             if (balance >= 300)
@@ -387,7 +383,6 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Profile", false);
             }
-
             return View(user);
         }
         /// <summary>
@@ -398,7 +393,6 @@ namespace GrabDemSite.Controllers
         {
             var current = await _context.Users.Where(x => x.UserName == this.User.Identity.Name).SingleAsync();
             return current;
-
         }
         [Authorize]
         public async Task<IActionResult> Index()
@@ -416,7 +410,6 @@ namespace GrabDemSite.Controllers
             ViewBag.BlockChain = block;
             ViewBag.Bitc = bitcoinSupply;
             return View(task);
-            
         }
         private async Task<int> CountUsersAsync()
         {
@@ -484,7 +477,6 @@ namespace GrabDemSite.Controllers
             else
             {
                 return FakeWallet;
-
             }
         }
         [Authorize]
