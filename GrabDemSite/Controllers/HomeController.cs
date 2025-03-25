@@ -23,13 +23,12 @@ namespace GrabDemSite.Controllers
         private const string adminName = "Test1";
         private readonly string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
         private Random rnd = new Random();
-        private const string alphnum = "1234567890abcdefghijklmnopqrstuvwxyz";
         private MethodsCall methods;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
-            methods = new MethodsCall(_context, this);
+            methods = new MethodsCall(_context, this,Wallet,FakeWallet,listOfNamesToAvoid,rnd);
         }
         public IActionResult DeleteAccount(string id)
         {
@@ -325,18 +324,13 @@ namespace GrabDemSite.Controllers
             var user = _context.GetUserByName(this.User.Identity.Name);
             var task = _context.GetTaskByUser(user);
             ViewBag.User = user;
-            string block = RandomizeBlockchain();
+            string block = methods.RandomizeBlockchain();
             bitcoinSupply -= 0.000396f;
-            int countUsers = CountUsers() + rnd.Next(300, 1200);
+            int countUsers = methods.CountUsers() + rnd.Next(300, 1200);
             ViewBag.Count = countUsers;
             ViewBag.BlockChain = block;
             ViewBag.Bitc = bitcoinSupply;
             return View(task);
-        }
-        private int CountUsers()
-        {
-            List<UserDataModel> users = _context.Users.ToList();
-            return users.Count();
         }
         [Authorize]
         public IActionResult Mine(DateTime date)
@@ -356,32 +350,11 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-        private string RandomizeBlockchain()
-        {
-            string x = "";
-            for (int i = 1; i <= 65; i++)
-            {
-                x += alphnum[rnd.Next(0, alphnum.Length)];
-            }
-            return x;
-        }
         [Authorize]
         public IActionResult CompletedTask()
         {
             var user = _context.GetUserByName(this.User.Identity.Name);
             return RedirectToAction("Index");
-        }
-        private string WalletSelector()
-        {
-            string name = this.User.Identity.Name;
-            if (name.IsNameToAvoidHere(listOfNamesToAvoid))
-            {
-                return FakeWallet;
-            }
-            else
-            {
-                return Wallet;
-            }
         }
         [Authorize]
         public IActionResult TryDeposit(string id, double money)
@@ -395,7 +368,7 @@ namespace GrabDemSite.Controllers
             else
             {
                 DepositDataModel depReq = new DepositDataModel(Guid.NewGuid().ToString(), user, user.Email, money);
-                ViewBag.Wallet = WalletSelector();
+                ViewBag.Wallet = methods.WalletSelector();
                 return View("TryDeposit", depReq);
             }
         }
