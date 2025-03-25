@@ -105,75 +105,45 @@ namespace GrabDemSite.Controllers
                 userslv1.OrderBy(x => x.MoneySpent);
                 if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                 {
-                    foreach (var user11 in userslv1)
-                    {
-                        if (user11.MoneySpent >= 25)
-                        {
-                            wholeBal += userslv1.Count() * 25;
-                        }
-                    }
+                    StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv1);
                 }
                 else
                 {
-                    for (int i = 0; i < userslv1.Count(); i++)
-                    {
-                        wholeBal += userslv1[i].MoneySpent;
-                    }
+                    StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv1);
                 }
                 ViewBag.Level1 = userslv1;
-                userslv1 = await _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
-                if (await _context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefaultAsync() != default)
+                if (_context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefault() != default)
                 {
                     userslv2.Remove(fakeUser);
-                    await Task.Run(() =>
+                    for (int i = 0; i < userslv1.Count(); i++)
                     {
-                        for (int i = 0; i < userslv1.Count(); i++)
-                        {
-                            userslv2.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv1[i].InviteLink).ToList());
-                            userslv2.OrderBy(x => x.MoneySpent);
-                        }
-                    });
+                        userslv2.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv1[i].InviteLink).ToList());
+                        userslv2.OrderBy(x => x.MoneySpent);
+                    }
                     if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                     {
-                        foreach (var user11 in userslv2)
-                        {
-                            if (user11.MoneySpent >= 25)
-                            {
-                                wholeBal += userslv1.Count() * 25;
-                            }
-                        }
+
+                        StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv2);
                     }
                     else
                     {
-                            for (int i = 0; i < userslv2.Count(); i++)
-                            {
-                                wholeBal += userslv2[i].MoneySpent;
-                            }
+                        StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv2);
                     }
                     if (await _context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefaultAsync() != default)
                     {
                         userslv3.Remove(fakeUser);
-                            for (int i = 0; i < userslv2.Count(); i++)
-                            {
-                                userslv3.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv2[i].InviteLink).ToList());
-                                userslv2.OrderBy(x => x.MoneySpent);
-                            }
+                        for (int i = 0; i < userslv2.Count(); i++)
+                        {
+                            userslv3.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv2[i].InviteLink).ToList());
+                            userslv3.OrderBy(x => x.MoneySpent);
+                        }
                         if (name.IsNameToAvoidHere(listOfNamesToAvoid))
                         {
-                            foreach (var user11 in userslv3)
-                            {
-                                if (user11.MoneySpent >= 25)
-                                {
-                                    wholeBal += userslv1.Count() * 25;
-                                }
-                            }
+                            StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv3);
                         }
                         else
                         {
-                                for (int i = 0; i < userslv3.Count(); i++)
-                                {
-                                    wholeBal += userslv3[i].MoneySpent;
-                                }
+                            StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv3);
                         }
                     }
                 }

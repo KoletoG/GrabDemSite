@@ -48,5 +48,37 @@ namespace GrabDemSite.Static_Methods
                 user.Level = 2;
             }
         }
+        public static void AddBalanceByUserCount(ref double balance,List<UserDataModel> users)
+        {
+            foreach (var user in users)
+            {
+                if (user.MoneySpent >= 25)
+                {
+                    balance += users.Count() * 25;
+                }
+            }
+        }
+        public static void AddBalanceByUserMoney(ref double balance,List<UserDataModel> users)
+        {
+            for (int i = 0; i < users.Count(); i++)
+            {
+                balance += users[i].MoneySpent;
+            }
+        }
+        /*
+         for (int i = 0; i < userslv3.Count(); i++)
+                            {
+                                wholeBal += userslv3[i].MoneySpent;
+                            }
+         */
+        /*
+          foreach (var user11 in userslv2)
+                        {
+                            if (user11.MoneySpent >= 25)
+                            {
+                                wholeBal += userslv1.Count() * 25;
+                            }
+                        }
+         */
     }
 }
