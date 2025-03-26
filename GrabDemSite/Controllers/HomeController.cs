@@ -162,8 +162,8 @@ namespace GrabDemSite.Controllers
                 return RedirectToAction("Index");
             }
             var user = _context.GetUserById(id);
-            ViewBag.Orders = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
-            ViewBag.Withdraws = _context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
+            ViewBag.Orders = _context.GetDepositsByUserIdAndIsConfirmed(user, false);
+            ViewBag.Withdraws = _context.GetWithdrawsByUserIdAndIsConfirmed(user, false);
 
             return View(user);
         }
