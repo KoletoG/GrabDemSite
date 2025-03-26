@@ -43,6 +43,10 @@ namespace GrabDemSite.Extension_methods
         {
             return context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == isConfirmed).ToList();
         }
+        public static UserDataModel GetUserByInviteLink(this ApplicationDbContext context, UserDataModel user)
+        {
+            return context.Users.Where(x => x.InviteLink == user.InviteWithLink).Single();
+        }
         /*
          for (int i = 0; i < userslv2.Count(); i++)
                         {

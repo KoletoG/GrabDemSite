@@ -24,11 +24,13 @@ namespace GrabDemSite.Controllers
         private readonly string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
         private Random rnd = new Random();
         private MethodsCall methods;
+        private readonly string userName;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
             methods = new MethodsCall(_context, this, Wallet, FakeWallet, listOfNamesToAvoid, rnd);
+            userName = this.User.Identity.Name;
         }
         [Authorize]
         public IActionResult DeleteAccount(string id)
@@ -66,7 +68,7 @@ namespace GrabDemSite.Controllers
         {
             ViewData["Title"] = "Deposit";
             ViewBag.ErrorSum = "";
-            var user = _context.GetUserByName(this.User.Identity.Name);
+            var user = _context.GetUserByName(userName);
             if (string.IsNullOrEmpty(user.WalletAddress))
             {
                 return RedirectToAction("Profile", false);
@@ -145,7 +147,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult AdminMenu()
         {
-            if (this.User.Identity.Name != adminName)
+            if (userName != adminName)
             {
                 return RedirectToAction("Index");
             }
@@ -193,7 +195,7 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Profile");
             }
-            var user = _context.GetUserByName(this.User.Identity.Name);
+            var user = _context.GetUserByName(userName);
             user.WalletAddress = wallet;
             _context.Update(user);
             _context.SaveChanges();
@@ -230,7 +232,7 @@ namespace GrabDemSite.Controllers
             user.MoneySpent += balance;
             user.PlayMoney = balance;
             List<DepositDataModel> deposits = _context.GetDepositsByUserIdAndIsConfirmed(user,false);
-            UserDataModel user1 = _context.Users.Where(x => x.InviteLink == user.InviteWithLink).Single();
+            UserDataModel user1 = _context.GetUserByInviteLink(user);
             var task = _context.GetTaskByUser(user1);
             var task1 = _context.GetTaskByUser(user);
             StaticWorkMethods.IncreaseTaskAndBalance(balance, ref task1, ref user);
@@ -307,7 +309,7 @@ namespace GrabDemSite.Controllers
         {
             ViewData["Title"] = "Mine";
             ViewBag.ErrorCh = "";
-            var user = _context.GetUserByName(this.User.Identity.Name);
+            var user = _context.GetUserByName(userName);
             var task = _context.GetTaskByUser(user);
             ViewBag.User = user;
             string block = methods.RandomizeBlockchain();
@@ -321,7 +323,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Mine(DateTime date)
         {
-            UserDataModel u = _context.GetUserByName(this.User.Identity.Name);
+            UserDataModel u = _context.GetUserByName(userName);
             var t = _context.GetTaskByUser(u);
             if (u.Balance == 0)
             {
@@ -339,7 +341,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult CompletedTask()
         {
-            var user = _context.GetUserByName(this.User.Identity.Name);
+            var user = _context.GetUserByName(userName);
             return RedirectToAction("Index");
         }
         [Authorize]
