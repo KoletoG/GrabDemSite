@@ -16,14 +16,14 @@ namespace GrabDemSite.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private const string Wallet = "randomWallet";
         private const string FakeWallet = "randomFakeWallet";
         private static float bitcoinSupply = 38.743898f;
         private const string adminName = "Test1";
         private readonly string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
-        private Random rnd = new Random();
-        private MethodsCall methods;
+        private readonly Random rnd = new();
+        private readonly MethodsCall methods;
         private readonly string userName;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {

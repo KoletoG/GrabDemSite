@@ -3,6 +3,7 @@ using GrabDemSite.Data;
 using GrabDemSite.Data.Migrations;
 using GrabDemSite.Extension_methods;
 using GrabDemSite.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GrabDemSite.Methods
@@ -25,7 +26,6 @@ namespace GrabDemSite.Methods
             ListOfNamesToAvoid = listOfNamesToAvoid;
             Rnd = rnd;
         }
-
         public UserDataModel GetUser()
         {
             var current = Context.Users.Where(x => x.UserName == homeController.User.Identity.Name).Single();
@@ -45,6 +45,7 @@ namespace GrabDemSite.Methods
             }
             return x;
         }
+
         public string WalletSelector()
         {
             string name = homeController.User.Identity.Name;

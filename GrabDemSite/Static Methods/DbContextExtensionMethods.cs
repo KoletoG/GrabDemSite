@@ -55,7 +55,7 @@ namespace GrabDemSite.Extension_methods
          */
         public static void AddUsersToTeamByLevel(this ApplicationDbContext context, ref List<UserDataModel> users1, ref List<UserDataModel> users2, UserDataModel fakeUser)
         {
-            UserDataModel user = new UserDataModel();
+            UserDataModel user = new();
             users2.Remove(fakeUser);
             for (int i = 0; i < users1.Count(); i++)
             {
