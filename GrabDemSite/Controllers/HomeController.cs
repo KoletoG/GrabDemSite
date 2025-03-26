@@ -35,7 +35,7 @@ namespace GrabDemSite.Controllers
         {
             var user = _context.GetUserById(id);
             var task = _context.GetTaskByUser(user);
-            var deposits = _context.GetDepositByUser(user);
+            var deposits = _context.GetDepositsByUser(user);
             var withdraws = _context.GetWithdrawsByUser(user);
             if (deposits.DefaultIfEmpty() != default)
             {
@@ -89,8 +89,8 @@ namespace GrabDemSite.Controllers
             userslv2.Add(fakeUser);
             double wholeBal = 0;
             string name = user.UserName;
-            ViewBag.DepositOrders = _context.DepositDatas.Where(x => x.User == user && x.IsConfirmed == true).ToList();
-            ViewBag.WithdrawOrders = _context.WithdrawDatas.Where(x => x.User == user).ToList();
+            ViewBag.DepositOrders = _context.GetDepositsByUserAndIsConfirmed(user);
+            ViewBag.WithdrawOrders = _context.GetWithdrawsByUser(user);
             if (tr == false)
             {
                 ViewBag.Error = "You need to set your wallet first";
@@ -179,7 +179,7 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Withdraws = _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed == false).ToList();
+            ViewBag.Withdraws = _context.GetWithdrawsByWalletAndIsConfirmed(wallet);
             return View();
         }
         [Authorize]
@@ -206,7 +206,7 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            List<WithdrawDataModel> withdraws = _context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed == false).ToList();
+            List<WithdrawDataModel> withdraws = _context.GetWithdrawsByWalletAndIsConfirmed(wallet);
 
             for (int i = 0; i < withdraws.Count(); i++)
             {
@@ -229,7 +229,7 @@ namespace GrabDemSite.Controllers
             user.Balance += balance;
             user.MoneySpent += balance;
             user.PlayMoney = balance;
-            List<DepositDataModel> deposits = _context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == false).ToList();
+            List<DepositDataModel> deposits = _context.GetDepositsByUserIdAndIsConfirmed(user,false);
             UserDataModel user1 = _context.Users.Where(x => x.InviteLink == user.InviteWithLink).Single();
             var task = _context.GetTaskByUser(user1);
             var task1 = _context.GetTaskByUser(user);
@@ -321,7 +321,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Mine(DateTime date)
         {
-            UserDataModel u = _context.Users.Where(x => x.UserName == this.User.Identity.Name).Single();
+            UserDataModel u = _context.GetUserByName(this.User.Identity.Name);
             var t = _context.GetTaskByUser(u);
             if (u.Balance == 0)
             {

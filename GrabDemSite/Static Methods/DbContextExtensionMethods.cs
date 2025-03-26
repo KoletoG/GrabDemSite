@@ -15,9 +15,17 @@ namespace GrabDemSite.Extension_methods
         {
             return context.TaskDatas.Where(x => x.User == user).Single();
         }
-        public static List<DepositDataModel> GetDepositByUser(this ApplicationDbContext context, UserDataModel user)
+        public static List<DepositDataModel> GetDepositsByUser(this ApplicationDbContext context, UserDataModel user)
         {
             return context.DepositDatas.Where(x => x.User == user).ToList();
+        }
+        public static List<DepositDataModel> GetDepositsByUserAndIsConfirmed(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = true)
+        {
+            return context.DepositDatas.Where(x => x.User == user && x.IsConfirmed==isConfirmed).ToList();
+        }
+        public static List<DepositDataModel> GetDepositsByUserIdAndIsConfirmed(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = false)
+        {
+            return context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == isConfirmed).ToList();
         }
         public static UserDataModel GetUserByName(this ApplicationDbContext context, string name)
         {
@@ -26,6 +34,10 @@ namespace GrabDemSite.Extension_methods
         public static List<WithdrawDataModel> GetWithdrawsByUser(this ApplicationDbContext context, UserDataModel user)
         {
             return context.WithdrawDatas.Where(x => x.User == user).ToList();
+        }
+        public static List<WithdrawDataModel> GetWithdrawsByWalletAndIsConfirmed(this ApplicationDbContext context, string wallet, bool isConfirmed=false)
+        {
+            return context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed==isConfirmed).ToList();
         }
         /*
          for (int i = 0; i < userslv2.Count(); i++)
