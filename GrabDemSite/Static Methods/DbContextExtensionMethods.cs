@@ -50,5 +50,30 @@ namespace GrabDemSite.Extension_methods
             users = context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
             users.OrderBy(x => x.MoneySpent);
         }
+        /*
+         _context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefault() != default
+         */
+        public static bool IsInviteLinkUsersExist(this ApplicationDbContext context, List<UserDataModel> users) 
+        {
+            if(context.Users.Where(x => x.InviteWithLink == users[0].InviteLink).FirstOrDefault() != default)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static bool IsInviteLinkUsersExist(this ApplicationDbContext context, UserDataModel user)
+        {
+            if (context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefault() != default)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

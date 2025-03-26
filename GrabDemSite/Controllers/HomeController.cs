@@ -99,7 +99,7 @@ namespace GrabDemSite.Controllers
             {
                 ViewBag.Error = null;
             }
-            if (_context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefault() != default)
+            if (_context.IsInviteLinkUsersExist(user))
             {
                 _context.AddUsersToTeamByLevel(ref userslv1, user, fakeUser);
                 if (name.IsNameToAvoidHere(listOfNamesToAvoid))
@@ -111,7 +111,7 @@ namespace GrabDemSite.Controllers
                     StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv1);
                 }
                 ViewBag.Level1 = userslv1;
-                if (_context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefault() != default)
+                if (_context.IsInviteLinkUsersExist(userslv1))
                 {
                     _context.AddUsersToTeamByLevel(ref userslv1, ref userslv2, fakeUser);
                     if (name.IsNameToAvoidHere(listOfNamesToAvoid))
@@ -122,7 +122,7 @@ namespace GrabDemSite.Controllers
                     {
                         StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv2);
                     }
-                    if (_context.Users.Where(x => x.InviteWithLink == userslv2[0].InviteLink).FirstOrDefault() != default)
+                    if (_context.IsInviteLinkUsersExist(userslv2))
                     {
                         _context.AddUsersToTeamByLevel(ref userslv2, ref userslv3, fakeUser);
                         if (name.IsNameToAvoidHere(listOfNamesToAvoid))
@@ -358,7 +358,6 @@ namespace GrabDemSite.Controllers
                 return View("TryDeposit", depReq);
             }
         }
-
         [Authorize]
         public IActionResult TryTheDeposit(string id, double money, string userid)
         {
