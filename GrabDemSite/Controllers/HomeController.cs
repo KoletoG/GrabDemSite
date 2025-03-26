@@ -32,6 +32,11 @@ namespace GrabDemSite.Controllers
             methods = new MethodsCall(_context, this, Wallet, FakeWallet, listOfNamesToAvoid, rnd);
             userName = this.User.Identity.Name;
         }
+        /// <summary>
+        /// Deletes a user's account
+        /// </summary>
+        /// <param name="id">id of the user</param>
+        /// <returns>Admin page</returns>
         [Authorize]
         public IActionResult DeleteAccount(string id)
         {
@@ -58,11 +63,19 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("AdminMenu");
         }
+        /// <summary>
+        /// Contact page
+        /// </summary>
+        /// <returns>Contact page</returns>
         [Authorize]
         public IActionResult Contact()
         {
             return View();
         }
+        /// <summary>
+        /// Redirects user to deposit page
+        /// </summary>
+        /// <returns>Deposit page</returns>
         [Authorize]
         public IActionResult Deposit()
         {
@@ -75,6 +88,11 @@ namespace GrabDemSite.Controllers
             }
             return View(user);
         }
+        /// <summary>
+        /// Shows your profile information
+        /// </summary>
+        /// <param name="tr">checks if wallet is set</param>
+        /// <returns>Profile page</returns>
         [Authorize]
         public IActionResult Profile(bool tr)
         {
@@ -144,6 +162,10 @@ namespace GrabDemSite.Controllers
             ViewBag.WholeBal = wholeBal;
             return View(user);
         }
+        /// <summary>
+        /// Shows every user and their withdraws and deposits
+        /// </summary>
+        /// <returns>Page with all important information about users</returns>
         [Authorize]
         public IActionResult AdminMenu()
         {
@@ -156,6 +178,11 @@ namespace GrabDemSite.Controllers
             ViewBag.Withdraws = _context.WithdrawDatas.ToList();
             return View();
         }
+        /// <summary>
+        /// Views unconfirmed deposits and withdraws / Admin only
+        /// </summary>
+        /// <param name="id">id of the user</param>
+        /// <returns>Page with unconfirmed deposits and withdraws</returns>
         [Authorize]
         public IActionResult Edit(string id)
         {
@@ -169,21 +196,35 @@ namespace GrabDemSite.Controllers
 
             return View(user);
         }
+        /// <summary>
+        /// About us section
+        /// </summary>
+        /// <returns>Page 'About us'</returns>
         public IActionResult Tutorial()
         {
             ViewData["Title"] = "About us";
             return View();
         }
+        /// <summary>
+        /// Admin page for checking unconfirmed withdraws
+        /// </summary>
+        /// <param name="wallet">wallet of the user</param>
+        /// <returns>Page with all unconfirmed withdraws</returns>
         [Authorize]
         public IActionResult AdminWithdrawConfirm(string wallet)
         {
-            if (methods.GetUser().UserName != "adminName")
+            if (methods.GetUser().UserName != adminName)
             {
                 return RedirectToAction("Index");
             }
             ViewBag.Withdraws = _context.GetWithdrawsByWalletAndIsConfirmed(wallet);
             return View();
         }
+        /// <summary>
+        /// Changes wallet of the user
+        /// </summary>
+        /// <param name="wallet">wallet of the user</param>
+        /// <returns>Updated wallet address</returns>
         [Authorize]
         public IActionResult ChangeWallet(string wallet)
         {
@@ -201,10 +242,15 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        /// <summary>
+        /// Confirms withdraw only if Admin
+        /// </summary>
+        /// <param name="wallet">wallet of the user</param>
+        /// <returns>Clears unchecked withdraws</returns>
         [Authorize]
         public IActionResult AdminWithdrawConfirmed(string wallet)
         {
-            if (methods.GetUser().UserName != "adminName")
+            if (methods.GetUser().UserName != adminName)
             {
                 return RedirectToAction("Index");
             }
@@ -219,11 +265,17 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("AdminMenu", "Home");
         }
+        /// <summary>
+        /// Admin page - edits a user's account, checks for withdraws and deposits
+        /// </summary>
+        /// <param name="id">id of the user</param>
+        /// <param name="balance">balance of the user</param>
+        /// <returns>Updated user's deposits and balance</returns>
         [Authorize]
         [HttpGet]
         public IActionResult Edit(string id, double balance)
         {
-            if (methods.GetUser().UserName != "adminName")
+            if (methods.GetUser().UserName != adminName)
             {
                 return RedirectToAction("Index");
             }
@@ -250,6 +302,12 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        /// <summary>
+        /// Validates withdraw request
+        /// </summary>
+        /// <param name="id">id of the user</param>
+        /// <param name="money">money to withdraw</param>
+        /// <returns>ConfirmedWithdraw method if successful / Withdraw section if not / Index if no money to withdraw</returns>
         [Authorize]
         public IActionResult TryWithdraw(string id, double money)
         {
@@ -273,7 +331,14 @@ namespace GrabDemSite.Controllers
             ViewBag.Mon = money;
             return View("ConfirmWithdraw", withdrawReq);
         }
-
+        /// <summary>
+        /// Makes a withdraw instance
+        /// </summary>
+        /// <param name="id">id of the withdraw instance</param>
+        /// <param name="money">money for withdraw</param>
+        /// <param name="wallet">wallet for which the user withdraws</param>
+        /// <param name="iduser">id of the user</param>
+        /// <returns>Withdraw instance</returns>
         [Authorize]
         public IActionResult ConfirmedWithdraw(string id, double money, string wallet, string iduser)
         {
@@ -286,6 +351,10 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        /// <summary>
+        /// Goes to the withdraw section
+        /// </summary>
+        /// <returns>Withdraw page</returns>
         [Authorize]
         public IActionResult Withdraw()
         {
@@ -301,9 +370,9 @@ namespace GrabDemSite.Controllers
             return View(user);
         }
         /// <summary>
-        /// Gets current user asynchronously
+        /// Main page, shows bitcoin supply and the mining option
         /// </summary>
-        /// <returns>Current Users</returns>
+        /// <returns>Index page</returns>
         [Authorize]
         public IActionResult Index()
         {
@@ -320,6 +389,11 @@ namespace GrabDemSite.Controllers
             ViewBag.Bitc = bitcoinSupply;
             return View(task);
         }
+        /// <summary>
+        /// Makes a pseudo-mining operation creating balance
+        /// </summary>
+        /// <param name="date">Gets the current date</param>
+        /// <returns>Adds balance to the user's account</returns>
         [Authorize]
         public IActionResult Mine(DateTime date)
         {
@@ -338,12 +412,12 @@ namespace GrabDemSite.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-        [Authorize]
-        public IActionResult CompletedTask()
-        {
-            var user = _context.GetUserByName(userName);
-            return RedirectToAction("Index");
-        }
+        /// <summary>
+        /// Validates if deposit is over 25$
+        /// </summary>
+        /// <param name="id">id of the user</param>
+        /// <param name="money">how much money he wants to deposit</param>
+        /// <returns>A new deposit data model or gets you back to the same page</returns>
         [Authorize]
         public IActionResult TryDeposit(string id, double money)
         {
@@ -360,10 +434,17 @@ namespace GrabDemSite.Controllers
                 return View("TryDeposit", depReq);
             }
         }
+        /// <summary>
+        /// Makes a deposit instance
+        /// </summary>
+        /// <param name="id">Id of the Deposit</param>
+        /// <param name="money">How much money he wants to deposit</param>
+        /// <param name="userid">Id of the User</param>
+        /// <returns>Adds a DepositDataModel to Database</returns>
         [Authorize]
         public IActionResult TryTheDeposit(string id, double money, string userid)
         {
-            var user = _context.GetUserById(id);
+            var user = _context.GetUserById(userid);
             DepositDataModel deposit = new DepositDataModel(id, user, user.Email, money, false, DateTime.Now);
             _context.DepositDatas.Add(deposit);
             Console.ForegroundColor = ConsoleColor.Green;
