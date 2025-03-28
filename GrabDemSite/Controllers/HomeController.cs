@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using GrabDemSite.Methods;
+using GrabDemSite.Interfaces;
 namespace GrabDemSite.Controllers
 {
     public class HomeController : Controller
@@ -23,7 +24,7 @@ namespace GrabDemSite.Controllers
         private const string adminName = "Test1";
         private readonly string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
         private readonly Random rnd = new();
-        private readonly MethodsCall methods;
+        private readonly IMethodsCall methods;
         private readonly string userName;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {

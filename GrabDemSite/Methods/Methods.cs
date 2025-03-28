@@ -2,22 +2,23 @@
 using GrabDemSite.Data;
 using GrabDemSite.Data.Migrations;
 using GrabDemSite.Extension_methods;
+using GrabDemSite.Interfaces;
 using GrabDemSite.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GrabDemSite.Methods
 {
-    public class MethodsCall
+    public class MethodsCall : IMethodsCall
     {
-        private const string alphnum = "1234567890abcdefghijklmnopqrstuvwxyz"; 
-        private Random Rnd { get; }
-        private ApplicationDbContext Context { get; set; }
-        private HomeController homeController { get; set; }
-        private string[] ListOfNamesToAvoid { get; }
-        private string Wallet {get;}
-        private string FakeWallet {get;}
-        private string userName { get; set; }
+        public const string alphnum = "1234567890abcdefghijklmnopqrstuvwxyz";
+        public Random Rnd { get; }
+        public ApplicationDbContext Context { get; }
+        public HomeController homeController { get; }
+        public string[] ListOfNamesToAvoid { get; } 
+        public string Wallet { get; } 
+        public string FakeWallet { get; } 
+        public string userName { get; }
         public MethodsCall(ApplicationDbContext _context,HomeController _homeController,string wallet, string fakeWallet, string[] listOfNamesToAvoid,Random rnd)
         {
             Context = _context;

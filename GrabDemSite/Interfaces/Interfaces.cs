@@ -1,4 +1,6 @@
-﻿using GrabDemSite.Models;
+﻿using GrabDemSite.Controllers;
+using GrabDemSite.Data;
+using GrabDemSite.Models;
 
 namespace GrabDemSite.Interfaces
 {
@@ -24,5 +26,20 @@ namespace GrabDemSite.Interfaces
         int InviteCount { get; set; }
         double PlayMoney { get; set; }
         int Level { get; set; }
+    }
+    public interface IMethodsCall
+    {
+        const string alphnum="1234567890abcdefghijklmnopqrstuvwxyz";
+        Random Rnd {  get; }
+        public ApplicationDbContext Context { get; }
+        public HomeController homeController { get; }
+        string[] ListOfNamesToAvoid { get; }
+        string Wallet { get; }
+        string FakeWallet { get; }
+        string userName { get;}
+        Task<int> CountUsersAsync();
+        Task<UserDataModel> GetUserAsync();
+        string RandomizeBlockchain();
+        string WalletSelector();
     }
 }

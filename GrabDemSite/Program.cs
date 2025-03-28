@@ -8,6 +8,8 @@ using System.Net;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Systemd;
 using GrabDemSite.Controllers;
+using GrabDemSite.Interfaces;
+using GrabDemSite.Methods;
 namespace GrabDemSite
 {
     public class Program
@@ -25,6 +27,8 @@ namespace GrabDemSite
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+            builder.Services.AddTransient<IMethodsCall, MethodsCall>();
+            builder.Services.AddTransient<HomeController>();
             builder.Services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
