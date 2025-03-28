@@ -46,17 +46,11 @@ namespace GrabDemSite.Controllers
             var withdraws = _context.GetWithdrawsByUser(user);
             if (deposits.DefaultIfEmpty() != default)
             {
-                for (int i = 0; i < deposits.Count(); i++)
-                {
-                    _context.DepositDatas.Remove(deposits[i]);
-                }
+                _context.DepositDatas.RemoveRange(deposits);
             }
             if (withdraws.DefaultIfEmpty() != default)
             {
-                for (int i = 0; i < withdraws.Count(); i++)
-                {
-                    _context.WithdrawDatas.Remove(withdraws[i]);
-                }
+                _context.WithdrawDatas.RemoveRange(withdraws);
             }
             _context.TaskDatas.Remove(task);
             _context.Users.Remove(user);
@@ -283,7 +277,7 @@ namespace GrabDemSite.Controllers
             user.Balance += balance;
             user.MoneySpent += balance;
             user.PlayMoney = balance;
-            List<DepositDataModel> deposits = _context.GetDepositsByUserIdAndIsConfirmed(user,false);
+            List<DepositDataModel> deposits = _context.GetDepositsByUserIdAndIsConfirmed(user, false);
             UserDataModel user1 = _context.GetUserByInviteLink(user);
             var task = _context.GetTaskByUser(user1);
             var task1 = _context.GetTaskByUser(user);
