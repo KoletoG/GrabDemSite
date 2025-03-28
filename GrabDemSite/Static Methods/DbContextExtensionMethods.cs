@@ -96,7 +96,7 @@ namespace GrabDemSite.Extension_methods
                 return false;
             }
         }
-        public static List<T> LoadViewBagAll<T>(this ApplicationDbContext context)
+        public static List<T> LoadViewBagAll<T>(this ApplicationDbContext context) where T : class
         {
             if (typeof(T)==typeof(DepositDataModel))
             {

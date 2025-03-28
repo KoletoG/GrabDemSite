@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using GrabDemSite.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace GrabDemSite.Models
 {
-    public class UserDataModel : IdentityUser
+    public class UserDataModel : IdentityUser, IUserDataModel
     {
         [Key]
         public override string Id { get; set; }
