@@ -92,10 +92,10 @@ namespace GrabDemSite.Controllers
         {
             var user = methods.GetUser();
             ViewData["Title"] = $"{user.UserName}'s profile";
-            List<UserDataModel> userslv1 = new List<UserDataModel>();
-            List<UserDataModel> userslv2 = new List<UserDataModel>();
-            List<UserDataModel> userslv3 = new List<UserDataModel>();
-            UserDataModel fakeUser = new UserDataModel();
+            var userslv1 = new List<UserDataModel>();
+            var userslv2 = new List<UserDataModel>();
+            var userslv3 = new List<UserDataModel>();
+            var fakeUser = new UserDataModel();
             fakeUser.UserName = "N/A";
             fakeUser.MoneySpent = 0;
             userslv3.Add(fakeUser);
@@ -248,8 +248,7 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            List<WithdrawDataModel> withdraws = _context.GetWithdrawsByWalletAndIsConfirmed(wallet);
-
+            var withdraws = _context.GetWithdrawsByWalletAndIsConfirmed(wallet);
             for (int i = 0; i < withdraws.Count(); i++)
             {
                 withdraws[i].IsConfirmed = true;
@@ -277,8 +276,8 @@ namespace GrabDemSite.Controllers
             user.Balance += balance;
             user.MoneySpent += balance;
             user.PlayMoney = balance;
-            List<DepositDataModel> deposits = _context.GetDepositsByUserIdAndIsConfirmed(user, false);
-            UserDataModel user1 = _context.GetUserByInviteLink(user);
+            var deposits = _context.GetDepositsByUserIdAndIsConfirmed(user, false);
+            var user1 = _context.GetUserByInviteLink(user);
             var task = _context.GetTaskByUser(user1);
             var task1 = _context.GetTaskByUser(user);
             StaticWorkMethods.IncreaseTaskAndBalance(balance, ref task1, ref user);
@@ -288,7 +287,7 @@ namespace GrabDemSite.Controllers
             _context.Update(task1);
             for (int i = 0; i < deposits.Count(); i++)
             {
-                DepositDataModel deposit = deposits[i];
+                var deposit = deposits[i];
                 deposit.IsConfirmed = true;
                 _context.Update(deposit);
             }
@@ -321,7 +320,7 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            WithdrawDataModel withdrawReq = new WithdrawDataModel(Guid.NewGuid().ToString(), user.WalletAddress, money, user);
+            var withdrawReq = new WithdrawDataModel(Guid.NewGuid().ToString(), user.WalletAddress, money, user);
             ViewBag.Mon = money;
             return View("ConfirmWithdraw", withdrawReq);
         }
@@ -391,7 +390,7 @@ namespace GrabDemSite.Controllers
         [Authorize]
         public IActionResult Mine(DateTime date)
         {
-            UserDataModel u = _context.GetUserByName(userName);
+            var u = _context.GetUserByName(userName);
             var t = _context.GetTaskByUser(u);
             if (u.Balance == 0)
             {
@@ -423,7 +422,7 @@ namespace GrabDemSite.Controllers
             }
             else
             {
-                DepositDataModel depReq = new DepositDataModel(Guid.NewGuid().ToString(), user, user.Email, money);
+                var depReq = new DepositDataModel(Guid.NewGuid().ToString(), user, user.Email, money);
                 ViewBag.Wallet = methods.WalletSelector();
                 return View("TryDeposit", depReq);
             }
@@ -439,10 +438,11 @@ namespace GrabDemSite.Controllers
         public IActionResult TryTheDeposit(string id, double money, string userid)
         {
             var user = _context.GetUserById(userid);
-            DepositDataModel deposit = new DepositDataModel(id, user, user.Email, money, false, DateTime.Now);
+            var deposit = new DepositDataModel(id, user, user.Email, money, false, DateTime.Now);
             _context.DepositDatas.Add(deposit);
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Person tries to deposit \n\n\n\n");
+            Console.ForegroundColor = ConsoleColor.Gray;
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
