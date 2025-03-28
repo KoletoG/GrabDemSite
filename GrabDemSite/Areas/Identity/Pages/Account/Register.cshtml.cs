@@ -20,7 +20,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using GrabDemSite.Models;
 using GrabDemSite.Data;
-
 namespace GrabDemSite.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
@@ -140,6 +139,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                     ViewData["ErrorE"] = "Email already in use";
                     return Page();
                 }
+
                 user.Id = Guid.NewGuid().ToString();
                 user.InviteLink = count.ToString();
                 user.DateCreated = DateTimeOffset.Now;
@@ -168,16 +168,11 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 {
                     user.InviteWithLink = "";
                 }
-                TaskDataModel task = new TaskDataModel();
                 user.EmailConfirmed = true;
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                task.User = user;
-                task.Count = 0;
-                task.LevelOfTask = 1;
-                task.Id = Guid.NewGuid().ToString();
-                task.NewAccount = true;
+                TaskDataModel task = new TaskDataModel(Guid.NewGuid().ToString(),0,user,1,true);
                 _context.TaskDatas.Add(task);
                 if (result.Succeeded)
                 {

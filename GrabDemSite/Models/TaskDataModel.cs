@@ -5,6 +5,15 @@ namespace GrabDemSite.Models
 {
     public class TaskDataModel
     {
+        public TaskDataModel() { }
+        public TaskDataModel(string id,int count, UserDataModel user, int levelOfTask,bool newAccount) 
+        {
+            Id = id;
+            Count = count;
+            User = user;
+            LevelOfTask = levelOfTask;
+            NewAccount = newAccount;
+        }
         [Key]
         public string Id { get; set; }
         public int Count { get; set; }

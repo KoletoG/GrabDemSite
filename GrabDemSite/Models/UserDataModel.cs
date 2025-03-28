@@ -6,6 +6,23 @@ namespace GrabDemSite.Models
 {
     public class UserDataModel : IdentityUser, IUserDataModel
     {
+        public UserDataModel() { }
+        public UserDataModel(string id, string userName, string email, string inviteLink, string inviteWithLink, DateTimeOffset dateCreated, double balance, double moneySpent, string walletAddress, int inviteCount, double playMoney, int level)
+        {
+            Id = id;
+            UserName = userName;
+            Email = email;
+            InviteLink = inviteLink;
+            InviteWithLink = inviteWithLink;
+            DateCreated = dateCreated;
+            Balance = balance;
+            MoneySpent = moneySpent;
+            WalletAddress = walletAddress;
+            InviteCount = inviteCount;
+            PlayMoney = playMoney;
+            Level = level;
+        }
+
         [Key]
         public override string Id { get; set; }
         [Required(AllowEmptyStrings = false, ErrorMessage = "Username cannot be empty.")]
