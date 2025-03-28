@@ -1,4 +1,5 @@
-﻿using GrabDemSite.Data;
+﻿using System.Runtime.CompilerServices;
+using GrabDemSite.Data;
 using GrabDemSite.Interfaces;
 using GrabDemSite.Models;
 using Microsoft.EntityFrameworkCore;
@@ -7,76 +8,67 @@ namespace GrabDemSite.Extension_methods
 {
     public static class DbContextExtensionMethods
     {
-        public static UserDataModel GetUserById(this ApplicationDbContext context, string id)
+        public static async Task<UserDataModel> GetUserByIdAsync(this ApplicationDbContext context, string id)
         {
-            return context.Users.Where(x => x.Id == id).Single();
+            return await context.Users.Where(x => x.Id == id).SingleAsync();
         }
 
-        public static TaskDataModel GetTaskByUser(this ApplicationDbContext context, UserDataModel user)
+        public static async Task<TaskDataModel> GetTaskByUserAsync(this ApplicationDbContext context, UserDataModel user)
         {
-            return context.TaskDatas.Where(x => x.User == user).Single();
+            return await context.TaskDatas.Where(x => x.User == user).SingleAsync();
         }
-        public static List<DepositDataModel> GetDepositsByUser(this ApplicationDbContext context, UserDataModel user)
+        public static async Task<List<DepositDataModel>> GetDepositsByUserAsync(this ApplicationDbContext context, UserDataModel user)
         {
-            return context.DepositDatas.Where(x => x.User == user).ToList();
+            return await context.DepositDatas.Where(x => x.User == user).ToListAsync();
         }
-        public static List<DepositDataModel> GetDepositsByUserAndIsConfirmed(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = true)
+        public static async Task<List<DepositDataModel>> GetDepositsByUserAndIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = true)
         {
-            return context.DepositDatas.Where(x => x.User == user && x.IsConfirmed==isConfirmed).ToList();
+            return await context.DepositDatas.Where(x => x.User == user && x.IsConfirmed==isConfirmed).ToListAsync();
         }
-        public static List<DepositDataModel> GetDepositsByUserIdAndIsConfirmed(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = false)
+        public static async Task<List<DepositDataModel>> GetDepositsByUserIdAndIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = false)
         {
-            return context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == isConfirmed).ToList();
+            return await context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == isConfirmed).ToListAsync();
         }
-        public static UserDataModel GetUserByName(this ApplicationDbContext context, string name)
+        public static async Task<UserDataModel> GetUserByNameAsync(this ApplicationDbContext context, string name)
         {
-            return context.Users.Where(x => x.UserName == name).Single();
+            return await context.Users.Where(x => x.UserName == name).SingleAsync();
         }
-        public static List<WithdrawDataModel> GetWithdrawsByUser(this ApplicationDbContext context, UserDataModel user)
+        public static async Task<List<WithdrawDataModel>> GetWithdrawsByUserAsync(this ApplicationDbContext context, UserDataModel user)
         {
-            return context.WithdrawDatas.Where(x => x.User == user).ToList();
+            return await context.WithdrawDatas.Where(x => x.User == user).ToListAsync();
         }
-        public static List<WithdrawDataModel> GetWithdrawsByWalletAndIsConfirmed(this ApplicationDbContext context, string wallet, bool isConfirmed=false)
+        public static async Task<List<WithdrawDataModel>> GetWithdrawsByWalletAndIsConfirmedAsync(this ApplicationDbContext context, string wallet, bool isConfirmed=false)
         {
-            return context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed==isConfirmed).ToList();
+            return await context.WithdrawDatas.Where(x => x.WalletAddress == wallet && x.IsConfirmed == isConfirmed).ToListAsync();
         }
-        public static List<WithdrawDataModel> GetWithdrawsByUserIdAndIsConfirmed(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = false)
+        public static async Task<List<WithdrawDataModel>> GetWithdrawsByUserIdAndIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = false)
         {
-            return context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == isConfirmed).ToList();
+            return await context.WithdrawDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == isConfirmed).ToListAsync();
         }
-        public static UserDataModel GetUserByInviteLink(this ApplicationDbContext context, UserDataModel user)
+        public static async Task<UserDataModel> GetUserByInviteLinkAsync(this ApplicationDbContext context, UserDataModel user)
         {
-            return context.Users.Where(x => x.InviteLink == user.InviteWithLink).Single();
+            return await context.Users.Where(x => x.InviteLink == user.InviteWithLink).SingleAsync();
         }
-        /*
-         for (int i = 0; i < userslv2.Count(); i++)
-                        {
-                            userslv3.AddRange(_context.Users.Where(x => x.InviteWithLink == userslv2[i].InviteLink).ToList());
-                        }
-         */
-        public static void AddUsersToTeamByLevel(this ApplicationDbContext context, ref List<UserDataModel> users1, ref List<UserDataModel> users2, UserDataModel fakeUser)
+        public static async Task AddUsersToTeamByLevelAsync(this ApplicationDbContext context, List<UserDataModel> users1, List<UserDataModel> users2, UserDataModel fakeUser)
         {
             UserDataModel user = new();
             users2.Remove(fakeUser);
             for (int i = 0; i < users1.Count(); i++)
             {
                 user = users1[i];
-                users2.AddRange(context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList());
+                users2.AddRange(await context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync());
             }
             users2.OrderBy(x => x.MoneySpent);
         }
-        public static void AddUsersToTeamByLevel(this ApplicationDbContext context, ref List<UserDataModel> users, UserDataModel user, UserDataModel fakeUser)
+        public static async Task AddUsersToTeamByLevelAsync(this ApplicationDbContext context, List<UserDataModel> users, UserDataModel user, UserDataModel fakeUser)
         {
             users.Remove(fakeUser);
-            users = context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToList();
+            users = await context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
             users.OrderBy(x => x.MoneySpent);
         }
-        /*
-         _context.Users.Where(x => x.InviteWithLink == userslv1[0].InviteLink).FirstOrDefault() != default
-         */
-        public static bool IsInviteLinkUsersExist(this ApplicationDbContext context, List<UserDataModel> users) 
+        public static async Task<bool> IsInviteLinkUsersExistAsync(this ApplicationDbContext context, List<UserDataModel> users) 
         {
-            if(context.Users.Where(x => x.InviteWithLink == users[0].InviteLink).FirstOrDefault() != default)
+            if(await context.Users.Where(x => x.InviteWithLink == users[0].InviteLink).FirstOrDefaultAsync() != default)
             {
                 return true;
             }
@@ -85,9 +77,9 @@ namespace GrabDemSite.Extension_methods
                 return false;
             }
         }
-        public static bool IsInviteLinkUsersExist(this ApplicationDbContext context, UserDataModel user)
+        public static async Task<bool> IsInviteLinkUsersExistAsync(this ApplicationDbContext context, UserDataModel user)
         {
-            if (context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefault() != default)
+            if (await context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefaultAsync() != default)
             {
                 return true;
             }
@@ -96,19 +88,19 @@ namespace GrabDemSite.Extension_methods
                 return false;
             }
         }
-        public static List<T> LoadViewBagAll<T>(this ApplicationDbContext context) where T : class
+        public static async Task<List<T>> LoadViewBagAllAsync<T>(this ApplicationDbContext context) where T : class
         {
             if (typeof(T)==typeof(DepositDataModel))
             {
-                return context.DepositDatas.ToList() as List<T> ?? new List<T>();
+                return await context.DepositDatas.ToListAsync() as List<T> ?? new List<T>();
             }
             else if(typeof(T) == typeof(WithdrawDataModel))
             {
-                return context.WithdrawDatas.ToList() as List<T> ?? new List<T>();
+                return await context.WithdrawDatas.ToListAsync() as List<T> ?? new List<T>();
             }
             else if(typeof (T) == typeof(UserDataModel))
             {
-                return context.Users.ToList() as List<T> ?? new List<T>();
+                return await context.Users.ToListAsync() as List<T> ?? new List<T>();
             }
                 throw new InvalidOperationException("Unsupported type requested");
         }

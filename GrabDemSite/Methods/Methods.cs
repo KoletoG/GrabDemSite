@@ -17,6 +17,7 @@ namespace GrabDemSite.Methods
         private string[] ListOfNamesToAvoid { get; }
         private string Wallet {get;}
         private string FakeWallet {get;}
+        private string userName { get; set; }
         public MethodsCall(ApplicationDbContext _context,HomeController _homeController,string wallet, string fakeWallet, string[] listOfNamesToAvoid,Random rnd)
         {
             Context = _context;
@@ -24,16 +25,17 @@ namespace GrabDemSite.Methods
             Wallet = wallet;
             FakeWallet = fakeWallet;
             ListOfNamesToAvoid = listOfNamesToAvoid;
-            Rnd = rnd;
+            Rnd = rnd; 
+            userName = homeController.User.Identity?.Name ?? "N/A";
         }
-        public UserDataModel GetUser()
+        public async Task<UserDataModel> GetUserAsync()
         {
-            var current = Context.Users.Where(x => x.UserName == homeController.User.Identity.Name).Single();
+            var current = await Context.Users.Where(x => x.UserName == userName).SingleAsync();
             return current;
         }
-        public int CountUsers()
+        public async Task<int> CountUsersAsync()
         {
-            List<UserDataModel> users = Context.Users.ToList();
+            List<UserDataModel> users = await Context.Users.ToListAsync();
             return users.Count();
         }
         public string RandomizeBlockchain()
@@ -48,8 +50,7 @@ namespace GrabDemSite.Methods
 
         public string WalletSelector()
         {
-            string name = homeController.User.Identity.Name;
-            if (name.IsNameToAvoidHere(ListOfNamesToAvoid))
+            if (ListOfNamesToAvoid.Contains(userName))
             {
                 return FakeWallet;
             }
