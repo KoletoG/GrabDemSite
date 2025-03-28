@@ -116,7 +116,7 @@ namespace GrabDemSite.Controllers
             if (_context.IsInviteLinkUsersExist(user))
             {
                 _context.AddUsersToTeamByLevel(ref userslv1, user, fakeUser);
-                if (name.IsNameToAvoidHere(listOfNamesToAvoid))
+                if (listOfNamesToAvoid.Contains(name))
                 {
                     StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv1);
                 }
@@ -128,7 +128,7 @@ namespace GrabDemSite.Controllers
                 if (_context.IsInviteLinkUsersExist(userslv1))
                 {
                     _context.AddUsersToTeamByLevel(ref userslv1, ref userslv2, fakeUser);
-                    if (name.IsNameToAvoidHere(listOfNamesToAvoid))
+                    if (listOfNamesToAvoid.Contains(name))
                     {
                         StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv2);
                     }
@@ -139,7 +139,7 @@ namespace GrabDemSite.Controllers
                     if (_context.IsInviteLinkUsersExist(userslv2))
                     {
                         _context.AddUsersToTeamByLevel(ref userslv2, ref userslv3, fakeUser);
-                        if (name.IsNameToAvoidHere(listOfNamesToAvoid))
+                        if (listOfNamesToAvoid.Contains(name))
                         {
                             StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv3);
                         }
