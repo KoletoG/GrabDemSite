@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using GrabDemSite.Interfaces;
 
 namespace GrabDemSite.Models
 {
-    public class WithdrawDataModel
+    public class WithdrawDataModel : ITransactionDataModel
     {
         [Key]
         public string Id { get; set; }

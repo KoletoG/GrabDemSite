@@ -167,9 +167,9 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Users = _context.Users.ToList();
-            ViewBag.Orders = _context.DepositDatas.ToList();
-            ViewBag.Withdraws = _context.WithdrawDatas.ToList();
+            ViewBag.Users = _context.LoadViewBagAll<UserDataModel>();
+            ViewBag.Orders = _context.LoadViewBagAll<DepositDataModel>();
+            ViewBag.Orders = _context.LoadViewBagAll<WithdrawDataModel>();
             return View();
         }
         /// <summary>

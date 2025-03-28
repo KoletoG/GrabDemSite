@@ -14,7 +14,7 @@
 <h3 class="mt-3 display-5 text-warning">Send to this wallet: </h3>
 <br />
 <h2 class="mb-5 h2 text-dark display-6 fst-italic" id="wallet">@ViewBag.Wallet</h2>
-<form asp-controller="Home" asp-action="TryTheDeposit" asp-route-userid=@Model.User.Id asp-route-id="@Model.Id" asp-route-money="@Model.MoneyForDeposit">
+<form asp-controller="Home" asp-action="TryTheDeposit" asp-route-userid=@Model.User.Id asp-route-id="@Model.Id" asp-route-money="@Model.Money">
     <button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-5 fs-2">I made the payment</button>
 </form>
 </div>

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using GrabDemSite.Interfaces;
 
 namespace GrabDemSite.Models
 {
-    public class DepositDataModel
+    public class DepositDataModel : ITransactionDataModel
     {
         [Key]
         public string Id { get; set; }
@@ -10,7 +11,7 @@ namespace GrabDemSite.Models
         public string UserEmail { get; set; }
         [Required]
         [DataType(DataType.Currency)]
-        public double MoneyForDeposit { get; set; }
+        public double Money { get; set; }
         public bool IsConfirmed { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime DateCreated { get; set; }
@@ -20,7 +21,7 @@ namespace GrabDemSite.Models
             Id = id;
             User = user;
             UserEmail = userEmail;
-            MoneyForDeposit = moneyForDeposit;
+            Money = moneyForDeposit;
             IsConfirmed = isConfirmed;
             DateCreated = dateCreated;
         }
@@ -29,7 +30,7 @@ namespace GrabDemSite.Models
             Id = id; 
             User = user;
             UserEmail = userEmail; 
-            MoneyForDeposit = moneyForDeposit;
+            Money = moneyForDeposit;
         }
     }
 }

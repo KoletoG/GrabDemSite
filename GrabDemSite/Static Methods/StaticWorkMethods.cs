@@ -65,20 +65,5 @@ namespace GrabDemSite.Static_Methods
                 balance += users[i].MoneySpent;
             }
         }
-        /*
-         for (int i = 0; i < userslv3.Count(); i++)
-                            {
-                                wholeBal += userslv3[i].MoneySpent;
-                            }
-         */
-        /*
-          foreach (var user11 in userslv2)
-                        {
-                            if (user11.MoneySpent >= 25)
-                            {
-                                wholeBal += userslv1.Count() * 25;
-                            }
-                        }
-         */
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GrabDemSite.Data;
+using GrabDemSite.Interfaces;
 using GrabDemSite.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -95,6 +96,21 @@ namespace GrabDemSite.Extension_methods
                 return false;
             }
         }
-
+        public static List<T> LoadViewBagAll<T>(this ApplicationDbContext context)
+        {
+            if (typeof(T)==typeof(DepositDataModel))
+            {
+                return context.DepositDatas.ToList() as List<T> ?? new List<T>();
+            }
+            else if(typeof(T) == typeof(WithdrawDataModel))
+            {
+                return context.WithdrawDatas.ToList() as List<T> ?? new List<T>();
+            }
+            else if(typeof (T) == typeof(UserDataModel))
+            {
+                return context.Users.ToList() as List<T> ?? new List<T>();
+            }
+                throw new InvalidOperationException("Unsupported type requested");
+        }
     }
 }
