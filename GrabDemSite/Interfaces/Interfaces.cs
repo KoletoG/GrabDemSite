@@ -23,9 +23,9 @@ namespace GrabDemSite.Interfaces
         double Balance { get; set; }
         double MoneySpent { get; set; }
         string WalletAddress { get; set; }
-        int InviteCount { get; set; }
+        short InviteCount { get; set; }
         double PlayMoney { get; set; }
-        int Level { get; set; }
+        byte Level { get; set; }
     }
     public interface IMethodsCall
     {

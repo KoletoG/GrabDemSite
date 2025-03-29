@@ -6,7 +6,7 @@ namespace GrabDemSite.Models
     public class TaskDataModel
     {
         public TaskDataModel() { }
-        public TaskDataModel(string id,int count, UserDataModel user, int levelOfTask,bool newAccount) 
+        public TaskDataModel(string id,int count, UserDataModel user, byte levelOfTask,bool newAccount) 
         {
             Id = id;
             Count = count;
@@ -18,7 +18,7 @@ namespace GrabDemSite.Models
         public string Id { get; set; }
         public int Count { get; set; }
         public UserDataModel User { get; set; }
-        public int LevelOfTask { get; set; }
+        public byte LevelOfTask { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime DateStarted { get; set; }
         public bool NewAccount { get; set; }
