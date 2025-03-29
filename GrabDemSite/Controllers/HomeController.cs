@@ -168,9 +168,13 @@ namespace GrabDemSite.Controllers
             {
                 return RedirectToAction("Index");
             }
-            ViewBag.Users = await _context.LoadViewBagAllAsync<UserDataModel>();
-            ViewBag.Orders = await _context.LoadViewBagAllAsync<DepositDataModel>();
-            ViewBag.Orders = await _context.LoadViewBagAllAsync<WithdrawDataModel>();
+            var usersTask = _context.LoadViewBagAllAsync<UserDataModel>();
+            var depositOrdersTask = _context.LoadViewBagAllAsync<DepositDataModel>();
+            var withdrawOrdersTask = _context.LoadViewBagAllAsync<WithdrawDataModel>();
+            await Task.WhenAll(usersTask, depositOrdersTask, withdrawOrdersTask);
+            ViewBag.Users = await usersTask;
+            ViewBag.Orders = await depositOrdersTask;
+            ViewBag.Orders = await withdrawOrdersTask;
             return View();
         }
         /// <summary>
