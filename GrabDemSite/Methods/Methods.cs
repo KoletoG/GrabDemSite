@@ -1,4 +1,5 @@
-﻿using GrabDemSite.Controllers;
+﻿using System.Text;
+using GrabDemSite.Controllers;
 using GrabDemSite.Data;
 using GrabDemSite.Data.Migrations;
 using GrabDemSite.Extension_methods;
@@ -41,12 +42,12 @@ namespace GrabDemSite.Methods
         }
         public string RandomizeBlockchain()
         {
-            string x = "";
+            StringBuilder x = new StringBuilder(65);
             for (int i = 1; i <= 65; i++)
             {
-                x += alphnum[Rnd.Next(0, alphnum.Length)];
+                x.Append(alphnum[Rnd.Next(0, alphnum.Length)]);
             }
-            return x;
+            return x.ToString();
         }
 
         public string WalletSelector()
