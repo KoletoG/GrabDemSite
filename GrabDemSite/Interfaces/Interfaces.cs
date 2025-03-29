@@ -34,8 +34,6 @@ namespace GrabDemSite.Interfaces
         public ApplicationDbContext Context { get; }
         public HomeController homeController { get; }
         string[] ListOfNamesToAvoid { get; }
-        string Wallet { get; }
-        string FakeWallet { get; }
         string userName { get;}
         Task<int> CountUsersAsync();
         Task<UserDataModel> GetUserAsync();

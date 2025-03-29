@@ -17,8 +17,8 @@ namespace GrabDemSite.Methods
         public ApplicationDbContext Context { get; }
         public HomeController homeController { get; }
         public string[] ListOfNamesToAvoid { get; } 
-        public string Wallet { get; } 
-        public string FakeWallet { get; } 
+        private string Wallet { get; }
+        private string FakeWallet { get; } 
         public string userName { get; }
         public MethodsCall(ApplicationDbContext _context,HomeController _homeController,string wallet, string fakeWallet, string[] listOfNamesToAvoid,Random rnd)
         {
