@@ -51,7 +51,6 @@ namespace GrabDemSite.Controllers
                 var deposits = await depositsTask;
                 var withdraws = await withdrawsTask;
                 var task = await taskTask;
-                depositsTask.Dispose();
                 if (deposits.DefaultIfEmpty() != default)
                 {
                     _context.DepositDatas.RemoveRange(deposits);
