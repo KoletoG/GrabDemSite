@@ -143,8 +143,8 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 user.Id = Guid.NewGuid().ToString();
                 user.InviteLink = count.ToString();
                 user.DateCreated = DateTimeOffset.Now;
-                user.MoneySpent = 0.00;
-                user.Balance = 0.00;
+                user.MoneySpent = 0.00m;
+                user.Balance = 0.00m;
                 user.WalletAddress = "";
                 user.InviteCount = 0;
                 user.PlayMoney = 0;
