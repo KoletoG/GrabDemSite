@@ -65,9 +65,6 @@
             @if(confirmD==false)
             {
                 <h5 style="color:red;">Pending deposits</h5>
-                <form asp-controller="Home" asp-action="AdminDepositConfirm" asp-route-id="@user.Id">
-                    <button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-2 fs-5">Confirm Withdraw</button>
-                </form>
             }
             else
             {
