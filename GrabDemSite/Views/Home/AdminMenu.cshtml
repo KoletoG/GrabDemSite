@@ -1,7 +1,7 @@
 ﻿@model UserDataModel
 <header>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
 </header>
 @{
@@ -13,7 +13,7 @@
     {
         bool confirmD = true;
         bool confirmW = true;
-            <div class="container shadow-lg w-75 border-bottom border-top mt-5 text-center">
+        <div class="container shadow-lg w-75 border-bottom border-top mt-5 text-center">
             <h2 class="text-warning display-6">@user.Email</h2>
             <h4 class="h3 fst-italic">Wallet: @user.WalletAddress</h4>
             <h3>Invite count: @user.InviteCount</h3>
@@ -21,14 +21,14 @@
                 <input type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-2 fs-5" value="Edit" placeholder="Crip">
             </form>
             <form asp-controller="Home" asp-action="DeleteAccount" asp-route-id="@user.Id">
-                  <input type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-2 fs-5" value="Delete" placeholder="Crip">
-           
+                <input type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-2 fs-5" value="Delete" placeholder="Crip">
+
             </form>
-            @for(int i=0;i<deposits.Count();i++)
-            {
-                if (deposits[i].User.Id == user.Id)
+            @{
+                string id = user.Id;
+                foreach(var deposit in deposits)
                 {
-                    if(deposits[i].IsConfirmed==false)
+                    if (deposit.User.Id == id && deposit.IsConfirmed==false)
                     {
                         confirmD = false;
                     }
@@ -37,27 +37,23 @@
             @try
             {
                 {
-                    for (int i = 0; i < withdraws.Count(); i++)
+                    foreach(var withdraw in withdraws)
                     {
-                        if (withdraws[i].User.Id == user.Id)
+                        if (withdraw.User.Id == id && withdraw.IsConfirmed == false)
                         {
-                            if (withdraws[i].IsConfirmed == false)
-                            {
-                                confirmW = false;
-                            }
-                           
+                            confirmW = false;
                         }
                     }
                 }
             }
-            catch
+            catch(Exception e)
             {
-                
+                Console.WriteLine(e);
             }
             finally{
             @if(confirmW==false)
             {
-                <h5 style="color:red;">Pending withdraw</h5>
+                <h5 style="color:red;">Pending withdraws</h5>
                 <form asp-controller="Home" asp-action="AdminWithdrawConfirm" asp-route-wallet="@user.WalletAddress">
                     <button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-2 fs-5">Confirm Withdraw</button>
                 </form>
@@ -68,11 +64,14 @@
             }}
             @if(confirmD==false)
             {
-                <h5 style="color:red;">Not Confirmed deposit</h5>
+                <h5 style="color:red;">Pending deposits</h5>
+                <form asp-controller="Home" asp-action="AdminDepositConfirm" asp-route-id="@user.Id">
+                    <button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-2 fs-5">Confirm Withdraw</button>
+                </form>
             }
             else
             {
-                <h5 style="color:green">Confirmed deposit</h5>
+                <h5 style="color:green">No pending deposits</h5>
             }
         </div>
     }

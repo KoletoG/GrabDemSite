@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GrabDemSite.Methods;
 using GrabDemSite.Interfaces;
+using GrabDemSite.Data.Migrations;
 namespace GrabDemSite.Controllers
 {
     public class HomeController : Controller
@@ -262,6 +263,48 @@ namespace GrabDemSite.Controllers
             {
                 ViewData["Title"] = "About us";
                 return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }
+        }
+        [Authorize]
+        public async Task<IActionResult> AdminDepositConfirm(string id)
+        {
+            try
+            {
+                if ((await methods.GetUserAsync()).UserName != adminName)
+                {
+                    return RedirectToAction("Index");
+                }
+                ViewBag.Deposits = await _context.GetDepositsByUserIdAndIsConfirmedAsync(await _context.GetUserByIdAsync(id));
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return RedirectToAction("Error");
+            }
+        }
+        [Authorize]
+        public async Task<IActionResult> AdminDepositConfirmed(string id)
+        {
+            try
+            {
+                if ((await methods.GetUserAsync()).UserName != adminName)
+                {
+                    return RedirectToAction("Index");
+                }
+                var deposits = await _context.GetDepositsByUserIdAndIsConfirmedAsync(await _context.GetUserByIdAsync(id));
+                foreach (var deposit in deposits)
+                {
+                    deposit.IsConfirmed = true;
+                    _context.Update(deposit);
+                }
+                await _context.SaveChangesAsync();
+                return RedirectToAction("AdminMenu", "Home");
             }
             catch (Exception ex)
             {
