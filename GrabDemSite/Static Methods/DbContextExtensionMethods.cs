@@ -51,12 +51,10 @@ namespace GrabDemSite.Extension_methods
         }
         public static async Task AddUsersToTeamByLevelAsync(this ApplicationDbContext context, List<UserDataModel> users1, List<UserDataModel> users2, UserDataModel fakeUser)
         {
-            UserDataModel user = new();
             users2.Remove(fakeUser);
-            for (int i = 0; i < users1.Count(); i++)
+            foreach (var user1 in users1)
             {
-                user = users1[i];
-                users2.AddRange(await context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync());
+                users2.AddRange(await context.Users.Where(x => x.InviteWithLink == user1.InviteLink).ToListAsync());
             }
             users2.OrderBy(x => x.MoneySpent);
         }
@@ -66,22 +64,11 @@ namespace GrabDemSite.Extension_methods
             users = await context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
             users.OrderBy(x => x.MoneySpent);
         }
-        public static async Task<bool> IsInviteLinkUsersExistAsync(this ApplicationDbContext context, List<UserDataModel> users)
-        {
-            if (await context.Users.Where(x => x.InviteWithLink == users[0].InviteLink).FirstOrDefaultAsync() != default)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
         public static async Task<bool> IsInviteLinkUsersExistAsync(this ApplicationDbContext context, UserDataModel user)
         {
-            if (await context.Users.Where(x => x.InviteWithLink == user.InviteLink).FirstOrDefaultAsync() != default)
+            if (user != null)
             {
-                return true;
+                return await context.Users.AnyAsync(x => x.InviteWithLink == user.InviteLink);
             }
             else
             {

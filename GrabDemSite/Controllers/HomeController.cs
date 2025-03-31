@@ -159,7 +159,7 @@ namespace GrabDemSite.Controllers
                         StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv1);
                     }
                     ViewBag.Level1 = userslv1;
-                    if (await _context.IsInviteLinkUsersExistAsync(userslv1))
+                    if (await _context.IsInviteLinkUsersExistAsync(userslv1.FirstOrDefault()))
                     {
                         await _context.AddUsersToTeamByLevelAsync(userslv1, userslv2, fakeUser);
                         if (listOfNamesToAvoid.Contains(name))
@@ -170,7 +170,7 @@ namespace GrabDemSite.Controllers
                         {
                             StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv2);
                         }
-                        if (await _context.IsInviteLinkUsersExistAsync(userslv2))
+                        if (await _context.IsInviteLinkUsersExistAsync(userslv2.FirstOrDefault()))
                         {
                             await _context.AddUsersToTeamByLevelAsync(userslv2, userslv3, fakeUser);
                             if (listOfNamesToAvoid.Contains(name))
