@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using GrabDemSite.Models;
 using GrabDemSite.Data;
+using Microsoft.EntityFrameworkCore;
 namespace GrabDemSite.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
@@ -129,17 +130,16 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             {
                 count += rnd.Next(1, 500);
                 var user = CreateUser();
-                if(_context.Users.Where(x=>x.UserName==Input.UserName).SingleOrDefault()!=default)
+                if(await _context.Users.AnyAsync(x => x.UserName == Input.UserName))
                 {
                     ViewData["ErrorU"] = "Username already in use";
                     return Page();
                 }
-                if(_context.Users.Where(x => x.Email == Input.Email).SingleOrDefault() != default)
+                if(await _context.Users.AnyAsync(x => x.Email == Input.Email))
                 {
                     ViewData["ErrorE"] = "Email already in use";
                     return Page();
                 }
-
                 user.Id = Guid.NewGuid().ToString();
                 user.InviteLink = count.ToString();
                 user.DateCreated = DateTimeOffset.Now;
@@ -152,13 +152,13 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 user.InviteWithLink = Input.InviteWithLink;
                 if (Input.UserName != "Test1")
                 {
-                    if (_context.Users.Where(x => x.InviteLink == Input.InviteWithLink).SingleOrDefault() == default)
+                    if (!await _context.Users.AnyAsync(x => x.InviteLink == Input.InviteWithLink))
                     {
                         throw new Exception("Invalid Invite code");
                     }
                     else
                     {
-                        UserDataModel user1 = _context.Users.Where(x => x.InviteLink == Input.InviteWithLink).Single();
+                        UserDataModel user1 = await _context.Users.SingleAsync(x => x.InviteLink == Input.InviteWithLink);
                         user1.InviteCount++;
                         _context.Update(user1);
                         _context.SaveChanges();
