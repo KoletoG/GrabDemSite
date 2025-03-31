@@ -9,14 +9,15 @@ namespace GrabDemSite.Static_Methods
         {
             switch (level)
             {
-                case 1:balance += playMoney * 0.05;break;
-                case 2:balance += playMoney * 0.06;break;
-                case 3: balance += playMoney * 0.07;break;
+                case 1: balance += playMoney * 0.05; break;
+                case 2: balance += playMoney * 0.06; break;
+                case 3: balance += playMoney * 0.07; break;
             }
             return balance;
         }
         public static void IncreaseTaskAndBalance(double balance, ref TaskDataModel task, ref UserDataModel user)
         {
+
             if (balance >= 300)
             {
                 task.Count += 6;
@@ -48,21 +49,22 @@ namespace GrabDemSite.Static_Methods
                 user.Level = 2;
             }
         }
-        public static void AddBalanceByUserCount(ref double balance,List<UserDataModel> users)
+        public static void AddBalanceByUserCount(ref double balance, List<UserDataModel> users)
         {
+            int usersCount = users.Count();
             foreach (var user in users)
             {
                 if (user.MoneySpent >= 25)
                 {
-                    balance += users.Count() * 25;
+                    balance += usersCount * 25;
                 }
             }
         }
-        public static void AddBalanceByUserMoney(ref double balance,List<UserDataModel> users)
+        public static void AddBalanceByUserMoney(ref double balance, List<UserDataModel> users)
         {
-            for (int i = 0; i < users.Count(); i++)
+            foreach (var user in users)
             {
-                balance += users[i].MoneySpent;
+                balance += user.MoneySpent;
             }
         }
     }
