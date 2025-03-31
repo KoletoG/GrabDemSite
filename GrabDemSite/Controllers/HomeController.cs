@@ -13,25 +13,21 @@ using System.Threading.Tasks;
 using GrabDemSite.Methods;
 using GrabDemSite.Interfaces;
 using GrabDemSite.Data.Migrations;
+using GrabDemSite.Constants;
 namespace GrabDemSite.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
-        private const string Wallet = "randomWallet";
-        private const string FakeWallet = "randomFakeWallet";
         private static float bitcoinSupply = 38.743898f;
-        private const string adminName = "Test1";
-        private readonly string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
-        private readonly Random rnd = new();
         private readonly IMethodsCall methods;
         private readonly string userName;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
-            methods = new MethodsCall(_context, this, Wallet, FakeWallet, listOfNamesToAvoid, rnd);
+            methods = new MethodsCall(_context, this);
             userName = this.User.Identity?.Name ?? "N/A";
         }
         /// <summary>
@@ -151,7 +147,7 @@ namespace GrabDemSite.Controllers
                 if (await _context.IsInviteLinkUsersExistAsync(user))
                 {
                     await _context.AddUsersToTeamByLevelAsync(userslv1, user, fakeUser);
-                    if (listOfNamesToAvoid.Contains(name))
+                    if (ConstantsVars.listOfNamesToAvoid.Contains(name))
                     {
                         StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv1);
                     }
@@ -163,7 +159,7 @@ namespace GrabDemSite.Controllers
                     if (await _context.IsInviteLinkUsersExistAsync(userslv1.FirstOrDefault()))
                     {
                         await _context.AddUsersToTeamByLevelAsync(userslv1, userslv2, fakeUser);
-                        if (listOfNamesToAvoid.Contains(name))
+                        if (ConstantsVars.listOfNamesToAvoid.Contains(name))
                         {
                             StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv2);
                         }
@@ -174,7 +170,7 @@ namespace GrabDemSite.Controllers
                         if (await _context.IsInviteLinkUsersExistAsync(userslv2.FirstOrDefault()))
                         {
                             await _context.AddUsersToTeamByLevelAsync(userslv2, userslv3, fakeUser);
-                            if (listOfNamesToAvoid.Contains(name))
+                            if (ConstantsVars.listOfNamesToAvoid.Contains(name))
                             {
                                 StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv3);
                             }
@@ -206,7 +202,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if (userName != adminName)
+                if (userName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -235,7 +231,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != adminName)
+                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -275,7 +271,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != adminName)
+                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -293,7 +289,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != adminName)
+                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -322,7 +318,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != adminName)
+                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -375,7 +371,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != adminName)
+                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -406,7 +402,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != adminName)
+                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -549,7 +545,7 @@ namespace GrabDemSite.Controllers
                 ViewBag.User = user;
                 string block = methods.RandomizeBlockchain();
                 bitcoinSupply -= 0.000396f;
-                ViewBag.Count = countUsers.Result + rnd.Next(300, 1200);
+                ViewBag.Count = countUsers.Result + ConstantsVars.rnd.Next(300, 1200);
                 ViewBag.BlockChain = block;
                 ViewBag.Bitc = bitcoinSupply;
                 return View(task);

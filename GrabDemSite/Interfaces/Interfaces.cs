@@ -30,10 +30,8 @@ namespace GrabDemSite.Interfaces
     public interface IMethodsCall
     {
         const string alphnum="1234567890abcdefghijklmnopqrstuvwxyz";
-        Random Rnd {  get; }
         public ApplicationDbContext Context { get; }
         public HomeController homeController { get; }
-        string[] ListOfNamesToAvoid { get; }
         string userName { get;}
         Task<int> CountUsersAsync();
         Task<UserDataModel> GetUserAsync();
