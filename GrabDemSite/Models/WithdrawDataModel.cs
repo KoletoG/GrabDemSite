@@ -9,12 +9,12 @@ namespace GrabDemSite.Models
         public string Id { get; set; }
         public string WalletAddress { get; set; }
         [DataType(DataType.Currency)]
-        public double Money { get; set; }
+        public decimal Money { get; set; }
         public UserDataModel User { get; set; }
         public bool IsConfirmed { get; set; }
         public DateTime DateCreated { get; set; }
 
-        public WithdrawDataModel(string id, string walletAddress,double money, UserDataModel user, bool isConfirmed, DateTime dateCreated)
+        public WithdrawDataModel(string id, string walletAddress, decimal money, UserDataModel user, bool isConfirmed, DateTime dateCreated)
         {
             this.Id = id;
             this.WalletAddress = walletAddress;
@@ -23,7 +23,7 @@ namespace GrabDemSite.Models
             this.IsConfirmed = isConfirmed;
             this.DateCreated = dateCreated;
         }
-        public WithdrawDataModel(string id, string walletAddress, double money, UserDataModel user)
+        public WithdrawDataModel(string id, string walletAddress, decimal money, UserDataModel user)
         {
             this.Id = id;
             this.WalletAddress = walletAddress;

@@ -10,7 +10,7 @@ namespace GrabDemSite.Interfaces
         UserDataModel User { get; set; }
         bool IsConfirmed { get; set; }
         DateTime DateCreated { get; set; }
-        double Money { get; set; }
+        decimal Money { get; set; }
     }
     public interface IUserDataModel
     {
@@ -20,11 +20,11 @@ namespace GrabDemSite.Interfaces
         string InviteLink { get; set; }
         string InviteWithLink { get; set; }
         DateTimeOffset DateCreated { get; set; }
-        double Balance { get; set; }
-        double MoneySpent { get; set; }
+        decimal Balance { get; set; }
+        decimal MoneySpent { get; set; }
         string WalletAddress { get; set; }
         short InviteCount { get; set; }
-        double PlayMoney { get; set; }
+        decimal PlayMoney { get; set; }
         byte Level { get; set; }
     }
     public interface IMethodsCall

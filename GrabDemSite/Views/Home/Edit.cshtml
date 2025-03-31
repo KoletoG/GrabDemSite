@@ -4,7 +4,7 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
 @{
     List<DepositDataModel> deposits = ViewBag.Orders;
-    double sum = 0;
+    decimal sum = 0;
     for(int i=0;i<deposits.Count();i++)
     {
         sum += deposits[i].Money;

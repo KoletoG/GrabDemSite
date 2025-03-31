@@ -7,7 +7,7 @@ namespace GrabDemSite.Models
     public class UserDataModel : IdentityUser, IUserDataModel
     {
         public UserDataModel() { }
-        public UserDataModel(string id, string userName, string email, string inviteLink, string inviteWithLink, DateTimeOffset dateCreated, double balance, double moneySpent, string walletAddress, short inviteCount, double playMoney, byte level)
+        public UserDataModel(string id, string userName, string email, string inviteLink, string inviteWithLink, DateTimeOffset dateCreated, decimal balance, decimal moneySpent, string walletAddress, short inviteCount, decimal playMoney, byte level)
         {
             Id = id;
             UserName = userName;
@@ -39,14 +39,14 @@ namespace GrabDemSite.Models
         public DateTimeOffset DateCreated { get; set; }
         [DataType(DataType.Currency)]
         [Display(Name = "Current user's balance: ")]
-        public double Balance { get; set; }
+        public decimal Balance { get; set; }
         [DataType(DataType.Currency)]
         [Display(Name = "Money spent by user: ")]
-        public double MoneySpent { get; set; }
+        public decimal MoneySpent { get; set; }
         [Display(Name = "User's wallet address: ")]
         public string WalletAddress { get; set; }
         public short InviteCount { get; set; }
-        public double PlayMoney { get; set; }
+        public decimal PlayMoney { get; set; }
         public byte Level { get; set; }
     }
 }

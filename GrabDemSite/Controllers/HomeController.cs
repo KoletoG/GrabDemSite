@@ -132,7 +132,7 @@ namespace GrabDemSite.Controllers
                 userslv3.Add(fakeUser);
                 userslv1.Add(fakeUser);
                 userslv2.Add(fakeUser);
-                double wholeBal = 0;
+                decimal wholeBal = 0m;
                 string name = user.UserName;
                 var depositsTask = _context.GetDepositsByUserAndIsConfirmedAsync(user);
                 var withdrawsTask = _context.GetWithdrawsByUserAsync(user);
@@ -359,7 +359,7 @@ namespace GrabDemSite.Controllers
         /// <returns>Updated user's deposits and balance</returns>
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Edit(string id, double balance)
+        public async Task<IActionResult> Edit(string id, decimal balance)
         {
             try
             {
@@ -406,12 +406,12 @@ namespace GrabDemSite.Controllers
         /// <param name="money">money to withdraw</param>
         /// <returns>ConfirmedWithdraw method if successful / Withdraw section if not / Index if no money to withdraw</returns>
         [Authorize]
-        public async Task<IActionResult> TryWithdraw(string id, double money)
+        public async Task<IActionResult> TryWithdraw(string id, decimal money)
         {
             try
             {
                 var user = await _context.GetUserByIdAsync(id);
-                money -= money * 0.06;
+                money -= money * 0.06m;
                 if (user.MoneySpent < 25)
                 {
                     ViewBag.ErrorBal = "You need to deposit at least 25$ in order to withdraw";
@@ -444,14 +444,14 @@ namespace GrabDemSite.Controllers
         /// <param name="iduser">id of the user</param>
         /// <returns>Withdraw instance</returns>
         [Authorize]
-        public async Task<IActionResult> ConfirmedWithdraw(string id, double money, string wallet, string iduser)
+        public async Task<IActionResult> ConfirmedWithdraw(string id, decimal money, string wallet, string iduser)
         {
             try
             {
                 var user = await _context.GetUserByIdAsync(iduser);
                 user.Balance -= money;
                 user.PlayMoney -= money;
-                await _context.WithdrawDatas.AddAsync(new WithdrawDataModel(id, wallet, money - (money * 0.06), user, false, DateTime.Now));
+                await _context.WithdrawDatas.AddAsync(new WithdrawDataModel(id, wallet, money - (money * 0.06m), user, false, DateTime.Now));
                 _context.Update(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -555,7 +555,7 @@ namespace GrabDemSite.Controllers
         /// <param name="money">how much money he wants to deposit</param>
         /// <returns>A new deposit data model or gets you back to the same page</returns>
         [Authorize]
-        public async Task<IActionResult> TryDeposit(string id, double money)
+        public async Task<IActionResult> TryDeposit(string id, decimal money)
         {
             try
             {
@@ -585,7 +585,7 @@ namespace GrabDemSite.Controllers
         /// <param name="userid">Id of the User</param>
         /// <returns>Adds a DepositDataModel to Database</returns>
         [Authorize]
-        public async Task<IActionResult> TryTheDeposit(string id, double money, string userid)
+        public async Task<IActionResult> TryTheDeposit(string id, decimal money, string userid)
         {
             try
             {

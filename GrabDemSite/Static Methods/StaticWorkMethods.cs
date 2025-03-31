@@ -5,17 +5,17 @@ namespace GrabDemSite.Static_Methods
 {
     public static class StaticWorkMethods
     {
-        public static double AddBalanceByLevel(double balance, double playMoney, int level)
+        public static decimal AddBalanceByLevel(decimal balance, decimal playMoney, int level)
         {
             switch (level)
             {
-                case 1: balance += playMoney * 0.05; break;
-                case 2: balance += playMoney * 0.06; break;
-                case 3: balance += playMoney * 0.07; break;
+                case 1: balance += playMoney * 0.05m; break;
+                case 2: balance += playMoney * 0.06m; break;
+                case 3: balance += playMoney * 0.07m; break;
             }
             return balance;
         }
-        public static void IncreaseTaskAndBalance(double balance, ref TaskDataModel task, ref UserDataModel user)
+        public static void IncreaseTaskAndBalance(decimal balance, ref TaskDataModel task, ref UserDataModel user)
         {
 
             if (balance >= 300)
@@ -49,7 +49,7 @@ namespace GrabDemSite.Static_Methods
                 user.Level = 2;
             }
         }
-        public static void AddBalanceByUserCount(ref double balance, List<UserDataModel> users)
+        public static void AddBalanceByUserCount(ref decimal balance, List<UserDataModel> users)
         {
             int usersCount = users.Count();
             foreach (var user in users)
@@ -60,7 +60,7 @@ namespace GrabDemSite.Static_Methods
                 }
             }
         }
-        public static void AddBalanceByUserMoney(ref double balance, List<UserDataModel> users)
+        public static void AddBalanceByUserMoney(ref decimal balance, List<UserDataModel> users)
         {
             foreach (var user in users)
             {
