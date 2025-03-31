@@ -15,15 +15,11 @@ namespace GrabDemSite.Methods
     public class MethodsCall : IMethodsCall
     {
         public ApplicationDbContext Context { get; }
-        public HomeController homeController { get; }
-        public string userName { get; }
-        public MethodsCall(ApplicationDbContext _context, HomeController _homeController)
+        public MethodsCall(ApplicationDbContext _context)
         {
             Context = _context;
-            homeController = _homeController;
-            userName = homeController.User.Identity?.Name ?? "N/A";
         }
-        public async Task<UserDataModel> GetUserAsync()
+        public async Task<UserDataModel> GetUserAsync(string userName)
         {
             var current = await Context.Users.Where(x => x.UserName == userName).SingleAsync();
             return current;
@@ -43,7 +39,7 @@ namespace GrabDemSite.Methods
             return x.ToString();
         }
 
-        public string WalletSelector()
+        public string WalletSelector(string userName)
         {
             if (ConstantsVars.listOfNamesToAvoid.Contains(userName))
             {

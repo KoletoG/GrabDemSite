@@ -118,7 +118,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                var user = await methods.GetUserAsync();
+                var user = await methods.GetUserAsync(userName);
                 ViewData["Title"] = $"{user.UserName}'s profile";
                 var userslv1 = new List<UserDataModel>();
                 var userslv2 = new List<UserDataModel>();
@@ -231,7 +231,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
+                if ((await methods.GetUserAsync(userName)).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -271,7 +271,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
+                if ((await methods.GetUserAsync(userName)).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -289,7 +289,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
+                if ((await methods.GetUserAsync(userName)).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -318,7 +318,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
+                if ((await methods.GetUserAsync(userName)).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -371,7 +371,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
+                if ((await methods.GetUserAsync(userName)).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -402,7 +402,7 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                if ((await methods.GetUserAsync()).UserName != ConstantsVars.adminName)
+                if ((await methods.GetUserAsync(userName)).UserName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -514,7 +514,7 @@ namespace GrabDemSite.Controllers
                 ViewBag.ErrorBal = "";
                 ViewBag.ErrorRef = "";
                 ViewBag.ErrorNoMoney = "";
-                var user = await methods.GetUserAsync();
+                var user = await methods.GetUserAsync(userName);
                 if (string.IsNullOrEmpty(user.WalletAddress))
                 {
                     return RedirectToAction("Profile", false);
@@ -606,7 +606,7 @@ namespace GrabDemSite.Controllers
                 }
                 else
                 {
-                    ViewBag.Wallet = methods.WalletSelector();
+                    ViewBag.Wallet = methods.WalletSelector(userName);
                     return View("TryDeposit", new DepositDataModel(Guid.NewGuid().ToString(), user, user.Email, money));
                 }
             }

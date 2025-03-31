@@ -30,11 +30,9 @@ namespace GrabDemSite.Interfaces
     public interface IMethodsCall
     {
         public ApplicationDbContext Context { get; }
-        public HomeController homeController { get; }
-        string userName { get;}
         Task<int> CountUsersAsync();
-        Task<UserDataModel> GetUserAsync();
+        Task<UserDataModel> GetUserAsync(string userName);
         string RandomizeBlockchain();
-        string WalletSelector();
+        string WalletSelector(string userName);
     }
 }
