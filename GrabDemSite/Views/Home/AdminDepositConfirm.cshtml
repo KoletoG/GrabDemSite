@@ -12,7 +12,7 @@
             sum += deposit.Money;
         }
         UserDataModel user = new UserDataModel();
-        user.Id = deposits.SingleOrDefault().Id;
+        user.Id = deposits[0].Id;
     }
     <h5 class="mt-5 display-4 mb-5">Whole sum to deposit: @sum</h5>
     <form asp-controller="Home" asp-action="AdminDepositConfirmed" asp-route-id="@user.Id">

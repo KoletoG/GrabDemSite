@@ -76,6 +76,7 @@
             <div class="d-flex justify-content-around">
                 @{
                     string name = this.User.Identity.Name;
+                    string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
                 }
                 <div class="p-2">
                     <h1 class="display-4 text-warning">Level 1: </h1>
@@ -87,7 +88,7 @@
                         {
                             <h3>0$</h3>
                         }
-                        else if (userlv1.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+                        else if (userlv1.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5") && name.)
                         {
                             <h3>25$</h3>
                         }
@@ -106,7 +107,7 @@
                         {
                             <h3>0$</h3>
                         }
-                        else if (userlv2.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+                        else if (userlv2.MoneySpent >= 25 && listOfNamesToAvoid.Contains(name))
                         {
                             <h3>25$</h3>
                         }
@@ -125,7 +126,7 @@
                         {
                             <h3>0$</h3>
                         }
-                        else if (userlv3.MoneySpent >= 25 && (name == "SkAg1" || name == "BlAg2" || name == "5aAg3" || name == "TyAg4" || name == "66Ag5"))
+                        else if (userlv3.MoneySpent >= 25 && listOfNamesToAvoid.Contains(name))
                         {
                             <h3>25$</h3>
                         }
