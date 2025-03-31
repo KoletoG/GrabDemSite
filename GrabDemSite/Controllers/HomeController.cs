@@ -23,12 +23,12 @@ namespace GrabDemSite.Controllers
         private static float bitcoinSupply = 38.743898f;
         private readonly IMethodsCall methods;
         private readonly string userName;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context,IMethodsCall _methods)
         {
             _logger = logger;
             _context = context;
-            methods = new MethodsCall(_context, this);
             userName = this.User.Identity?.Name ?? "N/A";
+            methods = _methods;
         }
         /// <summary>
         /// Deletes a user's account

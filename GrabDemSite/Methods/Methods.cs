@@ -14,7 +14,6 @@ namespace GrabDemSite.Methods
 {
     public class MethodsCall : IMethodsCall
     {
-        public const string alphnum = "1234567890abcdefghijklmnopqrstuvwxyz";
         public ApplicationDbContext Context { get; }
         public HomeController homeController { get; }
         public string userName { get; }
@@ -36,10 +35,10 @@ namespace GrabDemSite.Methods
         public string RandomizeBlockchain()
         {
             StringBuilder x = new StringBuilder(65);
-            int alphLength = alphnum.Length;
+            int alphLength = ConstantsVars.alphnum.Length;
             for (int i = 0; i < 65; i++)
             {
-                x.Append(alphnum[ConstantsVars.rnd.Next(0, alphLength)]);
+                x.Append(ConstantsVars.alphnum[ConstantsVars.rnd.Next(0, alphLength)]);
             }
             return x.ToString();
         }

@@ -29,7 +29,6 @@ namespace GrabDemSite.Interfaces
     }
     public interface IMethodsCall
     {
-        const string alphnum="1234567890abcdefghijklmnopqrstuvwxyz";
         public ApplicationDbContext Context { get; }
         public HomeController homeController { get; }
         string userName { get;}
