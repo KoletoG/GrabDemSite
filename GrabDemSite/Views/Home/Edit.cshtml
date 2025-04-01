@@ -1,13 +1,13 @@
 ﻿@model UserDataModel
-    <meta charset="utf-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
 @{
     List<DepositDataModel> deposits = ViewBag.Orders;
     decimal sum = 0;
-    for(int i=0;i<deposits.Count();i++)
+    foreach(var deposit in deposits)
     {
-        sum += deposits[i].Money;
+        sum += deposit.Money;
     }
     <br />
 }
