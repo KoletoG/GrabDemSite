@@ -1,28 +1,28 @@
 ﻿@model UserDataModel
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
 @{
-    List<DepositDataModel> deposits = ViewBag.Orders;
-    decimal sum = 0;
-    foreach(var deposit in deposits)
-    {
-        sum += deposit.Money;
-    }
-    <br />
+	List<DepositDataModel> deposits = ViewBag.Orders;
+	decimal sum = 0;
+	foreach (var deposit in deposits)
+	{
+		sum += deposit.Money;
+	}
+	<br />
 }
-                <div class="text-center container shadow-lg w-50 border-bottom border-top mt-5 mb-5">
-<label asp-for="UserName" class="text-warning display-6 mt-2">@Model.UserName</label>
-<br />
-<label asp-for="WalletAddress" class="h3 fst-italic">@Model.WalletAddress</label>
-<br/>
-<form asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id" method="get">
-<label class="text-dark h5">Person has deposited: @sum $</label>
-<br />
-<input placeholder="@sum" name="Balance" class="text-dark mt-3 h4 text-center rounded-3 w-25"/>
-<br/>
-<label asp-for="MoneySpent" class="h5 fst-italic">Person has spent: @Model.MoneySpent</label>
-<br />
-<button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-4 fs-5">Confirm edit</button>
-</form>
+<div class="text-center container shadow-lg w-50 border-bottom border-top mt-5 mb-5">
+	<label asp-for="UserName" class="text-warning display-6 mt-2">@Model.UserName</label>
+	<br />
+	<label asp-for="WalletAddress" class="h3 fst-italic">@Model.WalletAddress</label>
+	<br />
+	<form asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Id" method="get">
+		<label class="text-dark h5">Person has deposited: @sum $</label>
+		<br />
+		<input placeholder="@sum" name="Balance" class="text-dark mt-3 h4 text-center rounded-3 w-25" />
+		<br />
+		<label asp-for="MoneySpent" class="h5 fst-italic">Person has spent: @Model.MoneySpent</label>
+		<br />
+		<button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-4 fs-5">Confirm edit</button>
+	</form>
 </div>
