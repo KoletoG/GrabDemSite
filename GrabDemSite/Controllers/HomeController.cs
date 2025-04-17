@@ -490,13 +490,10 @@ namespace GrabDemSite.Controllers
                 var countUsers = await methods.CountUsersAsync();
                 var user = await _context.GetUserByNameAsync(userName);
                 var task = await _context.GetTaskByUserAsync(user);
-                ViewBag.User = user;
                 string block = methods.RandomizeBlockchain();
                 bitcoinSupply -= 0.000396f;
-                ViewBag.Count = countUsers + Random.Shared.Next(300, 1200);
-                ViewBag.BlockChain = block;
-                ViewBag.Bitc = bitcoinSupply;
-                return View(task);
+                int count = countUsers + Random.Shared.Next(300, 1200);
+                return View(new IndexViewModel(task,user,block,count,bitcoinSupply));
             }
             catch (Exception ex)
             {
