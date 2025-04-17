@@ -21,7 +21,7 @@ namespace GrabDemSite.Methods
         }
         public async Task<UserDataModel> GetUserAsync(string userName)
         {
-            var current = await Context.Users.Where(x => x.UserName == userName).SingleAsync();
+            var current = await Context.Users.SingleAsync(x => x.UserName == userName);
             return current;
         }
         public async Task<int> CountUsersAsync()
@@ -34,7 +34,7 @@ namespace GrabDemSite.Methods
             int alphLength = ConstantsVars.alphnum.Length;
             for (int i = 0; i < 65; i++)
             {
-                x.Append(ConstantsVars.alphnum[ConstantsVars.rnd.Next(0, alphLength)]);
+                x.Append(ConstantsVars.alphnum[Random.Shared.Next(0, alphLength)]);
             }
             return x.ToString();
         }
