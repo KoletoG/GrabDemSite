@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using GrabDemSite.Data;
 using GrabDemSite.Interfaces;
 using GrabDemSite.Models;
@@ -11,11 +12,11 @@ namespace GrabDemSite.Extension_methods
     {
         public static async Task<UserDataModel> GetUserByIdAsync(this ApplicationDbContext context, string id)
         {
-            return await context.Users.Where(x => x.Id == id).SingleAsync();
+            return await context.Users.SingleAsync(x => x.Id == id);
         }
         public static async Task<TaskDataModel> GetTaskByUserAsync(this ApplicationDbContext context, UserDataModel user)
         {
-            return await context.TaskDatas.Where(x => x.User == user).SingleAsync();
+            return await context.TaskDatas.SingleAsync(x => x.User == user);
         }
         public static async Task<List<DepositDataModel>> GetDepositsByUserAsync(this ApplicationDbContext context, UserDataModel user)
         {
@@ -31,7 +32,7 @@ namespace GrabDemSite.Extension_methods
         }
         public static async Task<UserDataModel> GetUserByNameAsync(this ApplicationDbContext context, string name)
         {
-            return await context.Users.Where(x => x.UserName == name).SingleAsync();
+            return await context.Users.SingleAsync(x => x.UserName == name);
         }
         public static async Task<List<WithdrawDataModel>> GetWithdrawsByUserAsync(this ApplicationDbContext context, UserDataModel user)
         {
@@ -47,7 +48,7 @@ namespace GrabDemSite.Extension_methods
         }
         public static async Task<UserDataModel> GetUserByInviteLinkAsync(this ApplicationDbContext context, UserDataModel user)
         {
-            return await context.Users.Where(x => x.InviteLink == user.InviteWithLink).SingleAsync();
+            return await context.Users.SingleAsync(x => x.InviteLink == user.InviteWithLink);
         }
         public static async Task AddUsersToTeamByLevelAsync(this ApplicationDbContext context, List<UserDataModel> users1, List<UserDataModel> users2, UserDataModel fakeUser)
         {
