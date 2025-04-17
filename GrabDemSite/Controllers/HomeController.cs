@@ -365,8 +365,8 @@ namespace GrabDemSite.Controllers
                 var deposits = await _context.GetDepositsByUserIdAndIsConfirmedAsync(user, false);
                 var task = await _context.GetTaskByUserAsync(user1);
                 var task1 = await _context.GetTaskByUserAsync(user);
-                StaticWorkMethods.IncreaseTaskAndBalance(balance, ref task1, ref user);
-                StaticWorkMethods.ChangeLevelByMoneySpent(ref user);
+                StaticWorkMethods.IncreaseTaskAndBalance(balance, task1, user);
+                StaticWorkMethods.ChangeLevelByMoneySpent(user);
                 task.Count++;
                 _context.Update(task);
                 _context.Update(task1);

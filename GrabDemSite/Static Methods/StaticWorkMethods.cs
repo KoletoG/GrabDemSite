@@ -15,7 +15,7 @@ namespace GrabDemSite.Static_Methods
             }
             return balance;
         }
-        public static void IncreaseTaskAndBalance(decimal balance, ref TaskDataModel task, ref UserDataModel user)
+        public static void IncreaseTaskAndBalance(decimal balance, TaskDataModel task, UserDataModel user)
         {
 
             if (balance >= 300)
@@ -38,7 +38,7 @@ namespace GrabDemSite.Static_Methods
                 task.Count += 5;
             }
         }
-        public static void ChangeLevelByMoneySpent(ref UserDataModel user)
+        public static void ChangeLevelByMoneySpent(UserDataModel user)
         {
             if (user.MoneySpent >= 300)
             {
