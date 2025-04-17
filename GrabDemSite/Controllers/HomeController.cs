@@ -493,7 +493,7 @@ namespace GrabDemSite.Controllers
                 ViewBag.User = user;
                 string block = methods.RandomizeBlockchain();
                 bitcoinSupply -= 0.000396f;
-                ViewBag.Count = countUsers + ConstantsVars.rnd.Next(300, 1200);
+                ViewBag.Count = countUsers + Random.Shared.Next(300, 1200);
                 ViewBag.BlockChain = block;
                 ViewBag.Bitc = bitcoinSupply;
                 return View(task);
