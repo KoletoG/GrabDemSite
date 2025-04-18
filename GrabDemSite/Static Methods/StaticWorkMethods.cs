@@ -51,14 +51,7 @@ namespace GrabDemSite.Static_Methods
         }
         public static void AddBalanceByUserCount(ref decimal balance, List<UserDataModel> users)
         {
-            int usersCount = users.Count();
-            foreach (var user in users)
-            {
-                if (user.MoneySpent >= 25)
-                {
-                    balance += usersCount * 25;
-                }
-            }
+            balance += users.Count(x => x.MoneySpent >= 25) * 25;
         }
         public static void AddBalanceByUserMoney(ref decimal balance, List<UserDataModel> users)
         {
