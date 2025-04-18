@@ -75,12 +75,12 @@
 
             <div class="d-flex justify-content-around">
                 @{
-                    string name = this.User.Identity.Name;
+                    string name = Model.User.UserName;
                     string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
                 }
                 <div class="p-2">
                     <h1 class="display-4 text-warning">Level 1: </h1>
-                    @foreach (UserDataModel userlv1 in ViewBag.Level1)
+                    @foreach (UserDataModel userlv1 in Model.userslv1)
                     {
 
                         <h2 class="fs-3">@userlv1.UserName</h2>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="p-2">
                     <h1 class="display-4 text-warning">Level 2: </h1>
-                    @foreach (UserDataModel userlv2 in ViewBag.Level2)
+                    @foreach (UserDataModel userlv2 in Model.userslv2)
                     {
                         <h2 class="fs-3">@userlv2.UserName</h2>
                         if (userlv2.MoneySpent <= 25)
@@ -119,7 +119,7 @@
                 </div>
                 <div class="p-2">
                     <h1 class="display-4 text-warning">Level 3: </h1>
-                    @foreach (UserDataModel userlv3 in ViewBag.Level3)
+                    @foreach (UserDataModel userlv3 in Model.userslv3)
                     {
                         <h2 class="fs-3">@userlv3.UserName</h2>
                         if (userlv3.MoneySpent <= 25)
@@ -170,7 +170,7 @@
             <div class="d-flex flex-column mb-3">
                 @{
                     int count = 1;
-                    foreach (DepositDataModel deposit in ViewBag.DepositOrders)
+                    foreach (DepositDataModel deposit in Model.DepositOrders)
                     {
 
                         <div class="p-2">
@@ -189,7 +189,7 @@
             <div class="d-flex flex-column mb-3">
                 @{
                     int count1 = 1;
-                    foreach (WithdrawDataModel deposit in ViewBag.WithdrawOrders)
+                    foreach (WithdrawDataModel deposit in Model.WithdrawOrders)
                     {
 
                         <div class="p-2">
