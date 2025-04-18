@@ -6,7 +6,6 @@ namespace GrabDemSite.Models
 {
     public class UserDataModel : IdentityUser, IUserDataModel
     {
-        public UserDataModel() { }
         public UserDataModel(string id, string userName, string email, string inviteLink, string inviteWithLink, DateTimeOffset dateCreated, decimal balance, decimal moneySpent, string walletAddress, short inviteCount, decimal playMoney, byte level)
         {
             Id = id;

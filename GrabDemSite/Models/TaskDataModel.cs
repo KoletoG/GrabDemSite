@@ -5,7 +5,6 @@ namespace GrabDemSite.Models
 {
     public class TaskDataModel
     {
-        public TaskDataModel() { }
         public TaskDataModel(string id,int count, UserDataModel user, byte levelOfTask,bool newAccount) 
         {
             Id = id;

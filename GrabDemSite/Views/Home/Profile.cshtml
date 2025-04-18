@@ -76,7 +76,7 @@
             <div class="d-flex justify-content-around">
                 @{
                     string name = Model.User.UserName;
-                    string[] listOfNamesToAvoid = { "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
+                    HashSet<string> listOfNamesToAvoid = new HashSet<string>(){ "SkAg1", "BlAg2", "5aAg3", "TyAg4", "66Ag5", "SpecAg" };
                 }
                 <div class="p-2">
                     <h1 class="display-4 text-warning">Level 1: </h1>
