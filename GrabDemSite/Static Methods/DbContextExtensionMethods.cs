@@ -65,17 +65,6 @@ namespace GrabDemSite.Extension_methods
             users = await context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
             users.OrderBy(x => x.MoneySpent);
         }
-        public static async Task<bool> IsInviteLinkUsersExistAsync(this ApplicationDbContext context, UserDataModel user)
-        {
-            if (user != null)
-            {
-                return await context.Users.AnyAsync(x => x.InviteWithLink == user.InviteLink);
-            }
-            else
-            {
-                return false;
-            }
-        }
         public static async Task<List<T>> LoadViewBagAllAsync<T>(this ApplicationDbContext context) where T : class
         {
             if (typeof(T) == typeof(DepositDataModel))
