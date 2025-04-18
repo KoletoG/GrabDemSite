@@ -143,7 +143,6 @@ namespace GrabDemSite.Controllers
                     {
                         StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv1);
                     }
-                    ViewBag.Level1 = userslv1;
                     if (await _context.Users.AnyAsync(x=>x.InviteWithLink == userslv1[0].InviteLink))
                     {
                         await _context.AddUsersToTeamByLevelAsync(userslv1, userslv2);

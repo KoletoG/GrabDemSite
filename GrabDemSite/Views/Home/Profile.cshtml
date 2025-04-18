@@ -1,4 +1,4 @@
-﻿@model UserDataModel
+﻿@model ProfileViewModel
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true" />
@@ -141,7 +141,7 @@
     </div>
     <div class="collapse" id="collapseWallet">
         <div class="card card-body mb-3  shadow-sm">
-            @if (string.IsNullOrEmpty(Model.WalletAddress))
+            @if (string.IsNullOrEmpty(Model.User.WalletAddress))
             {
                 <form asp-controller="Home" class="text-center mt-5" asp-action="ChangeWallet">
                     <h2 class="text-danger display-6 mb-3">You can only change your wallet once!</h2>
@@ -152,16 +152,16 @@
             }
             else
             {
-                <h2 class="text-warning display-4">@Model.WalletAddress</h2>
+                <h2 class="text-warning display-4">@Model.User.WalletAddress</h2>
             }
         </div>
     </div>
 
     <div class="collapse" id="collapseInfo">
         <div class="card card-body mb-3  shadow-sm">
-            <h2 class="text-dark display-4">Your invite code: <span class="text-warning display-2 fw-semibold">@Model.InviteLink</span></h2>
-            <h2 class="text-dark display-5"> Your balance: <span class="text-warning">@Model.Balance.ToString("0.00") $</span></h2>
-            <h2 class="text-dark display-5"> Your level: <span class="text-warning">@Model.Level</span></h2>
+            <h2 class="text-dark display-4">Your invite code: <span class="text-warning display-2 fw-semibold">@Model.User.InviteLink</span></h2>
+            <h2 class="text-dark display-5"> Your balance: <span class="text-warning">@Model.User.Balance.ToString("0.00") $</span></h2>
+            <h2 class="text-dark display-5"> Your level: <span class="text-warning">@Model.User.Level</span></h2>
 
         </div>
     </div>
