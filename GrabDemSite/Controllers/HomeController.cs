@@ -120,12 +120,6 @@ namespace GrabDemSite.Controllers
                 var userslv1 = new List<UserDataModel>();
                 var userslv2 = new List<UserDataModel>();
                 var userslv3 = new List<UserDataModel>();
-                var fakeUser = new UserDataModel();
-                fakeUser.UserName = "N/A";
-                fakeUser.MoneySpent = 0;
-                userslv3.Add(fakeUser);
-                userslv1.Add(fakeUser);
-                userslv2.Add(fakeUser);
                 decimal wholeBal = 0m;
                 string name = user.UserName;
                 ViewBag.DepositOrders = await _context.GetDepositsByUserAndIsConfirmedAsync(user);
@@ -140,7 +134,7 @@ namespace GrabDemSite.Controllers
                 }
                 if (await _context.Users.AnyAsync(x=>x.InviteLink==user.InviteLink))
                 {
-                    await _context.AddUsersToTeamByLevelAsync(userslv1, user, fakeUser);
+                    await _context.AddUsersToTeamByLevelAsync(userslv1, user);
                     if (ConstantsVars.listOfNamesToAvoid.Contains(name))
                     {
                         StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv1);
@@ -152,7 +146,7 @@ namespace GrabDemSite.Controllers
                     ViewBag.Level1 = userslv1;
                     if (await _context.Users.AnyAsync(x=>x.InviteWithLink == userslv1[0].InviteLink))
                     {
-                        await _context.AddUsersToTeamByLevelAsync(userslv1, userslv2, fakeUser);
+                        await _context.AddUsersToTeamByLevelAsync(userslv1, userslv2);
                         if (ConstantsVars.listOfNamesToAvoid.Contains(name))
                         {
                             StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv2);
@@ -163,7 +157,7 @@ namespace GrabDemSite.Controllers
                         }
                         if (await _context.Users.AnyAsync(x => x.InviteWithLink == userslv2[0].InviteLink))
                         {
-                            await _context.AddUsersToTeamByLevelAsync(userslv2, userslv3, fakeUser);
+                            await _context.AddUsersToTeamByLevelAsync(userslv2, userslv3);
                             if (ConstantsVars.listOfNamesToAvoid.Contains(name))
                             {
                                 StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv3);

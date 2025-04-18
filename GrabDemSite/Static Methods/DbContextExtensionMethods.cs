@@ -50,18 +50,16 @@ namespace GrabDemSite.Extension_methods
         {
             return await context.Users.SingleAsync(x => x.InviteLink == user.InviteWithLink);
         }
-        public static async Task AddUsersToTeamByLevelAsync(this ApplicationDbContext context, List<UserDataModel> users1, List<UserDataModel> users2, UserDataModel fakeUser)
+        public static async Task AddUsersToTeamByLevelAsync(this ApplicationDbContext context, List<UserDataModel> users1, List<UserDataModel> users2)
         {
-            users2.Remove(fakeUser);
             foreach (var user1 in users1)
             {
                 users2.AddRange(await context.Users.Where(x => x.InviteWithLink == user1.InviteLink).ToListAsync());
             }
             users2.OrderBy(x => x.MoneySpent);
         }
-        public static async Task AddUsersToTeamByLevelAsync(this ApplicationDbContext context, List<UserDataModel> users, UserDataModel user, UserDataModel fakeUser)
+        public static async Task AddUsersToTeamByLevelAsync(this ApplicationDbContext context, List<UserDataModel> users, UserDataModel user)
         {
-            users.Remove(fakeUser);
             users = await context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
             users.OrderBy(x => x.MoneySpent);
         }
