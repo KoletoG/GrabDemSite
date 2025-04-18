@@ -58,10 +58,12 @@ namespace GrabDemSite.Extension_methods
             }
             users2.OrderBy(x => x.MoneySpent);
         }
-        public static async Task AddUsersToTeamByLevelAsync(this ApplicationDbContext context, List<UserDataModel> users, UserDataModel user)
+        public static async Task<List<UserDataModel>> AddUsersToTeamByLevelAsync(this ApplicationDbContext context, UserDataModel user)
         {
+            var users = new List<UserDataModel>();
             users = await context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
             users.OrderBy(x => x.MoneySpent);
+            return users;
         }
         public static async Task<List<T>> LoadViewBagAllAsync<T>(this ApplicationDbContext context) where T : class
         {

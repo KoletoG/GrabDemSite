@@ -134,7 +134,7 @@ namespace GrabDemSite.Controllers
                 }
                 if (await _context.Users.AnyAsync(x=>x.InviteLink==user.InviteLink))
                 {
-                    await _context.AddUsersToTeamByLevelAsync(userslv1, user);
+                    userslv1 = await _context.AddUsersToTeamByLevelAsync(user);
                     if (ConstantsVars.listOfNamesToAvoid.Contains(name))
                     {
                         StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv1);
