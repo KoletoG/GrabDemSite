@@ -1,4 +1,6 @@
-﻿namespace GrabDemSite.Models
+﻿using GrabDemSite.Models.DataModel;
+
+namespace GrabDemSite.Models.ViewModel
 {
     public class IndexViewModel
     {

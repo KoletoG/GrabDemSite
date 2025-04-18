@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using GrabDemSite.Interfaces;
 
-namespace GrabDemSite.Models
+namespace GrabDemSite.Models.DataModel
 {
     public class WithdrawDataModel : ITransactionDataModel
     {
@@ -16,19 +16,19 @@ namespace GrabDemSite.Models
 
         public WithdrawDataModel(string id, string walletAddress, decimal money, UserDataModel user, bool isConfirmed, DateTime dateCreated)
         {
-            this.Id = id;
-            this.WalletAddress = walletAddress;
-            this.Money = money;
-            this.User = user;
-            this.IsConfirmed = isConfirmed;
-            this.DateCreated = dateCreated;
+            Id = id;
+            WalletAddress = walletAddress;
+            Money = money;
+            User = user;
+            IsConfirmed = isConfirmed;
+            DateCreated = dateCreated;
         }
         public WithdrawDataModel(string id, string walletAddress, decimal money, UserDataModel user)
         {
-            this.Id = id;
-            this.WalletAddress = walletAddress;
-            this.Money = money;
-            this.User = user;
+            Id = id;
+            WalletAddress = walletAddress;
+            Money = money;
+            User = user;
         }
         public WithdrawDataModel() { }
     }

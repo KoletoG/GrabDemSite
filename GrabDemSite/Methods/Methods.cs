@@ -6,7 +6,7 @@ using GrabDemSite.Data;
 using GrabDemSite.Data.Migrations;
 using GrabDemSite.Extension_methods;
 using GrabDemSite.Interfaces;
-using GrabDemSite.Models;
+using GrabDemSite.Models.DataModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

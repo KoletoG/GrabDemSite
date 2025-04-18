@@ -18,9 +18,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using GrabDemSite.Models;
 using GrabDemSite.Data;
 using Microsoft.EntityFrameworkCore;
+using GrabDemSite.Models.DataModel;
 namespace GrabDemSite.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel

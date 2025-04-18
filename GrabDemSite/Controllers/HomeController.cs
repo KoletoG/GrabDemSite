@@ -1,6 +1,5 @@
 ﻿using GrabDemSite.Data;
 using GrabDemSite.Extension_methods;
-using GrabDemSite.Models;
 using GrabDemSite.Static_Methods;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +13,8 @@ using GrabDemSite.Methods;
 using GrabDemSite.Interfaces;
 using GrabDemSite.Data.Migrations;
 using GrabDemSite.Constants;
+using GrabDemSite.Models.ViewModel;
+using GrabDemSite.Models.DataModel;
 namespace GrabDemSite.Controllers
 {
     public class HomeController : Controller
@@ -123,14 +124,7 @@ namespace GrabDemSite.Controllers
                 decimal wholeBal = 0m;
                 var deposits = await _context.GetDepositsByUserAndIsConfirmedAsync(user);
                 var withdraws = await _context.GetWithdrawsByUserAsync(user);
-                if (tr == false)
-                {
-                    ViewBag.Error = "You need to set your wallet first";
-                }
-                else
-                {
-                    ViewBag.Error = null;
-                }
+                ViewBag.Error = tr ? null : "You need to set your wallet first";
                 if (await _context.Users.AnyAsync(x=>x.InviteLink==user.InviteLink))
                 {
                     userslv1 = await _context.AddUsersToTeamByLevelAsync(user);
@@ -191,7 +185,7 @@ namespace GrabDemSite.Controllers
                 }
                 ViewBag.Users = await _context.LoadViewBagAllAsync<UserDataModel>();
                 ViewBag.Orders = await _context.LoadViewBagAllAsync<DepositDataModel>();
-                ViewBag.Withdraws = await _context.LoadViewBagAllAsync<GrabDemSite.Models.WithdrawDataModel>();
+                ViewBag.Withdraws = await _context.LoadViewBagAllAsync<Models.DataModel.WithdrawDataModel>();
                 return View();
             }
             catch (Exception ex)
@@ -401,7 +395,7 @@ namespace GrabDemSite.Controllers
                     return RedirectToAction("Index");
                 }
                 ViewBag.Mon = money;
-                return View("ConfirmWithdraw", new GrabDemSite.Models.WithdrawDataModel(Guid.NewGuid().ToString(), user.WalletAddress, money, user));
+                return View("ConfirmWithdraw", new GrabDemSite.Models.DataModel.WithdrawDataModel(Guid.NewGuid().ToString(), user.WalletAddress, money, user));
             }
             catch (Exception ex)
             {
@@ -425,7 +419,7 @@ namespace GrabDemSite.Controllers
                 var user = await _context.GetUserByIdAsync(iduser);
                 user.Balance -= money;
                 user.PlayMoney -= money;
-                await _context.WithdrawDatas.AddAsync(new GrabDemSite.Models.WithdrawDataModel(id, wallet, money - (money * 0.06m), user, false, DateTime.Now));
+                await _context.WithdrawDatas.AddAsync(new GrabDemSite.Models.DataModel.WithdrawDataModel(id, wallet, money - (money * 0.06m), user, false, DateTime.Now));
                 _context.Update(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
-namespace GrabDemSite.Models
+namespace GrabDemSite.Models.DataModel
 {
     public class UserDataModel : IdentityUser, IUserDataModel
     {

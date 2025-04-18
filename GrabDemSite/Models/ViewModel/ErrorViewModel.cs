@@ -1,4 +1,4 @@
-namespace GrabDemSite.Models
+namespace GrabDemSite.Models.ViewModel
 {
     public class ErrorViewModel
     {

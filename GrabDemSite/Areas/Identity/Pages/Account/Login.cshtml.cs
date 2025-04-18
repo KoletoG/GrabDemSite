@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using GrabDemSite.Models;
+using GrabDemSite.Models.DataModel;
 
 namespace GrabDemSite.Areas.Identity.Pages.Account
 {

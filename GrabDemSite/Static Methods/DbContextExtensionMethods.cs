@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using GrabDemSite.Data;
 using GrabDemSite.Interfaces;
-using GrabDemSite.Models;
+using GrabDemSite.Models.DataModel;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +10,7 @@ namespace GrabDemSite.Extension_methods
 {
     public static class DbContextExtensionMethods
     {
+        // Need summaries
         public static async Task<UserDataModel> GetUserByIdAsync(this ApplicationDbContext context, string id)
         {
             try

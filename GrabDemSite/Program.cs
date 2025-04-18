@@ -1,5 +1,4 @@
 using GrabDemSite.Data;
-using GrabDemSite.Models;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,7 @@ using Microsoft.Extensions.Hosting.Systemd;
 using GrabDemSite.Controllers;
 using GrabDemSite.Interfaces;
 using GrabDemSite.Methods;
+using GrabDemSite.Models.DataModel;
 namespace GrabDemSite
 {
     public class Program

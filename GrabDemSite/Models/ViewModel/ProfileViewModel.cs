@@ -1,6 +1,7 @@
 ﻿using System.Net;
+using GrabDemSite.Models.DataModel;
 
-namespace GrabDemSite.Models
+namespace GrabDemSite.Models.ViewModel
 {
     public class ProfileViewModel
     {

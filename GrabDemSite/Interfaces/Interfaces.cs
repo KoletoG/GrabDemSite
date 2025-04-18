@@ -1,6 +1,6 @@
 ﻿using GrabDemSite.Controllers;
 using GrabDemSite.Data;
-using GrabDemSite.Models;
+using GrabDemSite.Models.DataModel;
 
 namespace GrabDemSite.Interfaces
 {

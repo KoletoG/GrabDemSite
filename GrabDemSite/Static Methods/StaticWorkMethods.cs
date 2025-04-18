@@ -1,4 +1,4 @@
-﻿using GrabDemSite.Models;
+﻿using GrabDemSite.Models.DataModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GrabDemSite.Static_Methods

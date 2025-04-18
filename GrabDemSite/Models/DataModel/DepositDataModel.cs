@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using GrabDemSite.Interfaces;
 
-namespace GrabDemSite.Models
+namespace GrabDemSite.Models.DataModel
 {
     public class DepositDataModel : ITransactionDataModel
     {

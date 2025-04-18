@@ -1,4 +1,5 @@
-﻿@inject SignInManager<UserDataModel> SignInManager
+﻿@using GrabDemSite.Models.DataModel
+@inject SignInManager<UserDataModel> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

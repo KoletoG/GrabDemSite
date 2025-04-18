@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GrabDemSite.Models
+namespace GrabDemSite.Models.DataModel
 {
     public class TaskDataModel
     {
