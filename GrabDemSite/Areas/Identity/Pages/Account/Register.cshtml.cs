@@ -21,11 +21,11 @@ using Microsoft.Extensions.Logging;
 using GrabDemSite.Data;
 using Microsoft.EntityFrameworkCore;
 using GrabDemSite.Models.DataModel;
+using GrabDemSite.Constants;
 namespace GrabDemSite.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private Random rnd = new Random();
         private static int count = 100000;
         private readonly SignInManager<UserDataModel> _signInManager;
         private readonly UserManager<UserDataModel> _userManager;
@@ -128,7 +128,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                count += rnd.Next(1, 500);
+                count += Random.Shared.Next(1, 500);
                 var user = CreateUser();
                 if(await _context.Users.AnyAsync(x => x.UserName == Input.UserName))
                 {
@@ -150,7 +150,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 user.PlayMoney = 0;
                 user.Level = 1;
                 user.InviteWithLink = Input.InviteWithLink;
-                if (Input.UserName != "Test1")
+                if (Input.UserName != ConstantsVars.adminName)
                 {
                     if (!await _context.Users.AnyAsync(x => x.InviteLink == Input.InviteWithLink))
                     {
