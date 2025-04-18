@@ -121,9 +121,8 @@ namespace GrabDemSite.Controllers
                 var userslv2 = new List<UserDataModel>();
                 var userslv3 = new List<UserDataModel>();
                 decimal wholeBal = 0m;
-                string name = user.UserName;
-                ViewBag.DepositOrders = await _context.GetDepositsByUserAndIsConfirmedAsync(user);
-                ViewBag.WithdrawOrders = await _context.GetWithdrawsByUserAsync(user);
+                var deposits = await _context.GetDepositsByUserAndIsConfirmedAsync(user);
+                var withdraws = await _context.GetWithdrawsByUserAsync(user);
                 if (tr == false)
                 {
                     ViewBag.Error = "You need to set your wallet first";
@@ -135,7 +134,7 @@ namespace GrabDemSite.Controllers
                 if (await _context.Users.AnyAsync(x=>x.InviteLink==user.InviteLink))
                 {
                     userslv1 = await _context.AddUsersToTeamByLevelAsync(user);
-                    if (ConstantsVars.listOfNamesToAvoid.Contains(name))
+                    if (ConstantsVars.listOfNamesToAvoid.Contains(userName))
                     {
                         StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv1);
                     }
@@ -146,7 +145,7 @@ namespace GrabDemSite.Controllers
                     if (await _context.Users.AnyAsync(x=>x.InviteWithLink == userslv1[0].InviteLink))
                     {
                         await _context.AddUsersToTeamByLevelAsync(userslv1, userslv2);
-                        if (ConstantsVars.listOfNamesToAvoid.Contains(name))
+                        if (ConstantsVars.listOfNamesToAvoid.Contains(userName))
                         {
                             StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv2);
                         }
@@ -157,7 +156,7 @@ namespace GrabDemSite.Controllers
                         if (await _context.Users.AnyAsync(x => x.InviteWithLink == userslv2[0].InviteLink))
                         {
                             await _context.AddUsersToTeamByLevelAsync(userslv2, userslv3);
-                            if (ConstantsVars.listOfNamesToAvoid.Contains(name))
+                            if (ConstantsVars.listOfNamesToAvoid.Contains(userName))
                             {
                                 StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv3);
                             }
@@ -168,11 +167,7 @@ namespace GrabDemSite.Controllers
                         }
                     }
                 }
-                ViewBag.Level1 = userslv1;
-                ViewBag.Level2 = userslv2;
-                ViewBag.Level3 = userslv3;
-                ViewBag.WholeBal = wholeBal;
-                return View(user);
+                return View(new ProfileViewModel(userslv1,userslv2,userslv3,wholeBal,deposits,withdraws,user));
             }
             catch (Exception ex)
             {
