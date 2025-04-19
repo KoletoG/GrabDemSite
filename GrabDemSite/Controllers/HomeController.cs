@@ -41,7 +41,7 @@ namespace GrabDemSite.Controllers
             try
             {
                 var user = await _context.GetUserByIdAsync(id);
-                var task = await _context.GetTaskByUserAsync(user);
+                var task = await _context.GetTaskAsync(user);
                 var deposits = await _context.GetDataByUserAsync<DepositDataModel>(user);
                 var withdraws = await _context.GetDataByUserAsync<Models.DataModel.WithdrawDataModel>(user);
                 if (deposits.DefaultIfEmpty() != default)
@@ -345,8 +345,8 @@ namespace GrabDemSite.Controllers
                 user.PlayMoney = balance;
                 var user1 = await _context.GetUserByInviteLinkAsync(user);
                 var deposits = await _context.GetDepositsByUserIdAndIsConfirmedAsync(user, false);
-                var task = await _context.GetTaskByUserAsync(user1);
-                var task1 = await _context.GetTaskByUserAsync(user);
+                var task = await _context.GetTaskAsync(user1);
+                var task1 = await _context.GetTaskAsync(user);
                 StaticWorkMethods.IncreaseTaskAndBalance(balance, task1, user);
                 StaticWorkMethods.ChangeLevelByMoneySpent(user);
                 task.Count++;
@@ -471,7 +471,7 @@ namespace GrabDemSite.Controllers
                 ViewBag.ErrorCh = "";
                 var countUsers = await methods.CountUsersAsync();
                 var user = await _context.GetUserByNameAsync(userName);
-                var task = await _context.GetTaskByUserAsync(user);
+                var task = await _context.GetTaskAsync(user);
                 string block = methods.RandomizeBlockchain();
                 bitcoinSupply -= 0.000396f;
                 int count = countUsers + Random.Shared.Next(300, 1200);
@@ -495,7 +495,7 @@ namespace GrabDemSite.Controllers
             {
                 userName = this.User.Identity?.Name ?? "N/A";
                 var u = await _context.GetUserByNameAsync(userName);
-                var t = await _context.GetTaskByUserAsync(u);
+                var t = await _context.GetTaskAsync(u);
                 if (u.Balance == 0)
                 {
                     return RedirectToAction("Deposit");

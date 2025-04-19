@@ -23,7 +23,7 @@ namespace GrabDemSite.Extension_methods
                 throw;
             }
         }
-        public static async Task<TaskDataModel> GetTaskByUserAsync(this ApplicationDbContext context, UserDataModel user)
+        public static async Task<TaskDataModel> GetTaskAsync(this ApplicationDbContext context, UserDataModel user)
         {
             try
             {
