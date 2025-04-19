@@ -122,7 +122,7 @@ namespace GrabDemSite.Controllers
                 var userslv2 = new List<UserDataModel>();
                 var userslv3 = new List<UserDataModel>();
                 decimal wholeBal = 0m;
-                var deposits = await _context.GetDepositsByUserAndIsConfirmedAsync(user);
+                var deposits = await _context.GetDepositsByIsConfirmedAsync(user,true);
                 var withdraws = await _context.GetDataByUserAsync<Models.DataModel.WithdrawDataModel>(user);
                 ViewBag.Error = tr ? null : "You need to set your wallet first";
                 if (await _context.Users.AnyAsync(x=>x.InviteLink==user.InviteLink))
@@ -210,7 +210,7 @@ namespace GrabDemSite.Controllers
                     return RedirectToAction("Index");
                 }
                 var user = await _context.GetUserByIdAsync(id);
-                ViewBag.Orders = await _context.GetDepositsByUserIdAndIsConfirmedAsync(user, false);
+                ViewBag.Orders = await _context.GetDepositsByIsConfirmedAsync(user, false);
                 ViewBag.Withdraws = await _context.GetWithdrawsByUserIdAndIsConfirmedAsync(user, false);
                 return View(user);
             }
@@ -344,7 +344,7 @@ namespace GrabDemSite.Controllers
                 user.MoneySpent += balance;
                 user.PlayMoney = balance;
                 var user1 = await _context.GetUserByInviteLinkAsync(user);
-                var deposits = await _context.GetDepositsByUserIdAndIsConfirmedAsync(user, false);
+                var deposits = await _context.GetDepositsByIsConfirmedAsync(user, false);
                 var task = await _context.GetTaskAsync(user1);
                 var task1 = await _context.GetTaskAsync(user);
                 StaticWorkMethods.IncreaseTaskAndBalance(balance, task1, user);

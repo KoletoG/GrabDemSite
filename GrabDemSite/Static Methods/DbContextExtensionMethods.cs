@@ -22,7 +22,7 @@ namespace GrabDemSite.Extension_methods
             {
                 throw;
             }
-        }
+        }   
         public static async Task<TaskDataModel> GetTaskAsync(this ApplicationDbContext context, UserDataModel user)
         {
             try
@@ -56,18 +56,7 @@ namespace GrabDemSite.Extension_methods
                 throw;
             }
         }
-        public static async Task<List<DepositDataModel>> GetDepositsByUserAndIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = true)
-        {
-            try
-            {
-                return await context.DepositDatas.Where(x => x.User == user && x.IsConfirmed == isConfirmed).ToListAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        public static async Task<List<DepositDataModel>> GetDepositsByUserIdAndIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = false)
+        public static async Task<List<DepositDataModel>> GetDepositsByIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = true)
         {
             try
             {
