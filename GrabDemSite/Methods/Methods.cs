@@ -14,15 +14,14 @@ namespace GrabDemSite.Methods
 {
     public class MethodsCall : IMethodsCall
     {
-        public ApplicationDbContext Context { get; }
+        public ApplicationDbContext Context { get; private init; }
         public MethodsCall(ApplicationDbContext _context)
         {
             Context = _context;
         }
         public async Task<UserDataModel> GetUserAsync(string userName)
         {
-            var current = await Context.Users.SingleAsync(x => x.UserName == userName);
-            return current;
+            return await Context.Users.SingleAsync(x => x.UserName == userName);
         }
         public async Task<int> CountUsersAsync()
         {
