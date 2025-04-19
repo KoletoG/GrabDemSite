@@ -1,16 +1,15 @@
 ﻿@using GrabDemSite.Models.DataModel
-@model UserDataModel
+@using GrabDemSite.Models.ViewModel
+@model AdminMenuViewModel
 <header>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" asp-append-version="true"/>
 </header>
 @{
-    List<DepositDataModel> deposits = ViewBag.Orders;
-    List<WithdrawDataModel> withdraws = ViewBag.Withdraws;
 }
 <body>
-    @foreach(UserDataModel user in ViewBag.Users)
+    @foreach(UserDataModel user in Model.Users)
     {
         bool confirmD = true;
         bool confirmW = true;
@@ -27,7 +26,7 @@
             </form>
             @{
                 string id = user.Id;
-                foreach(var deposit in deposits)
+                foreach(var deposit in Model.Deposits)
                 {
                     if (deposit.User.Id == id && deposit.IsConfirmed==false)
                     {
@@ -38,7 +37,7 @@
             @try
             {
                 {
-                    foreach(var withdraw in withdraws)
+                    foreach(var withdraw in Model.Withdraws)
                     {
                         if (withdraw.User.Id == id && withdraw.IsConfirmed == false)
                         {

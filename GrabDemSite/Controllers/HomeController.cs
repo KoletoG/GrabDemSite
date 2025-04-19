@@ -183,10 +183,10 @@ namespace GrabDemSite.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                ViewBag.Users = await _context.LoadViewBagAllAsync<UserDataModel>();
-                ViewBag.Orders = await _context.LoadViewBagAllAsync<DepositDataModel>();
-                ViewBag.Withdraws = await _context.LoadViewBagAllAsync<Models.DataModel.WithdrawDataModel>();
-                return View();
+                var users = await _context.LoadViewBagAllAsync<UserDataModel>();
+                var deposits = await _context.LoadViewBagAllAsync<DepositDataModel>();
+                var withdraws = await _context.LoadViewBagAllAsync<Models.DataModel.WithdrawDataModel>();
+                return View(new AdminMenuViewModel(deposits,withdraws,users));
             }
             catch (Exception ex)
             {
