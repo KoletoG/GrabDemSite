@@ -211,7 +211,7 @@ namespace GrabDemSite.Controllers
                 }
                 var user = await _context.GetUserByIdAsync(id);
                 ViewBag.Orders = await _context.GetDepositsByIsConfirmedAsync(user, false);
-                ViewBag.Withdraws = await _context.GetWithdrawsByUserIdAndIsConfirmedAsync(user, false);
+                ViewBag.Withdraws = await _context.GetWithdrawsByIsConfirmedAsync(user, false);
                 return View(user);
             }
             catch (Exception ex)
@@ -252,7 +252,7 @@ namespace GrabDemSite.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                ViewBag.Withdraws = await _context.GetWithdrawsByWalletAndIsConfirmedAsync(wallet);
+                ViewBag.Withdraws = await _context.GetWithdrawsByIsConfirmedAsync(wallet);
                 return View();
             }
             catch (Exception ex)
@@ -307,7 +307,7 @@ namespace GrabDemSite.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                var withdraws = await _context.GetWithdrawsByWalletAndIsConfirmedAsync(wallet);
+                var withdraws = await _context.GetWithdrawsByIsConfirmedAsync(wallet);
                 foreach (var withdraw in withdraws)
                 {
                     withdraw.IsConfirmed = true;

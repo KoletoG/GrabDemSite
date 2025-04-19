@@ -78,7 +78,7 @@ namespace GrabDemSite.Extension_methods
                 throw;
             }
         }
-        public static async Task<List<WithdrawDataModel>> GetWithdrawsByWalletAndIsConfirmedAsync(this ApplicationDbContext context, string wallet, bool isConfirmed = false)
+        public static async Task<List<WithdrawDataModel>> GetWithdrawsByIsConfirmedAsync(this ApplicationDbContext context,string wallet, bool isConfirmed = false)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace GrabDemSite.Extension_methods
                 throw;
             }
         }
-        public static async Task<List<WithdrawDataModel>> GetWithdrawsByUserIdAndIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = false)
+        public static async Task<List<WithdrawDataModel>> GetWithdrawsByIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = false)
         {
             try
             {
