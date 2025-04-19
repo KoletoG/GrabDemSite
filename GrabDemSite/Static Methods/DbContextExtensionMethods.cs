@@ -34,7 +34,7 @@ namespace GrabDemSite.Extension_methods
                 throw;
             }
         }
-        public static async Task<List<T>> GetDataByUserAsync<T>(this ApplicationDbContext context, UserDataModel user)
+        public static async Task<List<T>> GetDataByUserAsync<T>(this ApplicationDbContext context, UserDataModel user) where T : class
         {
             try
             {
@@ -130,8 +130,7 @@ namespace GrabDemSite.Extension_methods
         {
             try
             {
-                var users = new List<UserDataModel>();
-                users = await context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
+                var users = await context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
                 users.OrderBy(x => x.MoneySpent);
                 return users;
             }
