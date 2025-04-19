@@ -42,8 +42,8 @@ namespace GrabDemSite.Controllers
             {
                 var user = await _context.GetUserByIdAsync(id);
                 var task = await _context.GetTaskByUserAsync(user);
-                var deposits = await _context.GetDepositsByUserAsync(user);
-                var withdraws = await _context.GetWithdrawsByUserAsync(user);
+                var deposits = await _context.GetDataByUserAsync<DepositDataModel>(user);
+                var withdraws = await _context.GetDataByUserAsync<Models.DataModel.WithdrawDataModel>(user);
                 if (deposits.DefaultIfEmpty() != default)
                 {
                     _context.DepositDatas.RemoveRange(deposits);
@@ -123,7 +123,7 @@ namespace GrabDemSite.Controllers
                 var userslv3 = new List<UserDataModel>();
                 decimal wholeBal = 0m;
                 var deposits = await _context.GetDepositsByUserAndIsConfirmedAsync(user);
-                var withdraws = await _context.GetWithdrawsByUserAsync(user);
+                var withdraws = await _context.GetDataByUserAsync<Models.DataModel.WithdrawDataModel>(user);
                 ViewBag.Error = tr ? null : "You need to set your wallet first";
                 if (await _context.Users.AnyAsync(x=>x.InviteLink==user.InviteLink))
                 {
@@ -183,9 +183,9 @@ namespace GrabDemSite.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                var users = await _context.LoadViewBagAllAsync<UserDataModel>();
-                var deposits = await _context.LoadViewBagAllAsync<DepositDataModel>();
-                var withdraws = await _context.LoadViewBagAllAsync<Models.DataModel.WithdrawDataModel>();
+                var users = await _context.LoadDataModels<UserDataModel>();
+                var deposits = await _context.LoadDataModels<DepositDataModel>();
+                var withdraws = await _context.LoadDataModels<Models.DataModel.WithdrawDataModel>();
                 return View(new AdminMenuViewModel(deposits,withdraws,users));
             }
             catch (Exception ex)

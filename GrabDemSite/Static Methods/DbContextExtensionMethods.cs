@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using GrabDemSite.Data;
 using GrabDemSite.Interfaces;
 using GrabDemSite.Models.DataModel;
+using Humanizer;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,18 +27,29 @@ namespace GrabDemSite.Extension_methods
         {
             try
             {
-                return await context.TaskDatas.SingleAsync(x => x.User == user);
+                return await context.TaskDatas.SingleAsync(x => x.User==user);
             }
             catch (Exception)
             {
                 throw;
             }
         }
-        public static async Task<List<DepositDataModel>> GetDepositsByUserAsync(this ApplicationDbContext context, UserDataModel user)
+        public static async Task<List<T>> GetDataByUserAsync<T>(this ApplicationDbContext context, UserDataModel user)
         {
             try
             {
-                return await context.DepositDatas.Where(x => x.User == user).ToListAsync();
+                if (typeof(T) == typeof(DepositDataModel))
+                {
+                    return await context.DepositDatas.Where(x => x.User == user).ToListAsync() as List<T> ?? new List<T>();
+                }
+                else if (typeof(T) == typeof(WithdrawDataModel))
+                {
+                    return await context.WithdrawDatas.Where(x => x.User == user).ToListAsync() as List<T> ?? new List<T>();
+                }
+                else
+                {
+                    throw new Exception("Invalid data type.");
+                }
             }
             catch (Exception)
             {
@@ -71,17 +83,6 @@ namespace GrabDemSite.Extension_methods
             try
             {
                 return await context.Users.SingleAsync(x => x.UserName == name);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        public static async Task<List<WithdrawDataModel>> GetWithdrawsByUserAsync(this ApplicationDbContext context, UserDataModel user)
-        {
-            try
-            {
-                return await context.WithdrawDatas.Where(x => x.User == user).ToListAsync();
             }
             catch (Exception)
             {
@@ -150,7 +151,7 @@ namespace GrabDemSite.Extension_methods
                 throw;
             }
         }
-        public static async Task<List<T>> LoadViewBagAllAsync<T>(this ApplicationDbContext context) where T : class
+        public static async Task<List<T>> LoadDataModels<T>(this ApplicationDbContext context) where T : class
         {
             try
             {

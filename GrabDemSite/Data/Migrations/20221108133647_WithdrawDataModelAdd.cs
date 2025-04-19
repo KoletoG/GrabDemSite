@@ -4,7 +4,7 @@
 
 namespace GrabDemSite.Data.Migrations
 {
-    public partial class WithdrawDataModel : Migration
+    public partial class WithdrawDataModelAdd : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
