@@ -210,9 +210,9 @@ namespace GrabDemSite.Controllers
                     return RedirectToAction("Index");
                 }
                 var user = await _context.GetUserByIdAsync(id);
-                ViewBag.Orders = await _context.GetDepositsByIsConfirmedAsync(user, false);
-                ViewBag.Withdraws = await _context.GetWithdrawsByIsConfirmedAsync(user, false);
-                return View(user);
+                var deposits = await _context.GetDepositsByIsConfirmedAsync(user, false);
+                var withdraws = await _context.GetWithdrawsByIsConfirmedAsync(user, false);
+                return View(new EditViewModel(user,deposits,withdraws));
             }
             catch (Exception ex)
             {
