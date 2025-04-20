@@ -252,8 +252,8 @@ namespace GrabDemSite.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                ViewBag.Withdraws = await _context.GetWithdrawsByIsConfirmedAsync(wallet);
-                return View();
+                var withdraws = await _context.GetWithdrawsByIsConfirmedAsync(wallet);
+                return View(new AdminWithdrawConfirmViewModel(withdraws));
             }
             catch (Exception ex)
             {
