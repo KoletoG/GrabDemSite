@@ -20,7 +20,7 @@
             <form asp-controller="Home" asp-action="Edit" asp-route-id="@user.Id">
                 <input type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-2 fs-5" value="Edit" placeholder="Crip">
             </form>
-            <form asp-controller="Home" asp-action="DeleteAccount" asp-route-id="@user.Id">
+            <form asp-controller="Home" asp-action="DeleteAccount" asp-route-id="@user.Id" method="post">
                 <input type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-2 fs-5" value="Delete" placeholder="Crip">
 
             </form>

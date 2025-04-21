@@ -35,6 +35,7 @@ namespace GrabDemSite.Controllers
         /// </summary>
         /// <param name="id">id of the user</param>
         /// <returns>Admin page</returns>
+        [HttpPost]
         [Authorize]
         public async Task<IActionResult> DeleteAccount(string id)
         {
