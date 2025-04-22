@@ -50,7 +50,7 @@ namespace GrabDemSite.Extension_methods
         public static async Task<UserDataModel> GetUserByNameAsync(this ApplicationDbContext context, string name)
         {
 
-            return await context.Users.SingleAsync(x => x.UserName == name);
+            return await context.Users.AsNoTracking().SingleAsync(x => x.UserName == name);
 
         }
         public static async Task<List<WithdrawDataModel>> GetWithdrawsByIsConfirmedAsync(this ApplicationDbContext context, string wallet, bool isConfirmed = false)

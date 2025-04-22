@@ -292,7 +292,8 @@ namespace GrabDemSite.Controllers
                 }
                 var user = await _context.GetUserByNameAsync(userName);
                 user.WalletAddress = wallet;
-                _context.Update(user);
+                _context.Attach(user);
+                _context.Entry(user).Property(x => x.WalletAddress).IsModified = true;
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -313,7 +314,7 @@ namespace GrabDemSite.Controllers
             try
             {
                 userName = this.User.Identity?.Name ?? "N/A";
-                if ((await methods.GetUserAsync(userName)).UserName != ConstantsVars.adminName)
+                if (userName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -364,6 +365,11 @@ namespace GrabDemSite.Controllers
                 {
                     deposit.IsConfirmed = true;
                 }
+                _context.Attach(user);
+                _context.Entry(user).Property(x=>x.Level).IsModified = true;
+                _context.Entry(user).Property(x => x.Balance).IsModified = true;
+                _context.Entry(user).Property(x => x.PlayMoney).IsModified = true;
+                _context.Entry(user).Property(x => x.MoneySpent).IsModified = true;
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -512,8 +518,9 @@ namespace GrabDemSite.Controllers
                 t.Count--;
                 t.NewAccount = false;
                 u.Balance = StaticWorkMethods.AddBalanceByLevel(u.Balance, u.PlayMoney, u.Level);
+                _context.Attach(u);
+                _context.Entry(u).Property(x => x.Balance).IsModified = true;
                 _context.Update(t);
-                _context.Update(u);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
