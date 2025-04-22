@@ -74,14 +74,14 @@ namespace GrabDemSite.Extension_methods
         {
             foreach (var user1 in users1)
             {
-                users2.AddRange(await context.Users.Where(x => x.InviteWithLink == user1.InviteLink).ToListAsync());
+                users2.AddRange(await context.Users.AsNoTracking().Where(x => x.InviteWithLink == user1.InviteLink).ToListAsync());
             }
             users2.OrderBy(x => x.MoneySpent);
 
         }
         public static async Task<List<UserDataModel>> AddUsersToTeamByLevelAsync(this ApplicationDbContext context, UserDataModel user)
         {
-            var users = await context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
+            var users = await context.Users.AsNoTracking().Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
             users.OrderBy(x => x.MoneySpent);
             return users;
 
@@ -91,15 +91,15 @@ namespace GrabDemSite.Extension_methods
 
             if (typeof(T) == typeof(DepositDataModel))
             {
-                return await context.DepositDatas.ToListAsync() as List<T> ?? new List<T>();
+                return await context.DepositDatas.AsNoTracking().ToListAsync() as List<T> ?? new List<T>();
             }
             else if (typeof(T) == typeof(WithdrawDataModel))
             {
-                return await context.WithdrawDatas.ToListAsync() as List<T> ?? new List<T>();
+                return await context.WithdrawDatas.AsNoTracking().ToListAsync() as List<T> ?? new List<T>();
             }
             else if (typeof(T) == typeof(UserDataModel))
             {
-                return await context.Users.ToListAsync() as List<T> ?? new List<T>();
+                return await context.Users.AsNoTracking().ToListAsync() as List<T> ?? new List<T>();
             }
             throw new InvalidOperationException("Unsupported type requested");
 
