@@ -35,12 +35,18 @@ namespace GrabDemSite.Controllers
         /// </summary>
         /// <param name="id">id of the user</param>
         /// <returns>Admin page</returns>
-        [HttpPost]
+        [HttpPost("deleteAcc/{id}")]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAccount(string id)
         {
             try
             {
+                userName = this.User.Identity.Name;
+                if (userName != ConstantsVars.adminName)
+                {
+                    return RedirectToAction("Index");
+                }
                 var user = await _context.GetUserByIdAsync(id);
                 var task = await _context.GetTaskAsync(user);
                 var deposits = await _context.GetDataByUserAsync<DepositDataModel>(user);
@@ -201,12 +207,13 @@ namespace GrabDemSite.Controllers
         /// <param name="id">id of the user</param>
         /// <returns>Page with unconfirmed deposits and withdraws</returns>
         [Authorize]
+        [HttpGet("editAcc/{id}")]
         public async Task<IActionResult> Edit(string id)
         {
             try
             {
                 userName = this.User.Identity?.Name ?? "N/A";
-                if ((await methods.GetUserAsync(userName)).UserName != ConstantsVars.adminName)
+                if (userName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }

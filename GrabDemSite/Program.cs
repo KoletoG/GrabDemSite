@@ -27,7 +27,7 @@ namespace GrabDemSite
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-            builder.Services.AddTransient<IMethodsCall, MethodsCall>();
+            builder.Services.AddScoped<IMethodsCall, MethodsCall>();
             builder.Services.AddTransient<HomeController>();
             builder.Services.AddMvc(options =>
             {
