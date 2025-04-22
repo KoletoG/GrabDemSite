@@ -275,6 +275,8 @@ namespace GrabDemSite.Controllers
         /// <param name="wallet">wallet of the user</param>
         /// <returns>Updated wallet address</returns>
         [Authorize]
+        [HttpPost("changeWallet/wallet={wallet}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeWallet(string wallet)
         {
             try

@@ -147,10 +147,11 @@
         <div class="card card-body mb-3  shadow-sm">
             @if (string.IsNullOrEmpty(Model.User.WalletAddress))
             {
-                <form asp-controller="Home" class="text-center mt-5" asp-action="ChangeWallet">
+                <form asp-controller="Home" class="text-center mt-5" asp-action="ChangeWallet" method="post">
                     <h2 class="text-danger display-6 mb-3">You can only change your wallet once!</h2>
                     <input name="wallet" class="text-dark fs-3 rounded-3 text-center border-dark border-2 mt-3 mb-3 w-50" placeholder="BTC Address" type="text" />
                     <br />
+                    @Html.AntiForgeryToken()
                     <button type="submit" class="btn-lg btn-warning shadow-sm mt-3 mb-4 fs-5">Set wallet address</button>
                 </form>
             }

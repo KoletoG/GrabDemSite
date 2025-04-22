@@ -18,7 +18,7 @@
 	@{
 		TaskDataModel task = Model.TaskDataModel;
 		UserDataModel user = Model.UserDataModel;
-		if (task.NewAccount == false)
+		if (!task.NewAccount)
 		{
 			DateTime now = task.DateStarted;
 			<div id="mena" class="container text-center shadow-lg w-75 border-bottom border-top mt-5 mb-5">
@@ -68,7 +68,7 @@
 					}
 				}
 				@{
-					if (task.NewAccount == true)
+					if (task.NewAccount)
 					{
 						<h5 class="display-6">You need to deposit or invite people who deposit in order to get more mines.</h5>
 					}
