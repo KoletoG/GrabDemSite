@@ -25,13 +25,14 @@
 				@{
 					if (DateTime.UtcNow > now.AddMinutes(360) && task.Count > 0)
 					{
-						<form class="text-center" asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now">
+						<form class="text-center" asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now" method="post">
 							<h3 class="mt-3 display-5 text-warning">Your blockchain to mine in this day: </h3>
 							<h5 class="h4 mb-5 opacity-50 fst-italic mt-2 text-truncate">@Model.BlockChain</h5>
 							<br>
+							@Html.AntiForgeryToken()
 							<h4 class="h5 text-center mt-3 fst-italic">The bigger the balance, the bigger the amount of money you are going to get</h4>
 
-							<input type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-5 fs-2" value="Start mining">
+							<button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-5 fs-2">Start mining </button>
 							<h3 class="text-dark mt-5 mb-3">Your balance: <span class="text-warning">@user.Balance $</span></h3>
 
 						</form>
@@ -77,12 +78,12 @@
 		else
 		{
 			<div id="mena" class="container shadow-lg w-75 border-bottom border-top mt-5 mb-5">
-				<form class="text-center" asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now">
+				<form class="text-center" asp-controller="Home" asp-action="Mine" asp-route-date="@DateTime.Now" method="post">
 					<h3 class="mt-3 display-5 text-warning">Your blockchain to mine in this day: </h3>
 					<h5 class="h4 mb-5 opacity-50 fst-italic mt-2 text-truncate">@Model.BlockChain</h5>
 					<br>
-					<h4 class="h5 text-center mt-3 fst-italic">The bigger the balance, the bigger the amount of money you are going to get</h4>
-
+					<h4 class="h5 text-center mt-3 fst-italic">The bigger the balance, the more amount of money you are going to get</h4>
+					@Html.AntiForgeryToken()
 					<input type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-5 fs-2" value="Start mining">
 					<h3 class="text-dark mt-5 mb-3">Your balance: <span class="text-warning">@user.Balance $</span></h3>
 

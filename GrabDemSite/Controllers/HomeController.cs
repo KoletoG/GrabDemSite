@@ -497,6 +497,8 @@ namespace GrabDemSite.Controllers
         /// <param name="date">Gets the current date</param>
         /// <returns>Adds balance to the user's account</returns>
         [Authorize]
+        [HttpPost("mine/date={date}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Mine(DateTime date)
         {
             try
