@@ -345,7 +345,7 @@ namespace GrabDemSite.Controllers
             try
             {
                 userName = this.User.Identity?.Name ?? "N/A";
-                if ((await methods.GetUserAsync(userName)).UserName != ConstantsVars.adminName)
+                if (userName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -360,14 +360,10 @@ namespace GrabDemSite.Controllers
                 StaticWorkMethods.IncreaseTaskAndBalance(balance, task1, user);
                 StaticWorkMethods.ChangeLevelByMoneySpent(user);
                 task.Count++;
-                _context.Update(task);
-                _context.Update(task1);
                 foreach (var deposit in deposits)
                 {
                     deposit.IsConfirmed = true;
-                    _context.Update(deposit);
                 }
-                _context.Users.Update(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
