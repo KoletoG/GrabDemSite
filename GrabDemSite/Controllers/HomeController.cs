@@ -340,7 +340,8 @@ namespace GrabDemSite.Controllers
         /// <param name="balance">balance of the user</param>
         /// <returns>Updated user's deposits and balance</returns>
         [Authorize]
-        [HttpGet]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, decimal balance)
         {
             try
