@@ -86,20 +86,20 @@ namespace GrabDemSite.Extension_methods
             return users;
 
         }
-        public static async Task<List<T>> LoadDataModels<T>(this ApplicationDbContext context) where T : class
+        public static async Task<T[]>LoadDataModels<T>(this ApplicationDbContext context) where T : class
         {
 
             if (typeof(T) == typeof(DepositDataModel))
             {
-                return await context.DepositDatas.AsNoTracking().ToListAsync() as List<T> ?? new List<T>();
+                return await context.DepositDatas.AsNoTracking().ToArrayAsync() as T[];
             }
             else if (typeof(T) == typeof(WithdrawDataModel))
             {
-                return await context.WithdrawDatas.AsNoTracking().ToListAsync() as List<T> ?? new List<T>();
+                return await context.WithdrawDatas.AsNoTracking().ToArrayAsync() as T[];
             }
             else if (typeof(T) == typeof(UserDataModel))
             {
-                return await context.Users.AsNoTracking().ToListAsync() as List<T> ?? new List<T>();
+                return await context.Users.AsNoTracking().ToArrayAsync() as T[];
             }
             throw new InvalidOperationException("Unsupported type requested");
 

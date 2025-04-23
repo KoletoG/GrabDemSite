@@ -4,10 +4,10 @@ namespace GrabDemSite.Models.ViewModel
 {
     internal class AdminMenuViewModel
     {
-        internal List<DepositDataModel> Deposits { get; private init; }
-        internal List<WithdrawDataModel> Withdraws { get; private init; }
-        internal List<UserDataModel> Users { get; private init; }
-        internal AdminMenuViewModel(List<DepositDataModel> deposits, List<WithdrawDataModel> withdraws, List<UserDataModel> users) 
+        internal DepositDataModel[] Deposits { get; private init; }
+        internal WithdrawDataModel[] Withdraws { get; private init; }
+        internal UserDataModel[] Users { get; private init; }
+        internal AdminMenuViewModel(DepositDataModel[] deposits, WithdrawDataModel[] withdraws, UserDataModel[] users) 
         {
             Deposits = deposits;
             Withdraws = withdraws;
