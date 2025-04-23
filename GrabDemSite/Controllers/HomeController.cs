@@ -256,7 +256,7 @@ namespace GrabDemSite.Controllers
             try
             {
                 userName = this.User.Identity?.Name ?? "N/A";
-                if ((await methods.GetUserAsync(userName)).UserName != ConstantsVars.adminName)
+                if (userName != ConstantsVars.adminName)
                 {
                     return RedirectToAction("Index");
                 }
@@ -437,7 +437,9 @@ namespace GrabDemSite.Controllers
                 user.Balance -= money;
                 user.PlayMoney -= money;
                 await _context.WithdrawDatas.AddAsync(new GrabDemSite.Models.DataModel.WithdrawDataModel(id, wallet, money - (money * 0.06m), user, false, DateTime.Now));
-                _context.Update(user);
+                _context.Attach(user);
+                _context.Entry(user).Property(x => x.PlayMoney).IsModified = true;
+                _context.Entry(user).Property(x => x.Balance).IsModified = true;
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
