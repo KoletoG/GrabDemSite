@@ -91,15 +91,15 @@ namespace GrabDemSite.Extension_methods
 
             if (typeof(T) == typeof(DepositDataModel))
             {
-                return await context.DepositDatas.AsNoTracking().ToArrayAsync() as T[];
+                return await context.DepositDatas.AsNoTracking().ToArrayAsync() as T[] ?? new T[1];
             }
             else if (typeof(T) == typeof(WithdrawDataModel))
             {
-                return await context.WithdrawDatas.AsNoTracking().ToArrayAsync() as T[];
+                return await context.WithdrawDatas.AsNoTracking().ToArrayAsync() as T[] ?? new T[1];
             }
             else if (typeof(T) == typeof(UserDataModel))
             {
-                return await context.Users.AsNoTracking().ToArrayAsync() as T[];
+                return await context.Users.AsNoTracking().ToArrayAsync() as T[] ?? new T[1];
             }
             throw new InvalidOperationException("Unsupported type requested");
 
