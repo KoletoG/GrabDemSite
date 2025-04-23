@@ -4,8 +4,8 @@ namespace GrabDemSite.Models.ViewModel
 {
     public class AdminWithdrawConfirmViewModel
     {
-        public List<WithdrawDataModel> Withdraws { get; private init; }
-        public AdminWithdrawConfirmViewModel(List<WithdrawDataModel> withdraw)
+        public WithdrawDataModel[] Withdraws { get; private init; }
+        public AdminWithdrawConfirmViewModel(WithdrawDataModel[] withdraw)
         {
             Withdraws = withdraw;
         }
