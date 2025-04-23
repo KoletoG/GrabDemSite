@@ -15,6 +15,7 @@ using GrabDemSite.Data.Migrations;
 using GrabDemSite.Constants;
 using GrabDemSite.Models.ViewModel;
 using GrabDemSite.Models.DataModel;
+using System.Text.RegularExpressions;
 namespace GrabDemSite.Controllers
 {
     public class HomeController : Controller
@@ -286,7 +287,7 @@ namespace GrabDemSite.Controllers
                 {
                     return RedirectToAction("Profile");
                 }
-                if (!wallet.StartsWith('1') && !wallet.StartsWith('3') && !wallet.StartsWith("bc1"))
+                if (!Regex.IsMatch(wallet, "^(bc1 | [13])[a - zA - HJ - NP - Z0 - 9]{ 25,39}$"))
                 {
                     return RedirectToAction("Profile");
                 }
