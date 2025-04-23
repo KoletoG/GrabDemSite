@@ -15,13 +15,13 @@ namespace GrabDemSite.Extension_methods
         public static async Task<UserDataModel> GetUserByIdAsync(this ApplicationDbContext context, string id)
         {
 
-            return await context.Users.SingleAsync(x => x.Id == id);
+            return await context.Users.FirstAsync(x => x.Id == id);
 
         }
         public static async Task<TaskDataModel> GetTaskAsync(this ApplicationDbContext context, UserDataModel user)
         {
 
-            return await context.TaskDatas.SingleAsync(x => x.User == user);
+            return await context.TaskDatas.FirstAsync(x => x.User == user);
 
         }
         public static async Task<List<T>> GetDataByUserAsync<T>(this ApplicationDbContext context, UserDataModel user) where T : class
@@ -50,7 +50,7 @@ namespace GrabDemSite.Extension_methods
         public static async Task<UserDataModel> GetUserByNameAsync(this ApplicationDbContext context, string name)
         {
 
-            return await context.Users.AsNoTracking().SingleAsync(x => x.UserName == name);
+            return await context.Users.AsNoTracking().FirstAsync(x => x.UserName == name);
 
         }
         public static async Task<WithdrawDataModel[]> GetWithdrawsByIsConfirmedAsync(this ApplicationDbContext context, string wallet, bool isConfirmed = false)
@@ -66,7 +66,7 @@ namespace GrabDemSite.Extension_methods
         public static async Task<UserDataModel> GetUserByInviteLinkAsync(this ApplicationDbContext context, UserDataModel user)
         {
 
-            return await context.Users.AsNoTracking().SingleAsync(x => x.InviteLink == user.InviteWithLink);
+            return await context.Users.AsNoTracking().FirstAsync(x => x.InviteLink == user.InviteWithLink);
 
 
         }
