@@ -360,11 +360,11 @@ namespace GrabDemSite.Controllers
                 user.PlayMoney = balance;
                 var user1 = await _context.GetUserByInviteLinkAsync(user);
                 var deposits = await _context.GetDepositsByIsConfirmedAsync(user, false);
-                var task = await _context.GetTaskAsync(user1);
-                var task1 = await _context.GetTaskAsync(user);
-                StaticWorkMethods.IncreaseTaskAndBalance(balance, task1, user);
+                var task1 = await _context.GetTaskAsync(user1);
+                var task = await _context.GetTaskAsync(user);
+                StaticWorkMethods.IncreaseTaskAndBalance(balance, task, user);
                 StaticWorkMethods.ChangeLevelByMoneySpent(user);
-                task.Count++;
+                task1.Count++;
                 foreach (var deposit in deposits)
                 {
                     deposit.IsConfirmed = true;

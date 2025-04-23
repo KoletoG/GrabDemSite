@@ -194,13 +194,13 @@
             <div class="d-flex flex-column mb-3">
                 @{
                     int count1 = 1;
-                    foreach (WithdrawDataModel deposit in Model.WithdrawOrders)
+                    foreach (WithdrawDataModel withdraw in Model.WithdrawOrders)
                     {
 
                         <div class="p-2">
                             <h3 class="fst-italic">Order number: @count1</h3>
-                            <h3 class="text-dark ">Date deposit made on: @deposit.DateCreated.ToShortDateString()</h3>
-                            <h3 class="text-warning display-6">@deposit.Money $</h3>
+                            <h3 class="text-dark ">Date deposit made on: @withdraw.DateCreated.ToShortDateString()</h3>
+                            <h3 class="text-warning display-6">@withdraw.Money $</h3>
                         </div>
                         count++;
                     }
