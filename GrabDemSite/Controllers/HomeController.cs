@@ -52,11 +52,11 @@ namespace GrabDemSite.Controllers
                 var task = await _context.GetTaskAsync(user);
                 var deposits = await _context.GetDataByUserAsync<DepositDataModel>(user);
                 var withdraws = await _context.GetDataByUserAsync<Models.DataModel.WithdrawDataModel>(user);
-                if (deposits.DefaultIfEmpty() != default)
+                if (deposits.Any())
                 {
                     _context.DepositDatas.RemoveRange(deposits);
                 }
-                if (withdraws.DefaultIfEmpty() != default)
+                if (withdraws.Any())
                 {
                     _context.WithdrawDatas.RemoveRange(withdraws);
                 }
@@ -97,14 +97,14 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                userName = this.User.Identity?.Name ?? "N/A";
-                ViewData["Title"] = "Deposit";
-                ViewBag.ErrorSum = "";
+                userName = this.User.Identity?.Name ?? "N/A"; 
                 var user = await _context.GetUserByNameAsync(userName);
                 if (string.IsNullOrEmpty(user.WalletAddress))
                 {
                     return RedirectToAction("Profile", false);
                 }
+                ViewData["Title"] = "Deposit";
+                ViewBag.ErrorSum = "";
                 return View(user);
             }
             catch (Exception ex)
@@ -283,7 +283,7 @@ namespace GrabDemSite.Controllers
             try
             {
                 userName = this.User.Identity?.Name ?? "N/A";
-                if (wallet == null)
+                if (string.IsNullOrEmpty(wallet))
                 {
                     return RedirectToAction("Profile");
                 }
@@ -463,15 +463,15 @@ namespace GrabDemSite.Controllers
             try
             {
                 userName = this.User.Identity?.Name ?? "N/A";
-                ViewData["Title"] = "Withdraw";
-                ViewBag.ErrorBal = "";
-                ViewBag.ErrorRef = "";
-                ViewBag.ErrorNoMoney = "";
                 var user = await methods.GetUserAsync(userName);
                 if (string.IsNullOrEmpty(user.WalletAddress))
                 {
                     return RedirectToAction("Profile", false);
                 }
+                ViewData["Title"] = "Withdraw";
+                ViewBag.ErrorBal = "";
+                ViewBag.ErrorRef = "";
+                ViewBag.ErrorNoMoney = "";
                 return View(user);
             }
             catch (Exception ex)
@@ -519,12 +519,12 @@ namespace GrabDemSite.Controllers
             try
             {
                 userName = this.User.Identity?.Name ?? "N/A";
-                var u = await _context.GetUserByNameAsync(userName);
-                var t = await _context.GetTaskAsync(u);
+                var u = await _context.GetUserByNameAsync(userName); 
                 if (u.Balance == 0)
                 {
                     return RedirectToAction("Deposit");
                 }
+                var t = await _context.GetTaskAsync(u);
                 t.DateStarted = date;
                 t.Count--;
                 t.NewAccount = false;
@@ -551,7 +551,6 @@ namespace GrabDemSite.Controllers
         {
             try
             {
-                userName = this.User.Identity?.Name ?? "N/A";
                 var user = await _context.GetUserByIdAsync(id);
                 if (money < 25)
                 {
@@ -560,6 +559,7 @@ namespace GrabDemSite.Controllers
                 }
                 else
                 {
+                    userName = this.User.Identity?.Name ?? "N/A";
                     ViewBag.Wallet = methods.WalletSelector(userName);
                     return View("TryDeposit", new DepositDataModel(Guid.NewGuid().ToString(), user, user.Email, money));
                 }
