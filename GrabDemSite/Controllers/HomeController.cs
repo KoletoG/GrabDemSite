@@ -324,7 +324,8 @@ namespace GrabDemSite.Controllers
                 foreach (var withdraw in withdraws)
                 {
                     withdraw.IsConfirmed = true;
-                    _context.Update(withdraw);
+                    _context.Attach(withdraw);
+                    _context.Entry(withdraw).Property(x=>x.IsConfirmed).IsModified = true;
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction("AdminMenu", "Home");
@@ -527,7 +528,6 @@ namespace GrabDemSite.Controllers
                 u.Balance = StaticWorkMethods.AddBalanceByLevel(u.Balance, u.PlayMoney, u.Level);
                 _context.Attach(u);
                 _context.Entry(u).Property(x => x.Balance).IsModified = true;
-                _context.Update(t);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
