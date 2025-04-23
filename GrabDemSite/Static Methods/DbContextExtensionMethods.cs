@@ -44,7 +44,7 @@ namespace GrabDemSite.Extension_methods
         public static async Task<List<DepositDataModel>> GetDepositsByIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = true)
         {
 
-            return await context.DepositDatas.Where(x => x.User.Id == user.Id && x.IsConfirmed == isConfirmed).ToListAsync();
+            return await context.DepositDatas.AsNoTracking().Where(x => x.User.Id == user.Id && x.IsConfirmed == isConfirmed).ToListAsync();
 
         }
         public static async Task<UserDataModel> GetUserByNameAsync(this ApplicationDbContext context, string name)

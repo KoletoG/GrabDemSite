@@ -368,6 +368,8 @@ namespace GrabDemSite.Controllers
                 foreach (var deposit in deposits)
                 {
                     deposit.IsConfirmed = true;
+                    _context.Attach(deposit);
+                    _context.Entry(deposit).Property(x => x.IsConfirmed).IsModified = true;
                 }
                 _context.Attach(user);
                 _context.Entry(user).Property(x=>x.Level).IsModified = true;
