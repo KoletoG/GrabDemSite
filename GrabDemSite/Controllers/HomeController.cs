@@ -340,7 +340,7 @@ namespace GrabDemSite.Controllers
         /// <param name="balance">balance of the user</param>
         /// <returns>Updated user's deposits and balance</returns>
         [Authorize]
-        [HttpPost]
+        [HttpPost("edit/{id}/{balance}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, decimal balance)
         {
@@ -571,6 +571,8 @@ namespace GrabDemSite.Controllers
         /// <param name="userid">Id of the User</param>
         /// <returns>Adds a DepositDataModel to Database</returns>
         [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> TryTheDeposit(string id, decimal money, string userid)
         {
             try
