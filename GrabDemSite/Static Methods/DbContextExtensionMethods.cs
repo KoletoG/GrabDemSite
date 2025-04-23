@@ -29,11 +29,11 @@ namespace GrabDemSite.Extension_methods
 
             if (typeof(T) == typeof(DepositDataModel))
             {
-                return await context.DepositDatas.Where(x => x.User == user).ToListAsync() as List<T> ?? new List<T>();
+                return await context.DepositDatas.AsNoTracking().Where(x => x.User == user).ToListAsync() as List<T> ?? new List<T>();
             }
             else if (typeof(T) == typeof(WithdrawDataModel))
             {
-                return await context.WithdrawDatas.Where(x => x.User == user).ToListAsync() as List<T> ?? new List<T>();
+                return await context.WithdrawDatas.AsNoTracking().Where(x => x.User == user).ToListAsync() as List<T> ?? new List<T>();
             }
             else
             {
@@ -66,7 +66,7 @@ namespace GrabDemSite.Extension_methods
         public static async Task<UserDataModel> GetUserByInviteLinkAsync(this ApplicationDbContext context, UserDataModel user)
         {
 
-            return await context.Users.SingleAsync(x => x.InviteLink == user.InviteWithLink);
+            return await context.Users.AsNoTracking().SingleAsync(x => x.InviteLink == user.InviteWithLink);
 
 
         }
