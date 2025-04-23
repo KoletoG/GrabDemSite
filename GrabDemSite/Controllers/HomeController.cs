@@ -425,6 +425,8 @@ namespace GrabDemSite.Controllers
         /// <param name="iduser">id of the user</param>
         /// <returns>Withdraw instance</returns>
         [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConfirmedWithdraw(string id, decimal money, string wallet, string iduser)
         {
             try
