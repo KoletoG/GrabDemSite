@@ -13,7 +13,8 @@
         }
     }
     <h5 class="mt-5 display-4 mb-5">Whole sum to withdraw: @sum</h5>
-    <form asp-controller="Home" asp-action="AdminWithdrawConfirmed" asp-route-wallet="@Model.Withdraws[0].WalletAddress">
+    <form asp-controller="Home" asp-action="AdminWithdrawConfirmed" asp-route-wallet="@Model.Withdraws[0].WalletAddress" method="post">
+        @Html.AntiForgeryToken()
         <button type="submit" class="btn-lg btn-warning shadow-sm mt-2 mb-5 fs-5">Confirm these withdraws</button>
     </form>
     </div>

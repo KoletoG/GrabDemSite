@@ -309,6 +309,8 @@ namespace GrabDemSite.Controllers
         /// <param name="wallet">wallet of the user</param>
         /// <returns>Clears unchecked withdraws</returns>
         [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdminWithdrawConfirmed(string wallet)
         {
             try
