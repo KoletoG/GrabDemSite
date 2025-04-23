@@ -58,9 +58,9 @@ namespace GrabDemSite.Extension_methods
             return await context.WithdrawDatas.AsNoTracking().Where(x => x.WalletAddress == wallet && x.IsConfirmed == isConfirmed).ToArrayAsync();
 
         }
-        public static async Task<List<WithdrawDataModel>> GetWithdrawsByIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = false)
+        public static async Task<WithdrawDataModel[]> GetWithdrawsByIsConfirmedAsync(this ApplicationDbContext context, UserDataModel user, bool isConfirmed = false)
         {
-            return await context.WithdrawDatas.AsNoTracking().Where(x => x.User.Id == user.Id && x.IsConfirmed == isConfirmed).ToListAsync();
+            return await context.WithdrawDatas.AsNoTracking().Where(x => x.User.Id == user.Id && x.IsConfirmed == isConfirmed).ToArrayAsync();
 
         }
         public static async Task<UserDataModel> GetUserByInviteLinkAsync(this ApplicationDbContext context, UserDataModel user)

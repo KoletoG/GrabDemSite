@@ -6,8 +6,8 @@ namespace GrabDemSite.Models.ViewModel
     {
         public UserDataModel User { get; private init; }
         public DepositDataModel[] Deposits { get; private init; }
-        public List<WithdrawDataModel> Withdraws { get; private init; }
-        public EditViewModel(UserDataModel user, DepositDataModel[] deposits, List<WithdrawDataModel> withdraws)
+        public WithdrawDataModel[] Withdraws { get; private init; }
+        public EditViewModel(UserDataModel user, DepositDataModel[] deposits, WithdrawDataModel[] withdraws)
         {
             User = user;
             Deposits = deposits;
