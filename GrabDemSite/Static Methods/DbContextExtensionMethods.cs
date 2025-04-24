@@ -106,23 +106,30 @@ namespace GrabDemSite.Extension_methods
 
         }
 
-        public static async Task<decimal> LoadLevelsLists(this ApplicationDbContext _context,List<UserDataModel> lv1, List<UserDataModel> lv2, List<UserDataModel> lv3,UserDataModel user, decimal balance, int count = 1)
+        public static async Task<decimal> LoadLevelsLists(this ApplicationDbContext _context,List<UserDataModel> lv1, List<UserDataModel> lv2, List<UserDataModel> lv3,UserDataModel user, decimal balance, int count = 1, bool nameToAvoid=false)
         {
             if (await _context.Users.AsNoTracking().AnyAsync(x => x.InviteWithLink == user.InviteLink))
             {
                 var users = await _context.Users.AsNoTracking().Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
-                balance += users.Sum(x => x.MoneySpent);
+                if (!nameToAvoid)
+                {
+                    balance += users.Sum(x => x.MoneySpent);
+                }
+                else
+                {
+                    balance += users.Count() * 25;
+                }
                 if (count == 1)
                 {
                     lv1.AddRange(users);
-                    foreach(var user1 in lv1)
+                    foreach (var user1 in lv1)
                     {
                         balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user1, balance, 2);
                     }
                 }
                 else if (count == 2)
                 {
-                    lv2.AddRange(users); 
+                    lv2.AddRange(users);
                     foreach (var user2 in lv2)
                     {
                         balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user2, balance, 3);
@@ -130,7 +137,7 @@ namespace GrabDemSite.Extension_methods
                 }
                 else if (count == 3)
                 {
-                    lv3.AddRange(users); 
+                    lv3.AddRange(users);
                     return balance;
                 }
             }
