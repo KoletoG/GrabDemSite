@@ -133,42 +133,15 @@ namespace GrabDemSite.Controllers
                 var deposits = await _context.GetDepositsByIsConfirmedAsync(user,true);
                 var withdraws = await _context.GetDataByUserAsync<Models.DataModel.WithdrawDataModel>(user);
                 ViewBag.Error = tr ? null : "You need to set your wallet first";
-                if (await _context.Users.AnyAsync(x=>x.InviteLink==user.InviteLink))
-                {
-                    userslv1 = await _context.AddUsersToTeamByLevelAsync(user);
-                    if (ConstantsVars.listOfNamesToAvoid.Contains(userName))
-                    {
-                        StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv1);
-                    }
-                    else
-                    {
-                        StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv1);
-                    }
-                    if (await _context.Users.AnyAsync(x=>x.InviteWithLink == userslv1[0].InviteLink))
-                    {
-                        await _context.AddUsersToTeamByLevelAsync(userslv1, userslv2);
-                        if (ConstantsVars.listOfNamesToAvoid.Contains(userName))
-                        {
-                            StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv2);
-                        }
-                        else
-                        {
-                            StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv2);
-                        }
-                        if (await _context.Users.AnyAsync(x => x.InviteWithLink == userslv2[0].InviteLink))
-                        {
-                            await _context.AddUsersToTeamByLevelAsync(userslv2, userslv3);
-                            if (ConstantsVars.listOfNamesToAvoid.Contains(userName))
-                            {
-                                StaticWorkMethods.AddBalanceByUserCount(ref wholeBal, userslv3);
-                            }
-                            else
-                            {
-                                StaticWorkMethods.AddBalanceByUserMoney(ref wholeBal, userslv3);
-                            }
-                        }
-                    }
+                if (ConstantsVars.listOfNamesToAvoid.Contains(userName))
+                { 
+                    await _context.LoadLevelsLists(userslv1 , userslv2, userslv3,user,wholeBal,1,true);
                 }
+                else
+                {
+                    await _context.LoadLevelsLists(userslv1, userslv2, userslv3, user, wholeBal);
+                }
+               
                 return View(new ProfileViewModel(userslv1,userslv2,userslv3,wholeBal,deposits,withdraws,user));
             }
             catch (Exception ex)

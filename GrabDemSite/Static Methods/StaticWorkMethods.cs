@@ -49,19 +49,5 @@ namespace GrabDemSite.Static_Methods
                 user.Level = 2;
             }
         }
-        /// <summary>
-        /// This is called when the user is one of the 'avoiden' ones,
-        /// so they get only the minimum (25$) of their people's transactions
-        /// </summary>
-        /// <param name="balance">Whole balance of the user</param>
-        /// <param name="users">Users he invited</param>
-        public static void AddBalanceByUserCount(ref decimal balance, List<UserDataModel> users)
-        {
-            balance += 25 * users.Count(x => x.MoneySpent >= 25);
-        }
-        public static void AddBalanceByUserMoney(ref decimal balance, List<UserDataModel> users)
-        {
-            balance += users.Select(x => x.MoneySpent).Sum();
-        }
     }
 }
