@@ -110,10 +110,11 @@ namespace GrabDemSite.Extension_methods
         {
             if (await _context.Users.AsNoTracking().AnyAsync(x => x.InviteWithLink == user.InviteLink))
             {
+                var users = await _context.Users.AsNoTracking().Where(x => x.InviteWithLink == user.InviteLink).ToListAsync();
+                balance += users.Sum(x => x.MoneySpent);
                 if (count == 1)
                 {
-                    lv1.AddRange(await _context.Users.AsNoTracking().Where(x => x.InviteWithLink == user.InviteLink).ToListAsync());
-                    balance += lv1.Select(x=>x.MoneySpent).Sum();
+                    lv1.AddRange(users);
                     foreach(var user1 in lv1)
                     {
                         balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user1, balance, 2);
@@ -121,8 +122,7 @@ namespace GrabDemSite.Extension_methods
                 }
                 else if (count == 2)
                 {
-                    lv2.AddRange(await _context.Users.AsNoTracking().Where(x => x.InviteWithLink == user.InviteLink).ToListAsync()); 
-                    balance += lv2.Select(x => x.MoneySpent).Sum();
+                    lv2.AddRange(users); 
                     foreach (var user2 in lv2)
                     {
                         balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user2, balance, 3);
@@ -130,14 +130,9 @@ namespace GrabDemSite.Extension_methods
                 }
                 else if (count == 3)
                 {
-                    lv3.AddRange(await _context.Users.AsNoTracking().Where(x => x.InviteWithLink == user.InviteLink).ToListAsync()); 
-                    balance += lv3.Select(x => x.MoneySpent).Sum();
+                    lv3.AddRange(users); 
                     return balance;
                 }
-            }
-            else
-            {
-                return balance;
             }
             return balance;
         }
