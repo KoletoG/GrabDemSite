@@ -124,7 +124,7 @@ namespace GrabDemSite.Extension_methods
                     lv1.AddRange(users);
                     foreach (var user1 in lv1)
                     {
-                        balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user1, balance, 2);
+                        balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user1, balance, 2,nameToAvoid);
                     }
                 }
                 else if (count == 2)
@@ -132,7 +132,7 @@ namespace GrabDemSite.Extension_methods
                     lv2.AddRange(users);
                     foreach (var user2 in lv2)
                     {
-                        balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user2, balance, 3);
+                        balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user2, balance, 3, nameToAvoid);
                     }
                 }
                 else if (count == 3)
