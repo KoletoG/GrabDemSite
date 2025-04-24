@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Transactions;
 using GrabDemSite.Data;
 using GrabDemSite.Interfaces;
 using GrabDemSite.Models.DataModel;
@@ -103,6 +104,42 @@ namespace GrabDemSite.Extension_methods
             }
             throw new InvalidOperationException("Unsupported type requested");
 
+        }
+
+        public static async Task<decimal> LoadLevelsLists(this ApplicationDbContext _context,List<UserDataModel> lv1, List<UserDataModel> lv2, List<UserDataModel> lv3,UserDataModel user, decimal balance, int count = 1)
+        {
+            if (await _context.Users.AnyAsync(x => x.InviteWithLink == user.InviteLink))
+            {
+                if (count == 1)
+                {
+                    lv1.AddRange(await _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync());
+                    balance += lv1.Select(x=>x.MoneySpent).Sum();
+                    foreach(var user1 in lv1)
+                    {
+                        balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user1, balance, 2);
+                    }
+                }
+                else if (count == 2)
+                {
+                    lv2.AddRange(await _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync()); 
+                    balance += lv2.Select(x => x.MoneySpent).Sum();
+                    foreach (var user2 in lv2)
+                    {
+                        balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user2, balance, 3);
+                    }
+                }
+                else if (count == 3)
+                {
+                    lv3.AddRange(await _context.Users.Where(x => x.InviteWithLink == user.InviteLink).ToListAsync()); 
+                    balance += lv3.Select(x => x.MoneySpent).Sum();
+                    return balance;
+                }
+            }
+            else
+            {
+                return balance;
+            }
+            return balance;
         }
     }
 }
