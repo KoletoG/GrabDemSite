@@ -150,11 +150,18 @@ namespace GrabDemSite.Extension_methods
             {
                 return balance;
             }
-            balance += user.InvitedUsers.Sum(x => x.MoneySpent);
+            if (nameToAvoid)
+            {
+                balance += user.InvitedUsers.Count * 25;
+            }
+            else
+            {
+                balance += user.InvitedUsers.Sum(x => x.MoneySpent);
+            }
             count++;
             foreach (var user1 in user.InvitedUsers)
             {
-                balance += await CalculateBalance(_context, user1, balance, count);
+                balance += await CalculateBalance(_context, user1, balance, count,nameToAvoid);
             }
             return balance;
         }
