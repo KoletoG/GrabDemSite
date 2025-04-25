@@ -160,8 +160,9 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                     {
                         UserDataModel user1 = await _context.Users.SingleAsync(x => x.InviteLink == Input.InviteWithLink);
                         user1.InviteCount++;
-                        _context.Update(user1);
-                        _context.SaveChanges();
+                        user.InviteByUser = user1;
+                        user.InvitedUsers = new List<UserDataModel>();
+                         await _context.SaveChangesAsync();
                     }
                 }
                 else
@@ -176,7 +177,7 @@ namespace GrabDemSite.Areas.Identity.Pages.Account
                 _context.TaskDatas.Add(task);
                 if (result.Succeeded)
                 {
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                     _logger.LogInformation("User created a new account with password.");
                     ViewData["Error"] = null;
                         return RedirectToAction("Index");

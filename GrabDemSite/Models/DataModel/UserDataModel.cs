@@ -28,6 +28,8 @@ namespace GrabDemSite.Models.DataModel
         [StringLength(25, MinimumLength = 3)]
         [Display(Name = "User's username: ")]
         public override string UserName { get; set; }
+        public UserDataModel InviteByUser { get; set; }
+        public List<UserDataModel> InvitedUsers { get; set; }
         [Required(AllowEmptyStrings = false)]
         [EmailAddress]
         public override string Email { get; set; }

@@ -87,7 +87,7 @@ namespace GrabDemSite.Extension_methods
             return users;
 
         }
-        public static async Task<T[]>LoadDataModels<T>(this ApplicationDbContext context) where T : class
+        public static async Task<T[]> LoadDataModels<T>(this ApplicationDbContext context) where T : class
         {
 
             if (typeof(T) == typeof(DepositDataModel))
@@ -106,7 +106,7 @@ namespace GrabDemSite.Extension_methods
 
         }
 
-        public static async Task<decimal> LoadLevelsLists(this ApplicationDbContext _context,List<UserDataModel> lv1, List<UserDataModel> lv2, List<UserDataModel> lv3,UserDataModel user, decimal balance, int count = 1, bool nameToAvoid=false)
+        public static async Task<decimal> LoadLevelsLists(this ApplicationDbContext _context, List<UserDataModel> lv1, List<UserDataModel> lv2, List<UserDataModel> lv3, UserDataModel user, decimal balance, int count = 1, bool nameToAvoid = false)
         {
             if (await _context.Users.AsNoTracking().AnyAsync(x => x.InviteWithLink == user.InviteLink))
             {
@@ -124,7 +124,7 @@ namespace GrabDemSite.Extension_methods
                     lv1.AddRange(users);
                     foreach (var user1 in lv1)
                     {
-                        balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user1, balance, 2,nameToAvoid);
+                        balance += await LoadLevelsLists(_context, lv1, lv2, lv3, user1, balance, 2, nameToAvoid);
                     }
                 }
                 else if (count == 2)
@@ -142,6 +142,44 @@ namespace GrabDemSite.Extension_methods
                 }
             }
             return balance;
+        }
+
+        public static async Task<decimal> CalculateBalance(this ApplicationDbContext _context, UserDataModel user, decimal balance, int count = 1, bool nameToAvoid = false)
+        {
+            if (count > 3)
+            {
+                return balance;
+            }
+            balance += user.InvitedUsers.Sum(x => x.MoneySpent);
+            count++;
+            foreach (var user1 in user.InvitedUsers)
+            {
+                balance += await CalculateBalance(_context, user1, balance, count);
+            }
+            return balance;
+        }
+        public static void LoadUserLevels(this ApplicationDbContext _context, List<UserDataModel> lv1,List<UserDataModel> lv2, List<UserDataModel> lv3,UserDataModel user,int count = 1)
+        {
+            if (count == 1)
+            {
+                lv1 = user.InvitedUsers;
+                foreach(var user1 in lv1)
+                {
+                    LoadUserLevels(_context, lv1, lv2, lv3, user, 2);
+                }
+            }
+            else if (count == 2)
+            {
+                lv2.AddRange(user.InvitedUsers);
+                foreach (var user1 in lv2)
+                {
+                    LoadUserLevels(_context, lv1, lv2, lv3, user, 3);
+                }
+            }
+            else if (count == 3)
+            {
+                lv3.AddRange(user.InvitedUsers);
+            }
         }
     }
 }
