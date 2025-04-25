@@ -134,6 +134,14 @@ namespace GrabDemSite.Controllers
                 var withdraws = await _context.GetDataByUserAsync<Models.DataModel.WithdrawDataModel>(user);
                 ViewBag.Error = tr ? null : "You need to set your wallet first";
                 StaticWorkMethods.LoadUserLevels(userslv1, userslv2, userslv3, user);
+                if (ConstantsVars.listOfNamesToAvoid.Contains(userName))
+                {
+                    StaticWorkMethods.CalculateBalance(user, wholeBal, 1, true);
+                }
+                else
+                {
+                    StaticWorkMethods.CalculateBalance(user, wholeBal);
+                }
                 return View(new ProfileViewModel(userslv1,userslv2,userslv3,wholeBal,deposits,withdraws,user));
             }
             catch (Exception ex)
