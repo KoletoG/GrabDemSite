@@ -133,15 +133,7 @@ namespace GrabDemSite.Controllers
                 var deposits = await _context.GetDepositsByIsConfirmedAsync(user,true);
                 var withdraws = await _context.GetDataByUserAsync<Models.DataModel.WithdrawDataModel>(user);
                 ViewBag.Error = tr ? null : "You need to set your wallet first";
-                if (ConstantsVars.listOfNamesToAvoid.Contains(userName))
-                { 
-                    await _context.LoadLevelsLists(userslv1 , userslv2, userslv3,user,wholeBal,1,true);
-                }
-                else
-                {
-                    await _context.LoadLevelsLists(userslv1, userslv2, userslv3, user, wholeBal);
-                }
-                
+                StaticWorkMethods.LoadUserLevels(userslv1, userslv2, userslv3, user);
                 return View(new ProfileViewModel(userslv1,userslv2,userslv3,wholeBal,deposits,withdraws,user));
             }
             catch (Exception ex)

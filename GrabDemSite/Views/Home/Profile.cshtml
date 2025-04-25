@@ -84,7 +84,7 @@
                 }
                 <div class="p-2">
                     <h1 class="display-4 text-warning">Level 1: </h1>
-                    @foreach (UserDataModel userlv1 in Model.userslv1)
+                    @foreach (var userlv1 in Model.userslv1)
                     {
 
                         <h2 class="fs-3">@userlv1.UserName</h2>
@@ -104,7 +104,7 @@
                 </div>
                 <div class="p-2">
                     <h1 class="display-4 text-warning">Level 2: </h1>
-                    @foreach (UserDataModel userlv2 in Model.userslv2)
+                    @foreach (var userlv2 in Model.userslv2)
                     {
                         <h2 class="fs-3">@userlv2.UserName</h2>
                         if (userlv2.MoneySpent <= 25)
@@ -123,7 +123,7 @@
                 </div>
                 <div class="p-2">
                     <h1 class="display-4 text-warning">Level 3: </h1>
-                    @foreach (UserDataModel userlv3 in Model.userslv3)
+                    @foreach (var userlv3 in Model.userslv3)
                     {
                         <h2 class="fs-3">@userlv3.UserName</h2>
                         if (userlv3.MoneySpent <= 25)

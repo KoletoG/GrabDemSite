@@ -70,11 +70,11 @@ namespace GrabDemSite.Static_Methods
             }
             return balance;
         }
-        public static void LoadUserLevels(List<string> lv1, List<string> lv2, List<string> lv3, UserDataModel user, int count = 1)
+        public static void LoadUserLevels(List<UserDataModel> lv1, List<UserDataModel> lv2, List<UserDataModel> lv3, UserDataModel user, int count = 1)
         {
             if (count == 1)
             {
-                lv1 = user.InvitedUsers.Select(x => x.UserName).ToList();
+                lv1 = user.InvitedUsers.ToList();
                 foreach (var user1 in lv1)
                 {
                     LoadUserLevels(lv1, lv2, lv3, user, 2);
@@ -82,7 +82,7 @@ namespace GrabDemSite.Static_Methods
             }
             else if (count == 2)
             {
-                lv2.AddRange(user.InvitedUsers.Select(x => x.UserName).ToList());
+                lv2.AddRange(user.InvitedUsers.ToList());
                 foreach (var user1 in lv2)
                 {
                     LoadUserLevels(lv1, lv2, lv3, user, 3);
@@ -90,7 +90,7 @@ namespace GrabDemSite.Static_Methods
             }
             else if (count == 3)
             {
-                lv3.AddRange(user.InvitedUsers.Select(x => x.UserName).ToList());
+                lv3.AddRange(user.InvitedUsers.ToList());
             }
         }
     }
