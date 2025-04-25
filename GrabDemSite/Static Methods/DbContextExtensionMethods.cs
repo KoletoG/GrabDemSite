@@ -144,49 +144,6 @@ namespace GrabDemSite.Extension_methods
             return balance;
         }
 
-        public static decimal CalculateBalance(UserDataModel user, decimal balance, int count = 1, bool nameToAvoid = false)
-        {
-            if (count > 3)
-            {
-                return balance;
-            }
-            if (nameToAvoid)
-            {
-                balance += user.InvitedUsers.Count * 25;
-            }
-            else
-            {
-                balance += user.InvitedUsers.Sum(x => x.MoneySpent);
-            }
-            count++;
-            foreach (var user1 in user.InvitedUsers)
-            {
-                balance += CalculateBalance(user1, balance, count,nameToAvoid);
-            }
-            return balance;
-        }
-        public static void LoadUserLevels(List<string> lv1,List<string> lv2, List<string> lv3,UserDataModel user,int count = 1)
-        {
-            if (count == 1)
-            {
-                lv1 = user.InvitedUsers.Select(x=>x.UserName).ToList();
-                foreach(var user1 in lv1)
-                {
-                    LoadUserLevels(lv1, lv2, lv3, user, 2);
-                }
-            }
-            else if (count == 2)
-            {
-                lv2.AddRange(user.InvitedUsers.Select(x => x.UserName).ToList());
-                foreach (var user1 in lv2)
-                {
-                    LoadUserLevels(lv1, lv2, lv3, user, 3);
-                }
-            }
-            else if (count == 3)
-            {
-                lv3.AddRange(user.InvitedUsers.Select(x => x.UserName).ToList());
-            }
-        }
+        
     }
 }

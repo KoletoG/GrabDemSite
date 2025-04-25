@@ -141,6 +141,7 @@ namespace GrabDemSite.Controllers
                 {
                     await _context.LoadLevelsLists(userslv1, userslv2, userslv3, user, wholeBal);
                 }
+                
                 return View(new ProfileViewModel(userslv1,userslv2,userslv3,wholeBal,deposits,withdraws,user));
             }
             catch (Exception ex)
