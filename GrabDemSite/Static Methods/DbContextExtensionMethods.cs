@@ -144,7 +144,7 @@ namespace GrabDemSite.Extension_methods
             return balance;
         }
 
-        public static async Task<decimal> CalculateBalance(this ApplicationDbContext _context, UserDataModel user, decimal balance, int count = 1, bool nameToAvoid = false)
+        public static decimal CalculateBalance(UserDataModel user, decimal balance, int count = 1, bool nameToAvoid = false)
         {
             if (count > 3)
             {
@@ -161,18 +161,18 @@ namespace GrabDemSite.Extension_methods
             count++;
             foreach (var user1 in user.InvitedUsers)
             {
-                balance += await CalculateBalance(_context, user1, balance, count,nameToAvoid);
+                balance += CalculateBalance(user1, balance, count,nameToAvoid);
             }
             return balance;
         }
-        public static void LoadUserLevels(this ApplicationDbContext _context, List<string> lv1,List<string> lv2, List<string> lv3,UserDataModel user,int count = 1)
+        public static void LoadUserLevels(List<string> lv1,List<string> lv2, List<string> lv3,UserDataModel user,int count = 1)
         {
             if (count == 1)
             {
                 lv1 = user.InvitedUsers.Select(x=>x.UserName).ToList();
                 foreach(var user1 in lv1)
                 {
-                    LoadUserLevels(_context, lv1, lv2, lv3, user, 2);
+                    LoadUserLevels(lv1, lv2, lv3, user, 2);
                 }
             }
             else if (count == 2)
@@ -180,7 +180,7 @@ namespace GrabDemSite.Extension_methods
                 lv2.AddRange(user.InvitedUsers.Select(x => x.UserName).ToList());
                 foreach (var user1 in lv2)
                 {
-                    LoadUserLevels(_context, lv1, lv2, lv3, user, 3);
+                    LoadUserLevels(lv1, lv2, lv3, user, 3);
                 }
             }
             else if (count == 3)
